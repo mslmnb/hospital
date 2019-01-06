@@ -18,7 +18,7 @@ public class PatientServlet extends HttpServlet {
     private PatientController controller;
 
     @Override
-    public void init() throws ServletException {
+    public void init() throws ServletException  {
         super.init();
         PatientRepository repository = new JdbcPatientRepositoryImpl();
         PatientService service = new PatientServiceImpl(repository);

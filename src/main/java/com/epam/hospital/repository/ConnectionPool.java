@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Properties;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
@@ -16,6 +17,7 @@ public class ConnectionPool {
     private String user;
     private String password;
     private int maxConn;
+
     private ConnectionPool(String DRIVER_NAME, String URL,
                            String user, String password, int maxConn) {
         this.DRIVER_NAME = DRIVER_NAME;
@@ -35,12 +37,10 @@ public class ConnectionPool {
         }
     }
 
-    static synchronized public ConnectionPool getInstance
-            (String DRIVER_NAME, String URL,
-             String user, String password, int maxConn) {
+    public static synchronized ConnectionPool getInstance(String DRIVER_NAME, String URL,
+                                                           String user, String password, int maxConn){
         if (instance == null) {
-            instance = new ConnectionPool(DRIVER_NAME, URL,
-                    user, password, maxConn);
+            instance = new ConnectionPool(DRIVER_NAME, URL, user, password, maxConn);
         }
         return instance;
     }
@@ -74,10 +74,8 @@ public class ConnectionPool {
                 con = DriverManager.getConnection(URL,
                         user, password);
             }
-            // "Created a new connection in pool „
         } catch (SQLException e) {
-            // "Can't create a new connection for " + URL
-            return null;
+            con = null;
         }
         return con;
     }

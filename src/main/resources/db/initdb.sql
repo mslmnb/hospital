@@ -222,6 +222,9 @@ ALTER TABLE inspection_register OWNER TO "user";
 -- пул коннектов. где закрывать соединения  (finalize() в классе ConnectionPool)
 -- пул коннектов. допустимо ли хранить имя проперти файла как константу в классе PropertiesUtil
 -- инициализацию пула вынести с уровня репозитория на уровень контроллера(?)
+-- как резолвить ссылки api webjars
+--  <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
+
 
 -- планы
 -- добавить логирование

@@ -23,7 +23,6 @@ public class PatientServlet extends HttpServlet {
         PatientRepository repository = new JdbcPatientRepositoryImpl();
         PatientService service = new PatientServiceImpl(repository);
         controller = new PatientRestController(service);
-
     }
 
     @Override

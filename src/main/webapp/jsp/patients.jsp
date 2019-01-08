@@ -2,34 +2,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <html>
-<head>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="webjars/datatables/1.10.15/media/css/jquery.dataTables.min.css">--%>
-    <%--<link rel="stylesheet" href="webjars/datatables/1.10.15/media/css/dataTables.bootstrap.min.css">--%>
-    <title>Patients</title>
-    <script type="text/javascript" src="webjars/jquery/dist/jquery.min.js" defer></script>
-    <%--<script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js" defer></script>--%>
-    <%--<script type="text/javascript" src="webjars/datatables/1.10.15/media/js/jquery.dataTables.min.js" defer></script>--%>
-    <%--<script type="text/javascript" src="webjars/datatables/1.10.15/media/js/dataTables.bootstrap.min.js" defer></script>--%>
-    <%--<script type="text/javascript" src="webjars/noty/2.4.1/js/noty/packaged/jquery.noty.packaged.min.js" defer></script>--%>
-
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
+<script type="text/javascript" src="js/datatablesUtil.js" defer></script>
+<script type="text/javascript" src="js/patientDatatables.js" defer></script>
+
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h2>Patient list</h2>
+            <%--<h3><spring:message code="patients.title"/></h3>--%>
+            <h3>Patient list</h3>
+
             <div class="view-box">
-                <a class="btn btn-info">
+
+                <a class="btn btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
-                <a href="patients?action=create">Add patient</a>
                 <hr>
             <hr>
-            <table class="table table-striped display" border="1" cellpadding="8" cellspacing="0">
+            <table class="table table-striped display" id="datatable">
                 <thead>
                 <tr>
+                    <%--<th><spring:message code="meals.dateTime"/></th>--%>
+                    <%--<th><spring:message code="meals.description"/></th>--%>
                     <th>Name</th>
                     <th>Surname</th>
                     <th></th>
@@ -55,6 +52,10 @@
             </div>
         </div>
     </div>
+    <jsp:include page="fragments/footer.jsp"/>
+
+    <%-- здесь добавить скрытое окно добавления/редактирования пациента--%>
+
 </div>
 </body>
 </html>

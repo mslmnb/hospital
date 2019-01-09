@@ -1,16 +1,17 @@
 function makeEditable() {
-    $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
-    });
-
-    $('#detailsForm').submit(function () {
-        save();
-        return false;
-    });
-
-    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
-        failNoty(event, jqXHR, options, jsExc);
-    });
+    i = 0;
+    // $('.delete').click(function () {
+    //     deleteRow($(this).attr("id"));
+    // });
+    //
+    // $('#detailsForm').submit(function () {
+    //     save();
+    //     return false;
+    // });
+    //
+    // $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+    //     failNoty(event, jqXHR, options, jsExc);
+    // });
 }
 
 function add() {

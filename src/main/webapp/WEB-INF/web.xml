@@ -23,7 +23,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>patientAjaxServlet</servlet-name>
-    <url-pattern>/ajax/patients</url-pattern>
+    <url-pattern>/ajax/pat/*</url-pattern>
   </servlet-mapping>
 
 

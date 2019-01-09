@@ -4,8 +4,8 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
-<script type="text/javascript" src="js/datatablesUtil.js" defer></script>
-<script type="text/javascript" src="js/patientDatatables.js" defer></script>
+<script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
+<script type="text/javascript" src="resources/js/patientDatatables.js" defer></script>
 
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
@@ -36,26 +36,98 @@
                     <th></th>
                 </tr>
                 </thead>
-                <c:forEach items="${patients}" var="patient">
-                    <jsp:useBean id="patient" scope="page" type="com.epam.hospital.to.PatientTo"/>
-                    <tr class="normal">
-                        <td>${patient.name}</td>
-                        <td>${patient.surName}</td>
-                        <td><a class="btn btn-xs btn-primary" href="patients?action=info&id=${patient.id}">Info</a></td>
-                        <td><a class="btn btn-xs btn-primary" href="patients?action=reception&id=${patient.id}">Reception</a></td>
-                        <td><a class="btn btn-xs btn-primary" href="patients?action=diagnosis&id=${patient.id}">Diagnosis</a></td>
-                        <td><a class="btn btn-xs btn-primary" href="patients?action=prescription&id=${patient.id}">Prescription</a></td>
-                        <td><a class="btn btn-xs btn-primary" href="patients?action=inspection&id=${patient.id}">Inspection</a></td>
-                    </tr>
-                </c:forEach>
             </table>
             </div>
         </div>
     </div>
-    <jsp:include page="fragments/footer.jsp"/>
-
-    <%-- здесь добавить скрытое окно добавления/редактирования пациента--%>
-
 </div>
+
+
+<div class="modal fade" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <%--<h2 class="modal-title"><spring:message code="users.add"/></h2>--%>
+                <h2 class="modal-title">Добавить пациента</h2>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="detailsForm">
+                    <input type="hidden" id="id" name="id">
+
+                    <div class="form-group">
+                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
+                        <label for="name" class="control-label col-xs-3">Имя</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="имя"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
+                        <label for="additional_name" class="control-label col-xs-3">Отчество</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
+                            <input type="text" class="form-control" id="additional_name" name="additional_name" placeholder="отчество"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
+                        <label for="surname" class="control-label col-xs-3">Фамилия</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
+                            <input type="text" class="form-control" id="surname" name="surname" placeholder="фамилия"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%--<label for="dateTime" class="control-label col-xs-3"><spring:message code="meals.dateTime"/></label>--%>
+                        <label for="birthday" class="control-label col-xs-3">Дата рождения</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="datetime-local" class="form-control" id="dateTime" name="dateTime" placeholder="<spring:message code="meals.dateTime"/>">--%>
+                            <input type="datetime-local" class="form-control" id="birthday" name="birthday" placeholder="дата рождения">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
+                        <label for="phone" class="control-label col-xs-3">Телефон</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="фамилия"/>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <%--<label for="email" class="control-label col-xs-3"><spring:message code="users.email"/></label>--%>
+                        <label for="email" class="control-label col-xs-3">Адрес email</label>
+
+                        <div class="col-xs-9">
+                            <%--<input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">--%>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="адрес email"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <button type="button" onclick="save()" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

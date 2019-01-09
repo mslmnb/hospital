@@ -19,4 +19,12 @@ public class PatientTo extends NamedTo{
         return surName;
     }
 
+    @Override
+    public String toString() {
+        return "{ " +
+                "\"id\": " + getId() + ", " +
+                "\"name\": \"" + getName() + "\", " +
+                "\"surName\": \"" + surName + "\" " +
+                '}';
+    }
 }

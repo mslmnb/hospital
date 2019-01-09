@@ -8,16 +8,16 @@
     <title>ГАЛА КЛИНИК</title>
     <base href="${pageContext.request.contextPath}/"/>
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="webjars/datatables/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="webjars/datatables/css/dataTables.bootstrap.min.css">
+    <%--<link rel="stylesheet" href="resources/css/style.css">--%>
+    <link rel="stylesheet" href="resources/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/webjars/datatables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="resources/webjars/datatables/css/dataTables.bootstrap.min.css">
     <%--<link rel="shortcut icon" href="resources/images/icon-meal.png">--%>
 
-    <script type="text/javascript" src="webjars/jquery/dist/jquery.min.js" defer></script>
-    <script type="text/javascript" src="webjars/bootstrap/js/bootstrap.min.js" defer></script>
-    <script type="text/javascript" src="webjars/datatables/js/jquery.dataTables.min.js" defer></script>
-    <script type="text/javascript" src="webjars/datatables/js/dataTables.bootstrap.min.js" defer></script>
+    <script type="text/javascript" src="resources/webjars/jquery/dist/jquery.min.js" defer></script>
+    <script type="text/javascript" src="resources/webjars/bootstrap/js/bootstrap.min.js" defer></script>
+    <script type="text/javascript" src="resources/webjars/datatables/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" src="resources/webjars/datatables/js/dataTables.bootstrap.min.js" defer></script>
     <%--<script type="text/javascript" src="webjars/noty/2.4.1/js/noty/packaged/jquery.noty.packaged.min.js" defer></script>--%>
 
 </head>

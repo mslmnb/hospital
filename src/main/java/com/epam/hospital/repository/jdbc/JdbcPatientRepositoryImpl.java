@@ -3,33 +3,19 @@ package com.epam.hospital.repository.jdbc;
 import com.epam.hospital.model.Patient;
 import com.epam.hospital.repository.ConnectionPool;
 import com.epam.hospital.repository.PatientRepository;
+import com.epam.hospital.web.AppServletContextListner;
 
-import java.io.IOException;
+import javax.servlet.ServletContext;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-
-import static com.epam.hospital.util.PropertiesUtil.*;
 
 public class JdbcPatientRepositoryImpl implements PatientRepository {
-    private ConnectionPool pool ;   // сделать final
+    private final ConnectionPool pool;
 
-    public JdbcPatientRepositoryImpl()  {// инициализацию пула вынести на уровень контроллера(?)
-        Properties properties = null;
-        try {
-            properties = getDefaultProperties();
-            pool = ConnectionPool.getInstance(getDriverName(properties),
-                    getUrl(properties),
-                    getUserName(properties),
-                    getPassword(properties),
-                    getMaxConn(properties));
-            int i = 0;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public JdbcPatientRepositoryImpl(ConnectionPool pool) {
+        this.pool = pool;
     }
 
     @Override

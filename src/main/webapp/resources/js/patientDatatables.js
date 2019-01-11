@@ -1,4 +1,4 @@
-var ajaxUrl = 'ajax/pat/';
+var ajaxUrl = 'ajax/patients/';
 var datatableApi;
 
 function updateTable() {

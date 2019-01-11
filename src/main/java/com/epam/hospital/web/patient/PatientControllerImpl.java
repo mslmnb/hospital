@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 import static com.epam.hospital.util.ValidationUtil.checkIdConsistent;
 import static com.epam.hospital.util.ValidationUtil.checkNew;
 
-public abstract class AbstractPatientController implements PatientController{
+public class PatientControllerImpl implements PatientController{
     private final PatientService service;
 
-    public AbstractPatientController(PatientService service) {
+    public PatientControllerImpl(PatientService service) {
         this.service = service;
     }
 

@@ -40,15 +40,4 @@ public class PropertiesUtil {
     public static int getMaxConn(Properties properties) {
         return Integer.parseInt((String) properties.get("database.maxConn"));
     }
-
-    public static void main(String[] args) {
-        try {
-            Properties properties=getPostgresProperties();
-            String s = getDriverName(properties);
-            int i = 0;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

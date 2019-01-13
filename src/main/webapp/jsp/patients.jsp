@@ -1,9 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages/app"/>
+
+
 <html>
+
 <jsp:include page="fragments/headTag.jsp"/>
+
 <body>
+
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
 <script type="text/javascript" src="resources/js/patientDatatables.js" defer></script>
 
@@ -12,23 +20,21 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <%--<h3><spring:message code="patients.title"/></h3>--%>
-            <h3>Patient list</h3>
+            <h3><fmt:message key="patients.title"/></h3>
 
             <div class="view-box">
 
                 <a class="btn btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <fmt:message key="common.add"/>
                 </a>
                 <hr>
             <hr>
             <table class="table table-striped display" id="datatable">
                 <thead>
                 <tr>
-                    <%--<th><spring:message code="meals.dateTime"/></th>--%>
-                    <%--<th><spring:message code="meals.description"/></th>--%>
-                    <th>Name</th>
-                    <th>Surname</th>
+                    <th><fmt:message key="patients.name"/></th>
+                    <th><fmt:message key="patients.surname"/></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -48,71 +54,58 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <%--<h2 class="modal-title"><spring:message code="users.add"/></h2>--%>
-                <h2 class="modal-title">Добавить пациента</h2>
+                <h2 class="modal-title"><fmt:message key="patients.add"/></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
-                        <label for="name" class="control-label col-xs-3">Имя</label>
+                        <label for="name" class="control-label col-xs-3"><fmt:message key="patients.name"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="имя"/>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="patients.name"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
-                        <label for="additional_name" class="control-label col-xs-3">Отчество</label>
+                        <label for="additional_name" class="control-label col-xs-3"><fmt:message key="patients.additionalName"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
-                            <input type="text" class="form-control" id="additional_name" name="additional_name" placeholder="отчество"/>
+                            <input type="text" class="form-control" id="additional_name" name="additional_name" placeholder="<fmt:message key="patients.additionalName"/>"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
-                        <label for="surname" class="control-label col-xs-3">Фамилия</label>
+                        <label for="surname" class="control-label col-xs-3"><fmt:message key="patients.surname"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
-                            <input type="text" class="form-control" id="surname" name="surname" placeholder="фамилия"/>
+                            <input type="text" class="form-control" id="surname" name="surname" placeholder="<fmt:message key="patients.surname"/>"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <%--<label for="dateTime" class="control-label col-xs-3"><spring:message code="meals.dateTime"/></label>--%>
-                        <label for="birthday" class="control-label col-xs-3">Дата рождения</label>
+                        <label for="birthday" class="control-label col-xs-3"><fmt:message key="patients.birthday"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="datetime-local" class="form-control" id="dateTime" name="dateTime" placeholder="<spring:message code="meals.dateTime"/>">--%>
-                            <input type="datetime-local" class="form-control" id="birthday" name="birthday" placeholder="дата рождения">
+                            <input type="datetime-local" class="form-control" id="birthday" name="birthday" placeholder="<fmt:message key="patients.birthday"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <%--<label for="name" class="control-label col-xs-3"><spring:message code="users.name"/></label>--%>
-                        <label for="phone" class="control-label col-xs-3">Телефон</label>
+                        <label for="phone" class="control-label col-xs-3"><fmt:message key="patients.phone"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="users.name"/>">--%>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="фамилия"/>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="<fmt:message key="patients.phone"/>"/>
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <%--<label for="email" class="control-label col-xs-3"><spring:message code="users.email"/></label>--%>
-                        <label for="email" class="control-label col-xs-3">Адрес email</label>
+                        <label for="email" class="control-label col-xs-3"><fmt:message key="patients.email"/></label>
 
                         <div class="col-xs-9">
-                            <%--<input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">--%>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="адрес email"/>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="<fmt:message key="patients.email"/>"/>
                         </div>
                     </div>
 
@@ -130,4 +123,14 @@
 </div>
 
 </body>
+
+<jsp:include page="fragments/i18n.jsp"/>
+<script type="text/javascript">
+    i18n["infoBtn"] = "<fmt:message key="patients.info"/>";
+    i18n["receptionBtn"] = "<fmt:message key="patients.reception"/>";
+    i18n["diagnosisBtn"] = "<fmt:message key="patients.diagnosis"/>";
+    i18n["prescriptionBtn"] = "<fmt:message key="patients.prescription"/>";
+    i18n["inspectionBtn"] = "<fmt:message key="patients.inspection"/>";
+</script>
+
 </html>

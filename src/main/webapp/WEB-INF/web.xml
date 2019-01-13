@@ -4,32 +4,13 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>Archetype Created Web Application</display-name>
-
-    <!--<servlet>-->
-    <!--<servlet-name>patientServlet</servlet-name>-->
-    <!--<servlet-class>com.epam.hospital.web.PatientServlet</servlet-class>-->
-    <!--<load-on-startup>0</load-on-startup>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>patientServlet</servlet-name>-->
-    <!--<url-pattern>/patients</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-    <!--<servlet-name>frontControllerServlet</servlet-name>-->
-    <!--<servlet-class>com.epam.hospital.web.FrontControllerServlet</servlet-class>-->
-    <!--<load-on-startup>0</load-on-startup>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>frontControllerServlet</servlet-name>-->
-    <!--<url-pattern>/ajax/pat/*</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <display-name>Hospital</display-name>
 
     <welcome-file-list>
         <welcome-file>jsp/index.jsp</welcome-file>
     </welcome-file-list>
-    
+
+    <!-- Servlet -->
     <servlet>
         <servlet-name>frontControllerServlet</servlet-name>
         <servlet-class>com.epam.hospital.web.FrontControllerServlet</servlet-class>
@@ -40,19 +21,23 @@
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
 
+    <!-- Filters -->
     <filter>
         <filter-name>resourcesFilter</filter-name>
         <filter-class>com.epam.hospital.web.ResourcesFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>resourcesFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- Listners -->
     <listener>
         <listener-class>com.epam.hospital.web.AppServletContextListner</listener-class>
     </listener>
 
+    <!-- Context parameters -->
     <context-param>
         <param-name>driverName</param-name>
         <param-value>org.postgresql.Driver</param-value>

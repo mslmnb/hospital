@@ -19,11 +19,9 @@ public class FrontControllerServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String requestURI = request.getRequestURI();
-
         try {
             ActionFactory actionFactory = (ActionFactory) request.getServletContext()
-                                                 .getAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY);
+                    .getAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY);
             Action action = actionFactory.getAction(request);
             String view = action.execute(request, response);
 
@@ -33,12 +31,26 @@ public class FrontControllerServlet extends HttpServlet {
                 writer.flush();
 
             } else if (view.contains(JSP_SUFFIX)) {             // for files with suffix .jsp
+                setLangAttribute(request);
                 request.getRequestDispatcher("/jsp/" + view).forward(request, response);
             } else {
                 response.sendRedirect(view);
             }
         } catch (Exception e) {
+            // insert logger
             throw new ServletException("Executing action failed.", e);
         }
+
+    }
+
+    private void setLangAttribute(HttpServletRequest request) {
+        String lang = request.getParameter("lang");
+        if (lang == null) {
+            lang = (String) request.getAttribute("lang");
+            if (lang == null) {
+                lang = request.getLocale().getLanguage();
+            }
+        }
+        request.setAttribute("lang", lang);
     }
 }

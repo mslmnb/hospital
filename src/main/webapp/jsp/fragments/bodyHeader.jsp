@@ -1,19 +1,26 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="messages/app"/>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <%--<a href="meals" class="navbar-brand"><spring:message code="app.title"/></a>--%>
-        <a href="" class="navbar-brand">ГАЛА КЛИНИК</a>
+        <a href="" class="navbar-brand"><fmt:message key="app.title"/></a>
 
         <div class="collapse navbar-collapse">
-            <form class="navbar-form navbar-right">
-                <%--<a class="btn btn-info" role="button" href="users"><spring:message code="users.title"/></a>--%>
-
-                <a class="btn btn-primary" href="">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                </a>
-            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <%--<form:form class="navbar-form navbar-right" action="logout" method="post">--%>
+                        <%--<sec:authorize access="isAuthenticated()">--%>
+                            <%--<a class="btn btn-info" href="profile">${userTo.name} <spring:message code="app.profile"/></a>--%>
+                            <%--<button class="btn btn-primary" type="submit">--%>
+                                <%--<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>--%>
+                            <%--</button>--%>
+                        <%--</sec:authorize>--%>
+                    <%--</form:form>--%>
+                </li>
+                <jsp:include page="lang.jsp"/>
+            </ul>
         </div>
     </div>
 </div>

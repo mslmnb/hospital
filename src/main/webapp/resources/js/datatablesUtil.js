@@ -53,6 +53,29 @@ function save() {
         }
     });
 }
+function extendsOpts(opts) {
+    $.extend(true, opts,
+        {
+            "ajax": {
+                "url": ajaxUrl,
+                "dataSrc": ""
+            },
+            "paging": true,
+            "info": true,
+            "language": {
+                "search": i18n["common.search"],
+                "lengthMenu": i18n["common.lengthMenu"],
+                "paginate": {
+                    "first":      i18n["common.first"],
+                    "last":       i18n["common.last"],
+                    "next":       i18n["common.next"],
+                    "previous":   i18n["common.previous"]
+                },
+            },
+            "initComplete": makeEditable
+        });
+    return opts;
+}
 
 var failedNote;
 

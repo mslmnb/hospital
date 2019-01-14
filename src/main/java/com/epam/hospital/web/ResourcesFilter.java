@@ -17,7 +17,11 @@ public class ResourcesFilter implements Filter{
         if (requestURI.startsWith("/resources") || requestURI.equals("/")) {
             filterChain.doFilter(request, servletResponse);
         } else {
-            request.getRequestDispatcher("/app" + requestURI).forward(request, servletResponse);
+            if (requestURI.endsWith(".jsp")) {
+                request.getRequestDispatcher("/app/WEB-INF/jsp/" + requestURI).forward(request, servletResponse);
+            } else {
+                request.getRequestDispatcher("/app" + requestURI).forward(request, servletResponse);
+            }
         }
     }
 

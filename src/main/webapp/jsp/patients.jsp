@@ -88,7 +88,7 @@
                         <label for="birthday" class="control-label col-xs-3"><fmt:message key="patients.birthday"/></label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="birthday" name="birthday" placeholder="<fmt:message key="patients.birthday"/>">
+                            <input class="form-control" id="birthday" name="birthday" placeholder="<fmt:message key="patients.birthday"/>">
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
         </div>
     </div>
 </div>
-
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 
 <jsp:include page="fragments/i18n.jsp"/>

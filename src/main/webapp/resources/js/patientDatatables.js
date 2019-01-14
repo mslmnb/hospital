@@ -62,7 +62,17 @@ $(function () {
             ]
         ]
     }));
+    $.datetimepicker.setLocale(localeCode);
+
+    var birthday = $('#birthday');
+    birthday.datetimepicker({
+        timepicker: false,
+        format: 'd-m-Y',
+        formatDate: 'd-m-Y',
+        language: 'ru'
+    })
 });
+
 
 function renderInfoBtn(data, type, row) {
     if (type === 'display') {

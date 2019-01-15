@@ -66,4 +66,9 @@ public class JdbcPatientRepositoryImpl implements PatientRepository {
 
         return resultList;
     }
+
+    @Override
+    public boolean connectionPoolIsNull() {
+        return pool==null;
+    }
 }

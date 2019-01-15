@@ -15,4 +15,6 @@ public interface PatientRepository {
 
     List<Patient> getAll();
 
+    boolean connectionPoolIsNull();
+
 }

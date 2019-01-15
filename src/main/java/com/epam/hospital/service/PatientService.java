@@ -17,4 +17,6 @@ public interface PatientService {
 
     void update(Patient patient);
 
+    boolean connectionPoolIsNull();
+
 }

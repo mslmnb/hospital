@@ -10,7 +10,12 @@
         <welcome-file>jsp/index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Servlet -->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/app/error</location>
+    </error-page>
+
+    <!-- Servlets -->
     <servlet>
         <servlet-name>frontControllerServlet</servlet-name>
         <servlet-class>com.epam.hospital.web.FrontControllerServlet</servlet-class>
@@ -37,36 +42,17 @@
         <listener-class>com.epam.hospital.web.AppServletContextListner</listener-class>
     </listener>
 
-    <!-- Context parameters -->
+     <!--Context parameters-->
     <context-param>
-        <param-name>driverName</param-name>
-        <param-value>org.postgresql.Driver</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>url</param-name>
-        <param-value>jdbc:postgresql://127.0.0.1:5432/hospital</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>userName</param-name>
-        <param-value>user</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>password</param-name>
-        <param-value>password</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>maxConn</param-name>
-        <param-value>5</param-value>
+        <param-name>dbPropertiesFile</param-name>
+        <param-value>db/db.properties</param-value>
     </context-param>
 
     <context-param>
         <param-name>actionClasses</param-name>
         <param-value>
             com.epam.hospital.web.action.PatientAction
+            com.epam.hospital.web.action.ErrorHandlerAction
         </param-value>
     </context-param>
 

@@ -219,14 +219,12 @@ ALTER TABLE inspection_register OWNER TO "user";
 -- воспросы на консультации
 -- приемлимо ли ON DELETE RESTRICT
 -- почему не работает  REASSIGN OWNED BY postgres TO user
--- пул коннектов. где закрывать соединения  (finalize() в классе ConnectionPool)
--- пул коннектов. допустимо ли хранить имя проперти файла как константу в классе PropertiesUtil
--- инициализацию пула вынести с уровня репозитория на уровень контроллера(?)
--- как резолвить ссылки api webjars
---  <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
+-- достаточно ли логировать exceptions
+-- empty catch in AppServletContextListner
+-- whether it's necessary to define a constant for exception messages (FrontControllerServlet)
 
 
 -- планы
--- добавить логирование (+ где достаю из контекста объекты логировать ошибки)
+-- добавить логирование
 -- добавить фильтр пациентов по буквам алфавита (patients.jsp)
 -- выделять выписанных пациентов други м цветом (patients.jsp)

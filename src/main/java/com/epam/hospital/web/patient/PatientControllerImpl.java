@@ -52,4 +52,8 @@ public class PatientControllerImpl implements PatientController{
                                .collect(Collectors.toList());
     }
 
+    @Override
+    public boolean connectionPoolIsNull() {
+        return service.connectionPoolIsNull();
+    }
 }

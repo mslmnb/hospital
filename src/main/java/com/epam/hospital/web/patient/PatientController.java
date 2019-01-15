@@ -1,6 +1,7 @@
 package com.epam.hospital.web.patient;
 
 import com.epam.hospital.model.Patient;
+import com.epam.hospital.repository.ConnectionPool;
 import com.epam.hospital.to.PatientTo;
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface PatientController {
     public List<Patient> getAll();
 
     public List<PatientTo> getAllTo();
+
+    boolean connectionPoolIsNull();
 
 }

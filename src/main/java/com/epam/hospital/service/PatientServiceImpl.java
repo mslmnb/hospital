@@ -40,4 +40,9 @@ public class PatientServiceImpl implements PatientService {
     public void update(Patient patient) {
         repository.save(patient);
     }
+
+    @Override
+    public boolean connectionPoolIsNull() {
+        return repository.connectionPoolIsNull();
+    }
 }

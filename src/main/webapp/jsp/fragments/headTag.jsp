@@ -10,7 +10,7 @@
     <title><fmt:message key="app.title"/></title>
     <base href="${pageContext.request.contextPath}/"/>
 
-    <%--<link rel="stylesheet" href="resources/css/style.css">--%>
+    <link rel="stylesheet" href="resources/css/style.css">
     <link rel="stylesheet" href="resources/webjars/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="resources/webjars/datatables/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="resources/webjars/datatables/css/dataTables.bootstrap.min.css">

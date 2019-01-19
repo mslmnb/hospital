@@ -3,15 +3,18 @@ package com.epam.hospital.repository.jdbc;
 import com.epam.hospital.model.Patient;
 import com.epam.hospital.repository.ConnectionPool;
 import com.epam.hospital.repository.PatientRepository;
-import com.epam.hospital.web.AppServletContextListner;
 
-import javax.servlet.ServletContext;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcPatientRepositoryImpl implements PatientRepository {
+    private static final String SELECT_ALL = "SELECT * FROM patient_register";
+
     private final ConnectionPool pool;
 
     public JdbcPatientRepositoryImpl(ConnectionPool pool) {
@@ -44,8 +47,7 @@ public class JdbcPatientRepositoryImpl implements PatientRepository {
         if (con != null) {
             try {
                 Statement statement = con.createStatement();
-                String sql = "SELECT * FROM patient_register";
-                ResultSet resultSet = statement.executeQuery(sql);
+                ResultSet resultSet = statement.executeQuery(SELECT_ALL);
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String name = resultSet.getString("name");

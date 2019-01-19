@@ -1,24 +1,37 @@
-dl {
-    background: none repeat scroll 0 0 #FAFAFA;
-    margin: 8px 0;
-    padding: 0;
+/*.normal {*/
+    /*color: green;*/
+/*}*/
+
+/*.exceeded {*/
+    /*color: red;*/
+/*}*/
+
+.footer {
+    padding-bottom: 15px;
 }
 
-dt {
-    display: inline-block;
-    width: 170px;
+.disabled {
+    opacity: 0.3;
 }
 
-dd {
-    display: inline-block;
-    margin-left: 8px;
-    vertical-align: top;
+.error, .message {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-.normal {
-    color: green;
+.error {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
 }
 
-.exceeded {
-    color: red;
+.message {
+    color: #2f9635;
+    background-color: #c6fbc2;
+    border: 1px solid #9feba6;
+}
+
+.glyphicon {
+    cursor: pointer;
 }

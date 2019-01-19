@@ -10,7 +10,6 @@
   <packaging>war</packaging>
 
   <name>Hospital</name>
-  <!--<url>http://www.example.com</url>-->
 
   <properties>
     <java.version>1.8</java.version>
@@ -22,26 +21,12 @@
     <!-- Logging -->
     <log4j.version>2.11.1</log4j.version>
 
-    <!--DB-->
+    <!--DataBase-->
     <postgresql.version>42.2.5</postgresql.version>
-
-    <!--webjars-->
-    <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
-    <webjars-jquery.version>3.2.1</webjars-jquery.version>
-    <!--<webjars-datetimepicker.version>2.5.4</webjars-datetimepicker.version>-->
-    <!--<webjars-noty.version>2.4.1</webjars-noty.version>-->
-    <webjars-datatables.version>1.10.15</webjars-datatables.version>
-
 
   </properties>
 
   <dependencies>
-    <!--dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency-->
 
     <!-- Logging with Log4J -->
     <dependency>
@@ -71,62 +56,13 @@
       <version>1.2</version>
     </dependency>
 
-    <!-- Webjars (static dependencies distributed as JAR files) -->
-    <!--<dependency>-->
-      <!--<groupId>org.webjars.bower</groupId>-->
-      <!--<artifactId>jquery</artifactId>-->
-      <!--<version>${webjars-jquery.version}</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-      <!--<groupId>org.webjars</groupId>-->
-      <!--<artifactId>bootstrap</artifactId>-->
-      <!--<version>${webjars-bootstrap.version}</version>-->
-      <!--<exclusions>-->
-        <!--<exclusion>-->
-          <!--<groupId>org.webjars</groupId>-->
-          <!--<artifactId>jquery</artifactId>-->
-        <!--</exclusion>-->
-      <!--</exclusions>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-      <!--<groupId>org.webjars.bower</groupId>-->
-      <!--<artifactId>datatables</artifactId>-->
-      <!--<version>${webjars-datatables.version}</version>-->
-      <!--<exclusions>-->
-        <!--<exclusion>-->
-          <!--<groupId>org.webjars.bower</groupId>-->
-          <!--<artifactId>jquery</artifactId>-->
-        <!--</exclusion>-->
-      <!--</exclusions>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-      <!--<groupId>org.webjars.bower</groupId>-->
-      <!--<artifactId>datetimepicker</artifactId>-->
-      <!--<version>${webjars-datetimepicker.version}</version>-->
-      <!--<exclusions>-->
-        <!--<exclusion>-->
-          <!--<groupId>org.webjars.bower</groupId>-->
-          <!--<artifactId>jquery</artifactId>-->
-        <!--</exclusion>-->
-      <!--</exclusions>-->
-    <!--</dependency>-->
-
   </dependencies>
 
   <build>
     <finalName>hospital</finalName>
     <defaultGoal>package</defaultGoal>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
-        <!--plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin-->
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <!--plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin-->
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
@@ -135,25 +71,6 @@
             <target>${java.version}</target>
           </configuration>
         </plugin>
-        <!--plugin> для тестов
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-          <configuration>
-            <argLine>-Dfile.encoding=UTF-8</argLine>
-          </configuration>
-        </plugin-->
-        <!--plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin-->
       </plugins>
     </pluginManagement>
   </build>

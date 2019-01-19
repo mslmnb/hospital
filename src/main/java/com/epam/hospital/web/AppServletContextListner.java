@@ -2,13 +2,19 @@ package com.epam.hospital.web;
 
 import com.epam.hospital.repository.ConnectionPool;
 import com.epam.hospital.repository.PatientRepository;
+import com.epam.hospital.repository.UserRepository;
 import com.epam.hospital.repository.jdbc.JdbcPatientRepositoryImpl;
+import com.epam.hospital.repository.jdbc.JdbcUserRepositoryImpl;
 import com.epam.hospital.service.PatientService;
 import com.epam.hospital.service.PatientServiceImpl;
+import com.epam.hospital.service.UserService;
+import com.epam.hospital.service.UserServiceImpl;
 import com.epam.hospital.web.action.Action;
 import com.epam.hospital.web.action.ActionFactory;
 import com.epam.hospital.web.patient.PatientController;
 import com.epam.hospital.web.patient.PatientControllerImpl;
+import com.epam.hospital.web.user.UserController;
+import com.epam.hospital.web.user.UserControllerImpl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -21,6 +27,8 @@ import static com.epam.hospital.util.PropertiesUtil.*;
 public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_ACTION_FACTORY = "actionFactory";
     public static final String CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER = "patientController";
+    public static final String CONTEXT_PARAMETER_FOR_USER_CONTROLLER = "userController";
+    public static final String CONTEXT_PARAMETER_FOR_AUTHORIZED_USER = "authorizedUser";
 
     private static final String CONTEXT_PARAMETER_FOR_CONNECTION_POOL = "connectionPool";
     private static final String CONTEXT_PARAMETER_FOR_ACTION_CLASSES = "actionClasses";
@@ -58,10 +66,17 @@ public class AppServletContextListner implements ServletContextListener {
 
     private void putInContextControllers(ServletContextEvent sce) {
         ConnectionPool connectionPool = putInContextConnectionPool(sce);
-        PatientRepository repository = new JdbcPatientRepositoryImpl(connectionPool);
-        PatientService service = new PatientServiceImpl(repository);
-        PatientController controller = new PatientControllerImpl(service);
-        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER, controller);
+        // patients controller
+        PatientRepository patientRepository = new JdbcPatientRepositoryImpl(connectionPool);
+        PatientService patientService = new PatientServiceImpl(patientRepository);
+        PatientController patientController = new PatientControllerImpl(patientService);
+        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER, patientController);
+        // users controller
+        UserRepository userRepository = new JdbcUserRepositoryImpl(connectionPool);
+        UserService userService = new UserServiceImpl(userRepository);
+        UserController userController = new UserControllerImpl(userService);
+        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_USER_CONTROLLER, userController);
+
     }
 
     private void putInContextActionFactory(ServletContextEvent sce) {
@@ -75,6 +90,8 @@ public class AppServletContextListner implements ServletContextListener {
                 Action action = (Action) actionClass.getConstructor().newInstance();
                 actionFactory.addAction(action.getUri(), action);
             } catch (Exception e) {
+                //logger
+                continue;
             }
         }
         sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY, actionFactory);

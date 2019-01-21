@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class User {
 
-    private int staff_id;
+    private Staff staff;
 
     private String login;
 
@@ -21,20 +21,20 @@ public class User {
     public User() {
     }
 
-    public User(int staff_id, String login, String password, boolean enabled, LocalDate registered) {
-        this.staff_id = staff_id;
+    public User(Staff staff, String login, String password, boolean enabled, LocalDate registered) {
+        this.staff = staff;
         this.login = login;
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
     }
 
-    public int getStaff_id() {
-        return staff_id;
+    public Staff getStaff() {
+        return staff;
     }
 
-    public void setStaff_id(int staff_id) {
-        this.staff_id = staff_id;
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 
     public String getLogin() {

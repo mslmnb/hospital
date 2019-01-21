@@ -1,6 +1,6 @@
 package com.epam.hospital;
 
-public interface HasId {
+public interface HavingId {
     Integer getId();
 
     void setId(Integer id);

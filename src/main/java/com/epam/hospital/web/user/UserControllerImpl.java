@@ -1,9 +1,11 @@
 package com.epam.hospital.web.user;
 
+import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
 import com.epam.hospital.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 
 public class UserControllerImpl implements UserController {
     private final UserService service;
@@ -36,8 +38,18 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public List<User> getAll() {
-        return service.getAll();
+    public User getByLoginWithOutRoles(String login) {
+        return service.getByLoginWithOutRoles(login);
+    }
+
+    @Override
+    public Set<Role> getRoles(int staff_id) {
+        return service.getRoles(staff_id);
+    }
+
+    @Override
+    public List<User> getAllWithoutRoles() {
+        return service.getAllWithoutRoles();
     }
 
     @Override
@@ -45,8 +57,4 @@ public class UserControllerImpl implements UserController {
         return service.connectionPoolIsNull();
     }
 
-    @Override
-    public User getByLogin(String login) {
-        return service.getByLogin(login);
-    }
 }

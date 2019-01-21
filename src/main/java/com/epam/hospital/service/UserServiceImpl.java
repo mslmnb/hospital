@@ -1,10 +1,12 @@
 package com.epam.hospital.service;
 
+import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
 import com.epam.hospital.repository.UserRepository;
 import com.epam.hospital.util.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.epam.hospital.util.ValidationUtil.checkNotFoundWithId;
 
@@ -31,13 +33,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return repository.getAll();
+    public void update(User patient) {
+        repository.save(patient);
     }
 
     @Override
-    public void update(User patient) {
-        repository.save(patient);
+    public User getByLoginWithOutRoles(String login) {
+        return repository.getByLoginWithoutRoles(login);
+    }
+
+    @Override
+    public Set<Role> getRoles(int staff_id) {
+        return repository.getRoles(staff_id);
+    }
+
+    @Override
+    public List<User> getAllWithoutRoles() {
+        return repository.getAllWithoutRoles();
     }
 
     @Override
@@ -45,10 +57,5 @@ public class UserServiceImpl implements UserService {
         return repository.connectionPoolIsNull();
     }
 
-    @Override
-    public User getByLogin(String login) { //throws NotFoundException {
-        //return checkNotFound(repository.getByLogin(login), "login=" + login);
-        return repository.getByLogin(login);
-    }
 
 }

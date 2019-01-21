@@ -1,4 +1,4 @@
-package com.epam.hospital.web;
+package com.epam.hospital.web.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

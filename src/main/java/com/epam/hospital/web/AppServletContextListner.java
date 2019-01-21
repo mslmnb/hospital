@@ -28,7 +28,7 @@ public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_ACTION_FACTORY = "actionFactory";
     public static final String CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER = "patientController";
     public static final String CONTEXT_PARAMETER_FOR_USER_CONTROLLER = "userController";
-    public static final String CONTEXT_PARAMETER_FOR_AUTHORIZED_USER = "authorizedUser";
+    public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
     private static final String CONTEXT_PARAMETER_FOR_CONNECTION_POOL = "connectionPool";
     private static final String CONTEXT_PARAMETER_FOR_ACTION_CLASSES = "actionClasses";

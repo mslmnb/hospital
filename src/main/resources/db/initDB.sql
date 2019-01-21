@@ -251,10 +251,13 @@ ALTER TABLE inspection_register OWNER TO "user";
 -- почему не работает  REASSIGN OWNED BY postgres TO user
 -- достаточно ли логировать exceptions
 -- empty catch in AppServletContextListner
--- whether it's necessary to define a constant for exception messages (FrontControllerServlet)
+-- whether it's necessary to define a static constant for exception messages (FrontControllerServlet)
+
 
 
 -- планы
 -- добавить логирование
+-- добавить кеширование пароля
 -- добавить фильтр пациентов по буквам алфавита (patients.jsp)
 -- выделять выписанных пациентов други м цветом (patients.jsp)
+-- в AuthorizedUser заменить login на Фамилия И.О., Фамилия И.О. доставать в LoginAction

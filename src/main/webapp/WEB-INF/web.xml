@@ -1,5 +1,5 @@
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
@@ -29,7 +29,7 @@
     <!-- Filters -->
     <filter>
         <filter-name>resourcesFilter</filter-name>
-        <filter-class>com.epam.hospital.web.ResourcesFilter</filter-class>
+        <filter-class>com.epam.hospital.web.filter.ResourcesFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -39,7 +39,7 @@
 
     <filter>
         <filter-name>securityFilter</filter-name>
-        <filter-class>com.epam.hospital.web.SecurityFilter</filter-class>
+        <filter-class>com.epam.hospital.web.filter.SecurityFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -64,6 +64,7 @@
         <param-value>
             com.epam.hospital.web.action.PatientAction
             com.epam.hospital.web.action.LoginAction
+            com.epam.hospital.web.action.LogoutAction
             com.epam.hospital.web.action.ErrorHandlerAction
         </param-value>
     </context-param>

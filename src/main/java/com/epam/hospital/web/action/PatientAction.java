@@ -6,17 +6,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ActionUtil.*;
-import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER;
+import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
-import static com.epam.hospital.util.ViewPrefixType.JSP_VIEW_PREFIX;
+import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER;
 
 public class PatientAction extends AbstractAction {
-    public static final String ATTRIBUTE_NAME = "patients";
     public static final String URI = "patients";
-    public static final String JSP_FILE = "patients.jsp";
+
+    public static final String JSP_FILE_NAME = "/jsp/patients.jsp";
+    public static final String ATTRIBUTE_NAME = "patients";
 
     public PatientAction() {
-        super(ATTRIBUTE_NAME, URI, JSP_FILE);
+        super(URI);
     }
 
     @Override
@@ -27,9 +28,11 @@ public class PatientAction extends AbstractAction {
                 .getAttribute(CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER);
 
         if (controller == null) {
+            // logger
             throw new IllegalStateException("PatientController is not defined.");
         }
         if (controller.connectionPoolIsNull()) {
+            // logger
             throw new IllegalStateException("ConnectionPool is not defined.");
         }
 
@@ -39,8 +42,8 @@ public class PatientAction extends AbstractAction {
             result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(controller.getAllTo());
 
         } else {
-            request.setAttribute(getAttributeName(), controller.getAllTo());
-            result = JSP_VIEW_PREFIX.getPrefix() + getJspFile();
+            request.setAttribute(ATTRIBUTE_NAME, controller.getAllTo());
+            result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
         }
         return result;
     }

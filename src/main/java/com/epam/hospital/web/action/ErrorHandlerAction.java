@@ -7,12 +7,10 @@ import static com.epam.hospital.util.ActionUtil.TEXT_MIMETYPE;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 public class ErrorHandlerAction extends AbstractAction {
-    public static final String ATTRIBUTE_NAME = "";
     public static final String URI = "error";
-    public static final String JSP_FILE = "";
 
     public ErrorHandlerAction() {
-        super(ATTRIBUTE_NAME, URI, JSP_FILE);
+        super(URI);
     }
 
     @Override

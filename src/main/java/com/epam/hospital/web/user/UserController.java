@@ -1,8 +1,10 @@
 package com.epam.hospital.web.user;
 
+import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserController {
 
@@ -14,9 +16,12 @@ public interface UserController {
 
     User get(int staff_id);
 
-    List<User> getAll();
+    User getByLoginWithOutRoles(String login);
+
+    Set<Role> getRoles(int staff_id);
+
+    List<User> getAllWithoutRoles();
 
     boolean connectionPoolIsNull();
 
-    User getByLogin(String login);
 }

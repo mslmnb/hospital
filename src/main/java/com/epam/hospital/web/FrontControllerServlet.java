@@ -31,13 +31,14 @@ public class FrontControllerServlet extends HttpServlet {
                     writer.print(view);
                     writer.flush();
                     break;
-                case JSP_VIEW_PREFIX:
-                    request.getRequestDispatcher(JSP_REQUEST_PREFIX + view).forward(request, response);
+                case FORWARD_VIEW_PREFIX:
+                    request.getRequestDispatcher(view).forward(request, response);
                     break;
                 case REDIRECT_VIEW_PREFIX:
                     response.sendRedirect(view);
                     break;
                 default:
+                    // logger
                     throw new IllegalStateException("Action is not defined for URI:" + request.getRequestURI());
             }
     }

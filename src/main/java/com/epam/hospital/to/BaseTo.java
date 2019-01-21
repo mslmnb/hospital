@@ -1,8 +1,8 @@
 package com.epam.hospital.to;
 
-import com.epam.hospital.HasId;
+import com.epam.hospital.HavingId;
 
-public abstract class BaseTo implements HasId{
+public abstract class BaseTo implements HavingId {
     private Integer id;
 
     protected BaseTo() {

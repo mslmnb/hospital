@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum ViewPrefixType {
     JSON_VIEW_PREFIX("json:"),
     JSP_VIEW_PREFIX("jsp:"),
-    REDIRECT_VIEW_PREFIX("redirect:");
+    REDIRECT_VIEW_PREFIX("redirect:"),
+    FORWARD_VIEW_PREFIX("forward:");
 
     String prefix;
 

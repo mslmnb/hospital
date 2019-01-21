@@ -1,8 +1,8 @@
 package com.epam.hospital.model;
 
-import com.epam.hospital.HasId;
+import com.epam.hospital.HavingId;
 
-public class BaseEntity implements HasId {
+public class BaseEntity implements HavingId {
     private Integer id;
 
     protected BaseEntity() {

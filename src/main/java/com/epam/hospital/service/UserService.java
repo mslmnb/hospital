@@ -1,9 +1,11 @@
 package com.epam.hospital.service;
 
+import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
 import com.epam.hospital.util.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -13,11 +15,15 @@ public interface UserService {
 
     User get(int staff_id) throws NotFoundException;
 
-    List<User> getAll();
-
     void update(User user);
+
+    // null if not found
+    User getByLoginWithOutRoles(String login);
+
+    Set<Role> getRoles(int staff_id);
+
+    List<User> getAllWithoutRoles();
 
     boolean connectionPoolIsNull();
 
-    User getByLogin(String login); //throws NotFoundException;
 }

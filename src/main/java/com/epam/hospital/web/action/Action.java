@@ -8,4 +8,5 @@ public interface Action {
     String execute(HttpServletRequest request, HttpServletResponse response);
 
     String getUri();
+
 }

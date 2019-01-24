@@ -18,6 +18,10 @@ public class PatientControllerImpl implements PatientController{
         this.service = service;
     }
 
+    private static Object getInstance(Object service) {
+        return new PatientControllerImpl((PatientService) service);
+    }
+
     @Override
     public Patient create(Patient patient) {
         checkNew(patient);

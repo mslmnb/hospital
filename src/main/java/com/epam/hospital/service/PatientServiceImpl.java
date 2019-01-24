@@ -16,6 +16,10 @@ public class PatientServiceImpl implements PatientService {
         this.repository = repository;
     }
 
+    private static Object getInstance(Object repository) {
+        return new PatientServiceImpl((PatientRepository) repository);
+    }
+
     @Override
     public Patient save(Patient patient) {
         return repository.save(patient);

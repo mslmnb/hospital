@@ -17,6 +17,10 @@ public class UserServiceImpl implements UserService {
         this.repository = repository;
     }
 
+    private static Object getInstance(Object repository) {
+        return new UserServiceImpl((UserRepository) repository);
+    }
+
     @Override
     public User save(User user) {
         return repository.save(user);

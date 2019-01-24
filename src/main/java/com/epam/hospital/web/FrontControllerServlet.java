@@ -3,6 +3,7 @@ package com.epam.hospital.web;
 import com.epam.hospital.util.ViewPrefixType;
 import com.epam.hospital.web.action.Action;
 import com.epam.hospital.web.action.ActionFactory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +14,25 @@ import java.io.PrintWriter;
 
 import static com.epam.hospital.util.ViewPrefixType.getValueByPrefix;
 import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_ACTION_FACTORY;
+import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_ERROR_MESSAGE;
 
 public class FrontControllerServlet extends HttpServlet {
-    private static final String JSP_REQUEST_PREFIX = "/jsp/";
+    private static final Logger LOG = Logger.getLogger(FrontControllerServlet.class);
+    private String errorMessage;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        errorMessage = (String) getServletContext().getAttribute(CONTEXT_PARAMETER_FOR_ERROR_MESSAGE);
+    }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            ActionFactory actionFactory = (ActionFactory) request.getServletContext()
+            if (errorMessage != null) {
+                LOG.error(errorMessage);
+                throw new IllegalStateException(errorMessage);
+            }
+            ActionFactory actionFactory = (ActionFactory) getServletContext()
                     .getAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY);
             Action action = actionFactory.getAction(request);
             String viewWithPrefix = action.execute(request, response);
@@ -38,7 +51,7 @@ public class FrontControllerServlet extends HttpServlet {
                     response.sendRedirect(view);
                     break;
                 default:
-                    // logger
+                    LOG.error("Action is not defined for URI:" + request.getRequestURI());
                     throw new IllegalStateException("Action is not defined for URI:" + request.getRequestURI());
             }
     }

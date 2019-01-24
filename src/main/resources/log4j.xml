@@ -4,7 +4,7 @@
 
     <appender name="file" class="org.apache.log4j.FileAppender">
         <param name="Encoding" value="UTF-8"/>
-        <param name="File" value="log/hospital.log"/>
+        <param name="File" value="../logs/hospital.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p %c{1} [%M:%L] %m%n"/>
         </layout>
@@ -17,7 +17,7 @@
         </layout>
     </appender>
 
-    <root level="info">
+    <root>
         <appender-ref ref="file"/>
         <appender-ref ref="console"/>
     </root>

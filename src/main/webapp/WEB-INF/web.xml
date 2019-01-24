@@ -60,6 +60,11 @@
     </context-param>
 
     <context-param>
+        <param-name>controllersXmlFile</param-name>
+        <param-value>controllers.xml</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>actionClasses</param-name>
         <param-value>
             com.epam.hospital.web.action.PatientAction

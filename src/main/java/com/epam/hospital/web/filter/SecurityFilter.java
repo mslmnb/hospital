@@ -1,8 +1,8 @@
 package com.epam.hospital.web.filter;
 
 import com.epam.hospital.model.Role;
-import com.epam.hospital.model.User;
 import com.epam.hospital.to.AuthorizedUser;
+import com.epam.hospital.web.action.UserAction;
 import com.epam.hospital.web.user.UserController;
 
 import javax.servlet.*;
@@ -14,11 +14,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_USER_CONTROLLER;
 import static com.epam.hospital.web.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
 public class SecurityFilter implements Filter {
     private static final String ROOT_PATH = "/";
+    private static final String LOGIN_PATH = "/login";
+
     private static final Map<String, Set<Role>> accessMap = new HashMap<>();
     static {
         Set<Role> roles = new HashSet<>();
@@ -34,22 +35,20 @@ public class SecurityFilter implements Filter {
                          FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String servletPath = request.getServletPath();
 
-        if (request.getPathInfo().equals("/login")) {
+        if (request.getPathInfo().equals(LOGIN_PATH)) {
             chain.doFilter(request, response);
             return;
         }
-        AuthorizedUser authorizedUser = (AuthorizedUser) request.getSession().getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER); // получить из сессии User
+        AuthorizedUser authorizedUser = (AuthorizedUser) request.getSession()
+                                                                .getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER);
 
-        if (accessMap.containsKey(request.getPathInfo())){   // требует ли запрос security
-            if (authorizedUser == null) {   // если юзер не авторизован
+        if (accessMap.containsKey(request.getPathInfo())){   // request needs protection
+            if (authorizedUser == null) {                   // user isn't authorized
                 request.getRequestDispatcher(ROOT_PATH).forward(request, response);
             } else {
                 boolean hasAccess = false;
-                UserController controller = (UserController) request.getServletContext()
-                        .getAttribute(CONTEXT_PARAMETER_FOR_USER_CONTROLLER);
-                for (Role userRole: controller.getRoles(authorizedUser.getId())) {
+                for (Role userRole: UserAction.getRoles(request, authorizedUser.getId())) {
                     if (accessMap.get(request.getPathInfo()).contains(userRole)) {
                         hasAccess = true;
                         break;
@@ -62,7 +61,6 @@ public class SecurityFilter implements Filter {
                 }
             }
         } else {
-
             chain.doFilter(request, response);
         }
     }

@@ -2,7 +2,9 @@ package com.epam.hospital.web.user;
 
 import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
+import com.epam.hospital.service.PatientService;
 import com.epam.hospital.service.UserService;
+import com.epam.hospital.web.patient.PatientControllerImpl;
 
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,10 @@ public class UserControllerImpl implements UserController {
 
     public UserControllerImpl(UserService service) {
         this.service = service;
+    }
+
+    private static Object getInstance(Object service) {
+        return new UserControllerImpl((UserService) service);
     }
 
     @Override

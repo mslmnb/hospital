@@ -1,40 +1,38 @@
 package com.epam.hospital.web;
 
 import com.epam.hospital.repository.ConnectionPool;
-import com.epam.hospital.repository.PatientRepository;
-import com.epam.hospital.repository.UserRepository;
-import com.epam.hospital.repository.jdbc.JdbcPatientRepositoryImpl;
-import com.epam.hospital.repository.jdbc.JdbcUserRepositoryImpl;
-import com.epam.hospital.service.PatientService;
-import com.epam.hospital.service.PatientServiceImpl;
-import com.epam.hospital.service.UserService;
-import com.epam.hospital.service.UserServiceImpl;
+import com.epam.hospital.util.xmlparser.ParseUtil;
+import com.epam.hospital.web.action.AbstractActionWithController;
 import com.epam.hospital.web.action.Action;
 import com.epam.hospital.web.action.ActionFactory;
-import com.epam.hospital.web.patient.PatientController;
-import com.epam.hospital.web.patient.PatientControllerImpl;
-import com.epam.hospital.web.user.UserController;
-import com.epam.hospital.web.user.UserControllerImpl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Properties;
+
+import org.apache.log4j.Logger;
 
 import static com.epam.hospital.util.PropertiesUtil.*;
 
 public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_ACTION_FACTORY = "actionFactory";
-    public static final String CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER = "patientController";
-    public static final String CONTEXT_PARAMETER_FOR_USER_CONTROLLER = "userController";
+    public static final String CONTEXT_PARAMETER_FOR_ERROR_MESSAGE = "errorMessage";
     public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
     private static final String CONTEXT_PARAMETER_FOR_CONNECTION_POOL = "connectionPool";
     private static final String CONTEXT_PARAMETER_FOR_ACTION_CLASSES = "actionClasses";
     private static final String CONTEXT_PARAMETER_FOR_DB_PROPERTIES = "dbPropertiesFile";
+    private static final String CONTEXT_PARAMETER_FOR_CONTROLLERS_XMLFILE = "controllersXmlFile";
+
 
     private static final String REGEX_FOR_ACTION_CLASS_NAMES_STRING = "\\n\\s*";
+
+    private static final Logger LOG = Logger.getLogger(AppServletContextListner.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -46,9 +44,9 @@ public class AppServletContextListner implements ServletContextListener {
         ConnectionPool connectionPool = (ConnectionPool) sce.getServletContext()
                 .getAttribute(CONTEXT_PARAMETER_FOR_CONNECTION_POOL);
         if (connectionPool == null) {
-            ServletContext context = sce.getServletContext();
+            ServletContext servletContext = sce.getServletContext();
             try {
-                String dbPropertiesFileName = context.getInitParameter(CONTEXT_PARAMETER_FOR_DB_PROPERTIES);
+                String dbPropertiesFileName = servletContext.getInitParameter(CONTEXT_PARAMETER_FOR_DB_PROPERTIES);
                 Properties properties = getProperties(dbPropertiesFileName);
                 String driverName = getDriverName(properties);
                 String url = getUrl(properties);
@@ -56,31 +54,35 @@ public class AppServletContextListner implements ServletContextListener {
                 String password = getPassword(properties);
                 int maxConn = getMaxConn(properties);
                 connectionPool = ConnectionPool.getInstance(driverName, url, userName, password, maxConn);
+                servletContext.setAttribute(CONTEXT_PARAMETER_FOR_CONNECTION_POOL, connectionPool);
             } catch (IOException e) {
+                LOG.error(e.getClass().getName() + " was thrown at initialization of the connection pool");
+                servletContext.setAttribute(CONTEXT_PARAMETER_FOR_ERROR_MESSAGE, "There is no database connection");
                 connectionPool = null;
             }
-            context.setAttribute(CONTEXT_PARAMETER_FOR_CONNECTION_POOL, connectionPool);
         }
         return connectionPool;
     }
 
     private void putInContextControllers(ServletContextEvent sce) {
         ConnectionPool connectionPool = putInContextConnectionPool(sce);
-        // patients controller
-        PatientRepository patientRepository = new JdbcPatientRepositoryImpl(connectionPool);
-        PatientService patientService = new PatientServiceImpl(patientRepository);
-        PatientController patientController = new PatientControllerImpl(patientService);
-        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_CONTROLLER, patientController);
-        // users controller
-        UserRepository userRepository = new JdbcUserRepositoryImpl(connectionPool);
-        UserService userService = new UserServiceImpl(userRepository);
-        UserController userController = new UserControllerImpl(userService);
-        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_USER_CONTROLLER, userController);
-
+        ServletContext servletContext = sce.getServletContext();
+        if (connectionPool != null) {
+            String controllersXmlFile = servletContext.getInitParameter(CONTEXT_PARAMETER_FOR_CONTROLLERS_XMLFILE);
+            Map<String, Object> controllers = ParseUtil.getControllers(controllersXmlFile, connectionPool);
+            if (controllers != null) {
+                for (Map.Entry<String, Object> pair : controllers.entrySet()) {
+                    servletContext.setAttribute(pair.getKey(), pair.getValue());
+                }
+            } else {
+                servletContext.setAttribute(CONTEXT_PARAMETER_FOR_ERROR_MESSAGE, "Error of project initialization");
+            }
+        }
     }
 
     private void putInContextActionFactory(ServletContextEvent sce) {
         ActionFactory actionFactory = ActionFactory.getInstance();
+        ServletContext servletContext = sce.getServletContext();
         String actionClassNamesString = sce.getServletContext().getInitParameter(CONTEXT_PARAMETER_FOR_ACTION_CLASSES);
         String[] actionClassNames = actionClassNamesString.split(REGEX_FOR_ACTION_CLASS_NAMES_STRING);
         for (String actionClassName : actionClassNames) {
@@ -88,13 +90,31 @@ public class AppServletContextListner implements ServletContextListener {
             try {
                 actionClass = Class.forName(actionClassName);
                 Action action = (Action) actionClass.getConstructor().newInstance();
+                if (action instanceof AbstractActionWithController) {
+                    AbstractActionWithController actionWithController = (AbstractActionWithController) action;
+                    Object controller = servletContext.getAttribute(actionWithController.getControllerXmlId());
+                    if (controller == null) {
+                        LOG.error("Controller is null for action class:" + actionClassName);
+                        throw new IllegalArgumentException("Controller is null for action class:" + actionClassName);
+                    }
+                    Method method = actionClass.getDeclaredMethod("setController", Object.class);
+                    method.setAccessible(true);
+                    method.invoke(actionWithController, controller);
+                }
                 actionFactory.addAction(action.getUri(), action);
-            } catch (Exception e) {
-                //logger
-                continue;
+            } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException |
+                     NoSuchMethodException | ClassNotFoundException |
+                     InstantiationException | NullPointerException e) {
+                LOG.error(e.getClass().getName() + " was thrown at initialization of action class:" + actionClassName);
+                actionFactory = null;
+                break;
             }
         }
-        sce.getServletContext().setAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY, actionFactory);
+        if (actionFactory != null) {
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY, actionFactory);
+        } else {
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_ERROR_MESSAGE, "Error of project initialization");
+        }
     }
 
     @Override

@@ -2,7 +2,10 @@ package com.epam.hospital.web.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.epam.hospital.util.ActionUtil.UTF8_CODE;
 
 public class ResourcesFilter implements Filter {
     private static final String LANG_ATTRIBUTE_NAME = "lang";
@@ -18,13 +21,16 @@ public class ResourcesFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         setLangAttribute(request); //move to LangFilter
+        response.setCharacterEncoding(UTF8_CODE); // //move to LangFilter
+
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
         if (requestURI.startsWith(RESOURCES_PATH) || requestURI.equals(ROOT_PATH)) {
-            filterChain.doFilter(request, servletResponse);
+            filterChain.doFilter(request, response);
         } else {
             request.getRequestDispatcher(SERVLET_PATH + requestURI)
-                   .forward(request, servletResponse);
+                   .forward(request, response);
         }
     }
 

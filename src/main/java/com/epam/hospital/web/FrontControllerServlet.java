@@ -40,9 +40,9 @@ public class FrontControllerServlet extends HttpServlet {
 
             switch (getViewPrefix(viewWithPrefix)) {
                 case JSON_VIEW_PREFIX:
-                    PrintWriter writer = response.getWriter();
-                    writer.print(view);
-                    writer.flush();
+                        PrintWriter writer = response.getWriter();
+                        writer.print(view);
+                        writer.flush();
                     break;
                 case FORWARD_VIEW_PREFIX:
                     request.getRequestDispatcher(view).forward(request, response);

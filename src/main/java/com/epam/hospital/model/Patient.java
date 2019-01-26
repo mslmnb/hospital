@@ -5,18 +5,19 @@ import java.time.LocalDate;
 public class Patient extends NamedEntity{
     private String additionalName;
     private String surname;
-    private LocalDate birthDay;
+    private LocalDate birthday;
     private String phone;
     private String email;
 
     public Patient() {
     }
 
-    public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthDay, String phone, String email) {
+    public Patient(Integer id, String name, String additionalName, String surname,
+                   LocalDate birthday, String phone, String email) {
         super(id, name);
         this.additionalName = additionalName;
         this.surname = surname;
-        this.birthDay = birthDay;
+        this.birthday = birthday;
         this.phone = phone;
         this.email = email;
     }
@@ -25,12 +26,12 @@ public class Patient extends NamedEntity{
         return additionalName;
     }
 
-    public String getSurName() {
+    public String getSurname() {
         return surname;
     }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
     public String getPhone() {

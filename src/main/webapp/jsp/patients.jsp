@@ -69,10 +69,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="additional_name" class="control-label col-xs-3"><fmt:message key="patients.additionalName"/></label>
+                        <label for="additionalName" class="control-label col-xs-3"><fmt:message key="patients.additionalName"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="additional_name" name="additional_name" placeholder="<fmt:message key="patients.additionalName"/>"/>
+                            <input type="text" class="form-control" id="additionalName" name="additionalName" placeholder="<fmt:message key="patients.additionalName"/>"/>
                         </div>
                     </div>
 

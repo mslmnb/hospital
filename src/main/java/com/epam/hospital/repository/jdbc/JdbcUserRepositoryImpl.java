@@ -66,7 +66,7 @@ public class JdbcUserRepositoryImpl implements UserRepository{
                         break;
                 }
             } catch (SQLException e) {
-                int i = 0;
+                user = null;
                 // logger
             }
             pool.freeConnection(con);

@@ -12,4 +12,6 @@
     i18n["common.next"] = "<fmt:message key="common.next"/>";
     i18n["common.previous"] = "<fmt:message key="common.previous"/>";
     i18n["common.lengthMenu"] = "<fmt:message key="common.lengthMenu"/>";
+    i18n["common.deleted"] = "<fmt:message key="common.deleted"/>";
+    i18n["common.saved"] = "<fmt:message key="common.saved"/>";
 </script>

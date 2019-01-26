@@ -24,7 +24,7 @@ public class PatientTo extends NamedTo{
                 "\"id\": " + getId() + ", " +
                 "\"name\": \"" + getName() + "\", " +
                 "\"surName\": \"" + surName + "\" " +
-                '}';
+                "}";
     }
 
     @Override

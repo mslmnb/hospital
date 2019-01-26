@@ -17,12 +17,11 @@
     <link rel="stylesheet" href="resources/webjars/datetimepicker/jquery.datetimepicker.css">
     <%--<link rel="shortcut icon" href="resources/images/icon-meal.png">--%>
 
-    <script type="text/javascript" src="resources/webjars/jquery/dist/jquery.min.js" defer></script>
+    <script type="text/javascript" src="resources/webjars/jquery/jquery.min.js" defer></script>
     <script type="text/javascript" src="resources/webjars/bootstrap/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="resources/webjars/datatables/js/jquery.dataTables.min.js" defer></script>
     <script type="text/javascript" src="resources/webjars/datatables/js/dataTables.bootstrap.min.js" defer></script>
     <script type="text/javascript" src="resources/webjars/datetimepicker/build/jquery.datetimepicker.full.min.js" defer></script>
-
-<%--<script type="text/javascript" src="webjars/noty/2.4.1/js/noty/packaged/jquery.noty.packaged.min.js" defer></script>--%>
+    <script type="text/javascript" src="resources/webjars/noty/jquery.noty.packaged.min.js" defer></script>
 
 </head>

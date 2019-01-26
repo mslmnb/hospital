@@ -15,8 +15,7 @@ public class PropertiesUtil {
     public static Properties getProperties(String propertiesFileName) throws IOException {
 
         Properties properties = new Properties();
-        InputStream inputStream = new PropertiesUtil().getClass()
-                                                      .getClassLoader()
+        InputStream inputStream = PropertiesUtil.class.getClassLoader()
                                                       .getResourceAsStream(propertiesFileName);
         properties.load(inputStream);
         return properties;

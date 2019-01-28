@@ -1,4 +1,4 @@
-package com.epam.hospital.web.action;
+package com.epam.hospital.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

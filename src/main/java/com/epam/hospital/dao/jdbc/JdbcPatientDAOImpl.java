@@ -1,15 +1,15 @@
-package com.epam.hospital.repository.jdbc;
+package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.model.Patient;
-import com.epam.hospital.repository.ConnectionPool;
-import com.epam.hospital.repository.PatientRepository;
+import com.epam.hospital.dao.ConnectionPool;
+import com.epam.hospital.dao.PatientDAO;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcPatientRepositoryImpl implements PatientRepository {
+public class JdbcPatientDAOImpl implements PatientDAO {
     private static final String SELECT_ALL = "SELECT * FROM patient_register";
     private static final String INSERT_INTO = "INSERT INTO patient_register " +
             "(name,  additional_name,  surname, birth_day, phone, email) " +
@@ -17,7 +17,7 @@ public class JdbcPatientRepositoryImpl implements PatientRepository {
 
     private final ConnectionPool pool;
 
-    public JdbcPatientRepositoryImpl(ConnectionPool pool) {
+    public JdbcPatientDAOImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 

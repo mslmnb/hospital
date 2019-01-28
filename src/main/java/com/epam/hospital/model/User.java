@@ -12,21 +12,19 @@ public class User {
 
     private String password;
 
-    private boolean enabled = true;
-
-    private LocalDate registered = LocalDate.now();
-
     private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
 
-    public User(Staff staff, String login, String password, boolean enabled, LocalDate registered) {
+    public User(Staff staff, String login, String password) {
         this.staff = staff;
         this.login = login;
         this.password = password;
-        this.enabled = enabled;
-        this.registered = registered;
+    }
+
+    public int getStaffId() {
+        return staff.getId();
     }
 
     public Staff getStaff() {
@@ -53,22 +51,6 @@ public class User {
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public LocalDate getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(LocalDate registered) {
-        this.registered = registered;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -77,4 +59,8 @@ public class User {
         this.roles = roles;
     }
 
+    @Override
+    public String toString() {
+        return staff.getSurnameWithInitials();
+    }
 }

@@ -1,8 +1,6 @@
 package com.epam.hospital.model;
 
-import com.epam.hospital.HavingId;
-
-public class BaseEntity implements HavingId {
+public class BaseEntity {
     private Integer id;
 
     protected BaseEntity() {
@@ -12,14 +10,16 @@ public class BaseEntity implements HavingId {
         this.id = id;
     }
 
-    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
-    @Override
     public Integer getId() {
         return id;
+    }
+
+    public boolean isNew() {
+        return (getId() == null);
     }
 
     @Override

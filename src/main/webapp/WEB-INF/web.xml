@@ -10,15 +10,10 @@
         <welcome-file>jsp/login.jsp</welcome-file>
     </welcome-file-list>
 
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/app/error</location>
-    </error-page>
-
     <!-- Servlets -->
     <servlet>
         <servlet-name>frontControllerServlet</servlet-name>
-        <servlet-class>com.epam.hospital.web.FrontControllerServlet</servlet-class>
+        <servlet-class>com.epam.hospital.servlet.FrontControllerServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -28,8 +23,18 @@
 
     <!-- Filters -->
     <filter>
+        <filter-name>langFilter</filter-name>
+        <filter-class>com.epam.hospital.filter.LangFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>langFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>resourcesFilter</filter-name>
-        <filter-class>com.epam.hospital.web.filter.ResourcesFilter</filter-class>
+        <filter-class>com.epam.hospital.filter.ResourcesFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -39,7 +44,7 @@
 
     <filter>
         <filter-name>securityFilter</filter-name>
-        <filter-class>com.epam.hospital.web.filter.SecurityFilter</filter-class>
+        <filter-class>com.epam.hospital.filter.SecurityFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -50,7 +55,7 @@
 
     <!-- Listners -->
     <listener>
-        <listener-class>com.epam.hospital.web.AppServletContextListner</listener-class>
+        <listener-class>com.epam.hospital.servlet.AppServletContextListner</listener-class>
     </listener>
 
      <!--Context parameters-->
@@ -60,17 +65,11 @@
     </context-param>
 
     <context-param>
-        <param-name>controllersXmlFile</param-name>
-        <param-value>controllers.xml</param-value>
-    </context-param>
-
-    <context-param>
         <param-name>actionClasses</param-name>
         <param-value>
-            com.epam.hospital.web.action.PatientAction
-            com.epam.hospital.web.action.LoginAction
-            com.epam.hospital.web.action.LogoutAction
-            com.epam.hospital.web.action.ErrorHandlerAction
+            com.epam.hospital.action.patient.PatientAction
+            com.epam.hospital.action.LoginAction
+            com.epam.hospital.action.LogoutAction
         </param-value>
     </context-param>
 

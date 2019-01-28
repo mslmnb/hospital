@@ -1,9 +1,7 @@
-package com.epam.hospital.web.filter;
+package com.epam.hospital.filter;
 
 import com.epam.hospital.model.Role;
-import com.epam.hospital.to.AuthorizedUser;
-import com.epam.hospital.web.action.UserAction;
-import com.epam.hospital.web.user.UserController;
+import com.epam.hospital.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.epam.hospital.web.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
+import static com.epam.hospital.servlet.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
 public class SecurityFilter implements Filter {
     private static final String ROOT_PATH = "/";
@@ -40,15 +38,14 @@ public class SecurityFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
-        AuthorizedUser authorizedUser = (AuthorizedUser) request.getSession()
-                                                                .getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER);
+        User authorizedUser = (User) request.getSession().getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER);
 
         if (accessMap.containsKey(request.getPathInfo())){   // request needs protection
             if (authorizedUser == null) {                   // user isn't authorized
                 request.getRequestDispatcher(ROOT_PATH).forward(request, response);
             } else {
                 boolean hasAccess = false;
-                for (Role userRole: UserAction.getRoles(request, authorizedUser.getId())) {
+                for (Role userRole: authorizedUser.getRoles()) {
                     if (accessMap.get(request.getPathInfo()).contains(userRole)) {
                         hasAccess = true;
                         break;

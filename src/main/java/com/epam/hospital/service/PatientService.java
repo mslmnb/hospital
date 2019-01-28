@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface PatientService {
 
+    Patient create(Patient patient);
+
     Patient save(Patient patient);
 
     void delete(int id) throws NotFoundException;
@@ -16,7 +18,5 @@ public interface PatientService {
     List<Patient> getAll();
 
     void update(Patient patient);
-
-    boolean connectionPoolIsNull();
 
 }

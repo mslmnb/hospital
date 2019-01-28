@@ -1,4 +1,4 @@
-package com.epam.hospital.repository;
+package com.epam.hospital.dao;
 
 import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
@@ -6,7 +6,7 @@ import com.epam.hospital.model.User;
 import java.util.List;
 import java.util.Set;
 
-public interface UserRepository {
+public interface UserDAO {
     User save(User user);
 
     // false if not found
@@ -16,17 +16,9 @@ public interface UserRepository {
     User get(int staff_id);
 
     // null if not found
-    //User getByLogin(String login);
-
-    // null if not found
-    User getByLoginWithoutRoles(String login);
-
-    // empty if not found
-    Set<Role> getRoles(int staff_id);
+    User getByLogin(String login);
 
     // empty if not found
     List<User> getAllWithoutRoles();
-
-    boolean connectionPoolIsNull();
 
 }

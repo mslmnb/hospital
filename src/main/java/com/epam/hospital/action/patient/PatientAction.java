@@ -1,8 +1,9 @@
-package com.epam.hospital.web.action;
+package com.epam.hospital.action.patient;
 
+import com.epam.hospital.action.AbstractActionWithService;
 import com.epam.hospital.model.Patient;
+import com.epam.hospital.service.PatientService;
 import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.web.patient.PatientController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,23 +14,23 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ValidationUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
+import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_SERVICE;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
-public class PatientAction extends AbstractActionWithController {
+public class PatientAction extends AbstractActionWithService {
     private static final String URI = "patients";
-    private static final String CONTROLLER_XML_ID = "patientController";
 
     private static final String JSP_FILE_NAME = "/jsp/patients.jsp";
     private static final String ATTRIBUTE_NAME = "patients";
 
-    private PatientController controller;
+    private PatientService service;
 
     public PatientAction() {
-        super(URI, CONTROLLER_XML_ID);
+        super(URI, CONTEXT_PARAMETER_FOR_PATIENT_SERVICE);
     }
 
-    private void setController(Object controller) {
-        this.controller = (PatientController) controller;
+    private void setService(Object service) {
+        this.service = (PatientService) service;
     }
 
     @Override
@@ -44,11 +45,9 @@ public class PatientAction extends AbstractActionWithController {
                 String requestURI = request.getRequestURI().substring(request.getContextPath().length());
                 if (requestURI.startsWith(AJAX_URI_PREFIX)) {
                     response.setContentType(JSON_MIMETYPE);
-                    result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(controller.getAllTo());
-
+                    result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
                 } else {
-                    request.setAttribute(ATTRIBUTE_NAME, controller.getAllTo());
-                    result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
+                    result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;  // сразу обрабатывать в сервлете
                 }
                 break;
             case "POST":
@@ -69,7 +68,7 @@ public class PatientAction extends AbstractActionWithController {
                     Patient patient = new Patient(id, name, additionalName, surname,
                             birthday, phone, email);
                     if (patient.isNew()) {
-                        controller.create(patient);
+                        service.create(patient);
                         result = "";
                     } else {
                         // отправить сообщение о неверном параметре id

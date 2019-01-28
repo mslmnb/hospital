@@ -1,4 +1,4 @@
-package com.epam.hospital.repository;
+package com.epam.hospital.dao;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -6,22 +6,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Properties;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
     private final String DRIVER_NAME;
     private ArrayList<Connection> freeConnections
             = new ArrayList<Connection>();
-    private String URL;
+    private String url;
     private String user;
     private String password;
     private int maxConn;
 
-    private ConnectionPool(String DRIVER_NAME, String URL,
+    private ConnectionPool(String DRIVER_NAME, String url,
                            String user, String password, int maxConn) {
         this.DRIVER_NAME = DRIVER_NAME;
-        this.URL = URL;
+        this.url = url;
         this.user = user;
         this.password = password;
         this.maxConn = maxConn;
@@ -33,7 +32,7 @@ public class ConnectionPool {
                     .forName(DRIVER_NAME).newInstance();
             DriverManager.registerDriver(driver);
         } catch (Exception e) {
-            // "Can't register JDBC driver "
+            // logger "Can't register JDBC driver "
         }
     }
 
@@ -69,9 +68,9 @@ public class ConnectionPool {
         Connection con = null;
         try {
             if (user == null) {
-                con = DriverManager.getConnection(URL);
+                con = DriverManager.getConnection(url);
             } else {
-                con = DriverManager.getConnection(URL,
+                con = DriverManager.getConnection(url,
                         user, password);
             }
         } catch (SQLException e) {

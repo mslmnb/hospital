@@ -18,12 +18,8 @@ public interface UserService {
     void update(User user);
 
     // null if not found
-    User getByLoginWithOutRoles(String login);
-
-    Set<Role> getRoles(int staff_id);
+    User getByLogin(String login);
 
     List<User> getAllWithoutRoles();
-
-    boolean connectionPoolIsNull();
 
 }

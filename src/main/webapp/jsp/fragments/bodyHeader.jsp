@@ -3,7 +3,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages/app"/>
 
-
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <a href="" class="navbar-brand"><fmt:message key="app.title"/></a>
@@ -12,9 +11,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form navbar-right" action="logout" method="post">
-                        <a class="btn btn-info" href="profile">${sessionScope.authorizedUser} <fmt:message
-                                key="app.profile"/></a>
                         <button class="btn btn-primary" type="submit">
+                            ${sessionScope.authorizedUser}
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
                     </form>

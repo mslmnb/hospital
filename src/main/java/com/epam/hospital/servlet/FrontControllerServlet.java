@@ -1,8 +1,8 @@
-package com.epam.hospital.web;
+package com.epam.hospital.servlet;
 
 import com.epam.hospital.util.ViewPrefixType;
-import com.epam.hospital.web.action.Action;
-import com.epam.hospital.web.action.ActionFactory;
+import com.epam.hospital.action.Action;
+import com.epam.hospital.action.ActionFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static com.epam.hospital.util.ViewPrefixType.getValueByPrefix;
-import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_ACTION_FACTORY;
-import static com.epam.hospital.web.AppServletContextListner.CONTEXT_PARAMETER_FOR_ERROR_MESSAGE;
+import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_ACTION_FACTORY;
+import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_ERROR_MESSAGE;
 
 public class FrontControllerServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(FrontControllerServlet.class);

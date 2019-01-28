@@ -1,10 +1,10 @@
-package com.epam.hospital.repository;
+package com.epam.hospital.dao;
 
 import com.epam.hospital.model.Patient;
 
 import java.util.List;
 
-public interface PatientRepository {
+public interface PatientDAO {
     Patient save(Patient user);
 
     // false if not found

@@ -1,10 +1,10 @@
-package com.epam.hospital.web.action;
+package com.epam.hospital.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
-import static com.epam.hospital.web.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
+import static com.epam.hospital.servlet.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
 public class LogoutAction extends AbstractAction {
     private static final String URI = "logout";

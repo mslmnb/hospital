@@ -14,13 +14,19 @@ function add() {
     $('#editRow').modal();
 }
 
-function updateTableByData(data) {
-    datatableApi.clear().rows.add(data).draw();
+function updateRow(id) {
+    $('#modalTitle').html(i18n["editTitle"]);
+    $.get(ajaxUrl + "get?id=" + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        $('#editRow').modal();
+    });
 }
 
 function deleteRow(id) {
     $.ajax({
-        url: ajaxUrl + id,
+        url: ajaxUrl + "delete?id=" + id,
         type: 'DELETE',
         success: function () {
             updateTable();
@@ -29,21 +35,15 @@ function deleteRow(id) {
     });
 }
 
-function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear();
-        $.each(data, function (key, item) {
-            datatableApi.row.add(item);
-        });
-        datatableApi.draw();
-    });
+function updateTableByData(data) {
+    datatableApi.clear().rows.add(data).draw();
 }
 
 function save() {
     var form = $('#detailsForm');
     $.ajax({
         type: "POST",
-        url: ajaxUrl,
+        url: ajaxUrl + "save",
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
@@ -56,7 +56,7 @@ function extendsOpts(opts) {
     $.extend(true, opts,
         {
             "ajax": {
-                "url": ajaxUrl,
+                "url": ajaxUrl + "all",
                 "dataSrc": ""
             },
             "paging": true,
@@ -98,8 +98,11 @@ function successNoty(key) {
 function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = $.parseJSON(jqXHR.responseText);
+    var keys = errorInfo.details.map(function (detail) {
+        return i18n[detail]
+    })
     failedNote = noty({
-        text: i18n['common.errorStatus'] + ': ' + jqXHR.status + '<br>'+ errorInfo.cause + '<br>' + errorInfo.details.join("<br>"),
+        text: keys.join("<br>"),
         type: 'error',
         layout: 'bottomRight'
     });

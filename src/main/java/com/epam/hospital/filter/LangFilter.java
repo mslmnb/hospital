@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LangFilter implements Filter {
-    private static final String LANG_ATTRIBUTE_NAME = "lang";
+    public static final String LANG_ATTRIBUTE_NAME = "lang";
     public static final String UTF8_CODE = "UTF-8";
 
     @Override

@@ -131,6 +131,12 @@
     i18n["diagnosisBtn"] = "<fmt:message key="patients.diagnosis"/>";
     i18n["prescriptionBtn"] = "<fmt:message key="patients.prescription"/>";
     i18n["inspectionBtn"] = "<fmt:message key="patients.inspection"/>";
+    i18n["invalidEmail"] = "<fmt:message key="error.patient.invalidEmail"/>";
+    i18n["invalidPhone"] = "<fmt:message key="error.patient.invalidPhone"/>";
+    i18n["emptyName"] = "<fmt:message key="error.patient.emptyName"/>";
+    i18n["emptySurname"] = "<fmt:message key="error.patient.emptySurname"/>";
+    i18n["emptyBirthday"] = "<fmt:message key="error.patient.emptyBirthday"/>";
+    i18n["invalidBirthday"] = "<fmt:message key="error.patient.invalidBirthday"/>";
 </script>
 
 </html>

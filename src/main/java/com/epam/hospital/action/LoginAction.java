@@ -2,6 +2,7 @@ package com.epam.hospital.action;
 
 import com.epam.hospital.model.User;
 import com.epam.hospital.service.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class LoginAction extends AbstractActionWithService {
         String password = request.getParameter(PASSWORD_POST_PARAMETER);
 
         User user = service.getByLogin(login);
-        if (user!=null && user.getPassword().equals(password)) {
+        if (user!=null && user.getPassword().equals(DigestUtils.md5Hex(password))) {
             user.setPassword(null);
             request.getSession().setAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER, user);
             result = REDIRECT_VIEW_PREFIX.getPrefix() + VIEW_NAME;

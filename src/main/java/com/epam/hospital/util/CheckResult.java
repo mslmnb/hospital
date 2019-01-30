@@ -6,11 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CheckResult {
-    private String cause;
     private Set<String> details = new HashSet<>();
 
-    public CheckResult(String cause) {
-        this.cause = cause;
+    public CheckResult() {
     }
 
     public void addErrorMessage(String msg) {
@@ -23,7 +21,6 @@ public class CheckResult {
 
     public String getJsonString() {
         return "{ " +
-                "\"cause\": \"" + this.cause + "\", " +
                 "\"details\": [" +
                 details.stream().map(s->"\"" + s + "\"").collect(Collectors.joining(",")) +
                 "]}";

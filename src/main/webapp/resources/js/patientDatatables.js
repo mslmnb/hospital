@@ -1,9 +1,11 @@
-var ajaxUrl = 'ajax/patients/';
+var ajaxUrl = 'patients/';
 var datatableApi;
 
 function updateTable() {
-    $.get(ajaxUrl, updateTableByData);
+    debugger;
+    $.get(ajaxUrl + "all", updateTableByData);
 }
+
 
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({

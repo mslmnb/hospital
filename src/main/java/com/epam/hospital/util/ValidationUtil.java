@@ -7,6 +7,8 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +16,11 @@ public class ValidationUtil {
     private static final String REGEX_FOR_EMAIL = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private static final String REGEX_FOR_PHONE = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    private static final String I18N_KEY_FOR_INVALID_EMAIL = "invalidEmail";
+    private static final String I18N_KEY_FOR_INVALID_PHONE = "invalidPhone";
+    private static final String I18N_KEY_FOR_EMPTY = "empty";
+    private static final String I18N_KEY_FOR_INVALID = "invalid";
 
     public static void checkNotFoundWithId(boolean found, int id) {
         checkNotFound(found, "id=" + id);
@@ -50,16 +57,20 @@ public class ValidationUtil {
 
     public static void checkNotEmpty(String str, String fieldName, CheckResult checkResult) {
         if (str == null || str.isEmpty()) {
-            checkResult.addErrorMessage(fieldName + " must not be empty.");
+            checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
         }
     }
 
+    private static String getWithCapitalFirstLetter(String fieldName) {
+        return fieldName.substring(0,1).toUpperCase() + fieldName.substring(1);
+    }
+
     public static void checkEmail(String email, CheckResult checkResult) {
-        checkByRegex(REGEX_FOR_EMAIL, email, checkResult, "Email address is invalid.");
+        checkByRegex(REGEX_FOR_EMAIL, email, checkResult, I18N_KEY_FOR_INVALID_EMAIL);
     }
 
     public static void checkPhone(String phone, CheckResult checkResult) {
-        checkByRegex(REGEX_FOR_PHONE, phone, checkResult, "Phone number is invalid.");
+        checkByRegex(REGEX_FOR_PHONE, phone, checkResult, I18N_KEY_FOR_INVALID_PHONE);
     }
 
     private static void checkByRegex(String regex, String target,  CheckResult checkResult, String errorMsg){
@@ -72,20 +83,17 @@ public class ValidationUtil {
         }
     }
 
-
-
-    public static LocalDate checkAndReturnDate(String date, CheckResult checkResult) {
+    public static LocalDate checkAndReturnDate(String date, String fieldName, CheckResult checkResult) {
         LocalDate result = null;
-        checkNotEmpty(date, "Date", checkResult);
+        checkNotEmpty(date, fieldName, checkResult);
         if (! checkResult.foundErrors()) {
             try {
                 result = LocalDate.parse(date, FORMATTER);
             } catch (DateTimeParseException e) {
-                checkResult.addErrorMessage("Date is invalid.");
+                checkResult.addErrorMessage(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName));
                 result = null;
             }
         }
         return result;
     }
-
 }

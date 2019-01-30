@@ -67,7 +67,7 @@
     <context-param>
         <param-name>actionClasses</param-name>
         <param-value>
-            com.epam.hospital.action.patient.PatientAction
+            com.epam.hospital.action.PatientAction
             com.epam.hospital.action.LoginAction
             com.epam.hospital.action.LogoutAction
         </param-value>

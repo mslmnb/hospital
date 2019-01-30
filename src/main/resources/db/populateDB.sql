@@ -71,11 +71,11 @@ INSERT INTO staff (name, additional_name, surname, position_item_id) VALUES
   ('Нина', 'Евгеньевна', 'Вилисова', 100004);
 
 INSERT INTO users (staff_id, login, password) VALUES
-  (100000, 'Vigel_VA', 'password1'),
-  (100001, 'Vigriyanov_KE', 'password2'),
-  (100002, 'Yershenova_ME', 'password3'),
-  (100003, 'Viyekayeva_NO', 'password4'),
-  (100004, 'Vilisova_NE', 'password5');
+  (100000, 'Vigel_VA', '7c6a180b36896a0a8c02787eeafb0e4c'),
+  (100001, 'Vigriyanov_KE', '6cb75f652a9b52798eb6cf2201057c73'),
+  (100002, 'Yershenova_ME', '819b0643d6b89dc9b579fdfc9094f28e'),
+  (100003, 'Viyekayeva_NO', '34cc93ece0ba9e3f6f235d4af979b16c'),
+  (100004, 'Vilisova_NE', 'db0edd04aaac4506f7edab03ac855d56');
 
 INSERT INTO user_roles (role, staff_id) VALUES
   ('ROLE_ADMIN', 100000),

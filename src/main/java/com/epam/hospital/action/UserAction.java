@@ -1,11 +1,9 @@
 package com.epam.hospital.action;
 
-import com.epam.hospital.model.Role;
 import com.epam.hospital.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
 
 public class UserAction extends AbstractActionWithService {
     private static final String URI = "users";

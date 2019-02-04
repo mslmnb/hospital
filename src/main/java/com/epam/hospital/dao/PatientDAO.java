@@ -5,7 +5,10 @@ import com.epam.hospital.model.Patient;
 import java.util.List;
 
 public interface PatientDAO {
-    Patient save(Patient user);
+
+    Patient create(Patient user);
+
+    Patient update(Patient user);
 
     // false if not found
     boolean delete(int id);

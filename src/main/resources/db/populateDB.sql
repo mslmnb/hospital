@@ -1,5 +1,4 @@
 DELETE FROM patient_register;
-DELETE FROM user_roles;
 DELETE FROM users;
 DELETE FROM staff;
 
@@ -11,10 +10,11 @@ DELETE FROM lang;
 ALTER SEQUENCE handbk_items_seq RESTART WITH 100000;
 ALTER SEQUENCE lang_dictionary_seq RESTART WITH 100000;
 ALTER SEQUENCE lang_seq RESTART WITH 100000;
+ALTER SEQUENCE users_seq RESTART WITH 100000;
 ALTER SEQUENCE staff_seq RESTART WITH 100000;
 ALTER SEQUENCE patient_seq RESTART WITH 100000;
 
-INSERT INTO patient_register (name, additional_name, surname, birth_day, phone, email) VALUES
+INSERT INTO patient_register (name, additional_name, surname, birthday, phone, email) VALUES
   ('Анатолий', 'Сергеевич', 'Скоробогатов', '1968-01-05', '+7(721)2345678', 'anatoliy@mail.ru'),
   ('Степанида', 'Федоровна', 'Стеняева', '2002-05-15', '+7(705)6479812', 'step@rambler.ru'),
   ('Полина', 'Андреевна', 'Тиханович', '1950-11-20', '+7(708)7531245', 'pol_tih@gmail.com'),
@@ -65,21 +65,15 @@ INSERT INTO handbk_item_translate (item_id, lang_dictionary_id) VALUES
 
 INSERT INTO staff (name, additional_name, surname, position_item_id) VALUES
   ('Валерий', 'Алексеевич', 'Вигель', 100000),
-  ('Константинович', 'Ежиков', 'Вигриянов', 100001),
+  ('Константин', 'Николаевич', 'Вигриянов', 100001),
   ('Мубарям', 'Ердебаевна', 'Ершенова', 100002),
   ('Наталья', 'Олеговна', 'Виекаева', 100003),
   ('Нина', 'Евгеньевна', 'Вилисова', 100004);
 
-INSERT INTO users (staff_id, login, password) VALUES
-  (100000, 'Vigel_VA', '7c6a180b36896a0a8c02787eeafb0e4c'),
-  (100001, 'Vigriyanov_KE', '6cb75f652a9b52798eb6cf2201057c73'),
-  (100002, 'Yershenova_ME', '819b0643d6b89dc9b579fdfc9094f28e'),
-  (100003, 'Viyekayeva_NO', '34cc93ece0ba9e3f6f235d4af979b16c'),
-  (100004, 'Vilisova_NE', 'db0edd04aaac4506f7edab03ac855d56');
+INSERT INTO users (staff_id, login, password, role) VALUES
+  (100000, 'Vigel_VA', '7c6a180b36896a0a8c02787eeafb0e4c', 'ROLE_ADMIN'),
+  (100001, 'Vigriyanov_KE', '6cb75f652a9b52798eb6cf2201057c73', 'ROLE_DOCTOR'),
+  (100002, 'Yershenova_ME', '819b0643d6b89dc9b579fdfc9094f28e', 'ROLE_DOCTOR'),
+  (100003, 'Viyekayeva_NO', '34cc93ece0ba9e3f6f235d4af979b16c', 'ROLE_NURSE'),
+  (100004, 'Vilisova_NE', 'db0edd04aaac4506f7edab03ac855d56', 'ROLE_NURSE');
 
-INSERT INTO user_roles (role, staff_id) VALUES
-  ('ROLE_ADMIN', 100000),
-  ('ROLE_DOCTOR', 100001),
-  ('ROLE_DOCTOR', 100002),
-  ('ROLE_NURSE', 100003),
-  ('ROLE_NURSE', 100004);

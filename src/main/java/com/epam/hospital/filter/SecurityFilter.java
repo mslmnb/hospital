@@ -24,6 +24,11 @@ public class SecurityFilter implements Filter {
         roles.add(Role.ROLE_DOCTOR);
         roles.add(Role.ROLE_NURSE);
         accessMap.put("/patients", roles);
+        roles = new HashSet<>();
+        roles.add(Role.ROLE_ADMIN);
+        accessMap.put("/admin", roles);
+        accessMap.put("/users", roles);
+        accessMap.put("/handbks", roles);
     }
 
     public void destroy() {
@@ -36,29 +41,23 @@ public class SecurityFilter implements Filter {
 
         if (request.getPathInfo().equals(LOGIN_PATH)) {
             chain.doFilter(request, response);
-            return;
-        }
-        User authorizedUser = (User) request.getSession().getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER);
+        } else {
+            User authorizedUser = (User) request.getSession().getAttribute(SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER);
 
-        if (accessMap.containsKey(request.getPathInfo())){   // request needs protection
-            if (authorizedUser == null) {                   // user isn't authorized
-                request.getRequestDispatcher(ROOT_PATH).forward(request, response);
-            } else {
-                boolean hasAccess = false;
-                for (Role userRole: authorizedUser.getRoles()) {
-                    if (accessMap.get(request.getPathInfo()).contains(userRole)) {
-                        hasAccess = true;
-                        break;
+            if (accessMap.containsKey(request.getPathInfo())) {   // request needs protection
+                if (authorizedUser == null) {                   // user isn't authorized
+                    request.getRequestDispatcher(ROOT_PATH).forward(request, response);
+                } else {
+                    boolean hasAccess = accessMap.get(request.getPathInfo()).contains(authorizedUser.getRole());
+                    if (hasAccess) {
+                        chain.doFilter(request, response);
+                    } else {
+                        throw new IllegalAccessError();
                     }
                 }
-                if (hasAccess) {
-                    chain.doFilter(request, response);
-                } else {
-                    throw new IllegalAccessError();
-                }
+            } else {
+                chain.doFilter(request, response);
             }
-        } else {
-            chain.doFilter(request, response);
         }
     }
 

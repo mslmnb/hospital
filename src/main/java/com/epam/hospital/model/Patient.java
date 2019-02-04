@@ -2,7 +2,7 @@ package com.epam.hospital.model;
 
 import java.time.LocalDate;
 
-public class Patient extends NamedEntity{
+public class Patient extends NamedEntity implements HavingJsonView{
     private String additionalName;
     private String surname;
     private LocalDate birthday;
@@ -40,5 +40,16 @@ public class Patient extends NamedEntity{
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String getJsonString() {
+        return "{ " +
+                "\"id\": " + getId() + ", " +
+                "\"name\": \"" + getName() + "\", " +
+                "\"additionalName\": \"" + additionalName + "\", " +
+                "\"surName\": \"" + surname + "\", " +
+                "\"phone\": \"" + phone + "\" " +
+                "}";
     }
 }

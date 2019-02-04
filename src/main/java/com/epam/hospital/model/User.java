@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class User {
+import static com.epam.hospital.model.Role.ROLE_ADMIN;
+
+public class User extends BaseEntity implements HavingJsonView{
 
     private Staff staff;
 
@@ -12,15 +14,17 @@ public class User {
 
     private String password;
 
-    private Set<Role> roles = new HashSet<>();
+    private Role role;
 
     public User() {
     }
 
-    public User(Staff staff, String login, String password) {
+    public User(Integer id, Staff staff, String login, String password, Role role) {
+        super(id);
         this.staff = staff;
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     public int getStaffId() {
@@ -51,12 +55,27 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isAdmin() {
+        return role.equals(ROLE_ADMIN);
+    }
+
+    @Override
+    public String getJsonString() {
+        return "{ " +
+                "\"id\": " + getId() + ", " +
+                "\"staffId\": " + getStaffId() + ", " +
+                "\"staffName\": \"" + staff.getSurnameWithInitials() + "\", " +
+                "\"login\": \"" + login + "\", " +
+                "\"role\": \"" + role + "\" " +
+                "}";
     }
 
     @Override

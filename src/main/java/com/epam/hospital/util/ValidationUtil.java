@@ -1,14 +1,13 @@
 package com.epam.hospital.util;
 
-import com.epam.hospital.model.BaseEntity;
-import com.epam.hospital.util.exception.NotFoundException;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+import com.epam.hospital.util.exception.AppException;
+import com.sun.deploy.association.utility.AppAssociationReader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,79 +20,131 @@ public class ValidationUtil {
     private static final String I18N_KEY_FOR_INVALID_PHONE = "invalidPhone";
     private static final String I18N_KEY_FOR_EMPTY = "empty";
     private static final String I18N_KEY_FOR_INVALID = "invalid";
+    private static final String I18N_KEY_FOR_NOT_FOUND = "notFound";
 
-    public static void checkNotFoundWithId(boolean found, int id) {
-        checkNotFound(found, "id=" + id);
-    }
-
-    public static <T> T checkNotFoundWithId(T object, int id) {
-        return checkNotFound(object, "id=" + id);
-    }
-
-    public static <T> T checkNotFound(T object, String msg) {
-        checkNotFound(object != null, msg);
+    public static <T> T checkNotFound(T object) throws AppException {
+        if (object == null) {
+            throw new AppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
+        }
         return object;
     }
 
-    public static void checkNotFound(boolean found, String msg) {
+    public static void checkNotFound(boolean found) throws AppException {
         if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new AppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
         }
     }
 
-    public static void checkNew(BaseEntity entity) {
-        if (!entity.isNew()) {
-            throw new IllegalArgumentException(entity + " must be new (id=null)");
+    public static void checkNotEmpty(Map<String, String> parameters,
+                                     CheckResult checkResult, boolean throwException) throws AppException {
+        try {
+            checkNotEmpty(parameters);
+        } catch (AppException e) {
+            checkResult.addErrorMessage(e.getCheckResult());
+        }
+        if (throwException && checkResult.foundErrors()) {
+            throw new AppException(checkResult);
         }
     }
 
-    public static void checkIdConsistent(BaseEntity entity, int id) {
-        if (entity.isNew()) {
-            entity.setId(id);
-        } else if (entity.getId() != id) {
-            throw new IllegalArgumentException(entity + " must be with id=" + id);
+    public static void checkNotEmpty(Map<String, String> parameters) throws AppException {
+        CheckResult checkResult = new CheckResult();
+        for (Map.Entry<String, String> pair : parameters.entrySet()) {
+            String fieldName = pair.getKey();
+            String fieldValue = pair.getValue();
+            if (fieldValue == null || fieldValue.isEmpty()) {
+                checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
+            }
+        }
+        if (checkResult.foundErrors()) {
+            throw new AppException(checkResult);
         }
     }
 
-    public static void checkNotEmpty(String str, String fieldName, CheckResult checkResult) {
-        if (str == null || str.isEmpty()) {
-            checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
-        }
+    public static void checkNotEmpty(String fieldValue, String fieldName) throws AppException {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put(fieldName, fieldValue);
+        checkNotEmpty(parameters);
     }
 
     private static String getWithCapitalFirstLetter(String fieldName) {
-        return fieldName.substring(0,1).toUpperCase() + fieldName.substring(1);
+        return fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
     }
 
-    public static void checkEmail(String email, CheckResult checkResult) {
-        checkByRegex(REGEX_FOR_EMAIL, email, checkResult, I18N_KEY_FOR_INVALID_EMAIL);
+    public static void checkEmail(String email, CheckResult checkResult, boolean throwException) {
+        try {
+            checkEmail(email);
+        } catch (AppException e) {
+            checkResult.addErrorMessage(e.getCheckResult());
+        }
+        if (throwException && checkResult.foundErrors()) {
+            throw new AppException(checkResult);
+        }
     }
 
-    public static void checkPhone(String phone, CheckResult checkResult) {
-        checkByRegex(REGEX_FOR_PHONE, phone, checkResult, I18N_KEY_FOR_INVALID_PHONE);
+    public static void checkEmail(String email) {
+        checkByRegex(REGEX_FOR_EMAIL, email, I18N_KEY_FOR_INVALID_EMAIL);
     }
 
-    private static void checkByRegex(String regex, String target,  CheckResult checkResult, String errorMsg){
+    public static void checkPhone(String phone, CheckResult checkResult, boolean throwException) {
+        try {
+            checkPhone(phone);
+        } catch (AppException e) {
+            checkResult.addErrorMessage(e.getCheckResult());
+        }
+        if (throwException && checkResult.foundErrors()) {
+            throw new AppException(checkResult);
+        }
+    }
+
+    public static void checkPhone(String phone) {
+        checkByRegex(REGEX_FOR_PHONE, phone, I18N_KEY_FOR_INVALID_PHONE);
+    }
+
+    private static void checkByRegex(String regex, String target, String errorMsg) {
         if (!target.isEmpty()) {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(target);
             if (!matcher.matches()) {
-                checkResult.addErrorMessage(errorMsg);
+                throw new AppException(new CheckResult(errorMsg));
             }
         }
     }
 
-    public static LocalDate checkAndReturnDate(String date, String fieldName, CheckResult checkResult) {
+    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName,
+                                               CheckResult checkResult, boolean throwException) throws AppException {
         LocalDate result = null;
-        checkNotEmpty(date, fieldName, checkResult);
-        if (! checkResult.foundErrors()) {
-            try {
-                result = LocalDate.parse(date, FORMATTER);
-            } catch (DateTimeParseException e) {
-                checkResult.addErrorMessage(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName));
-                result = null;
-            }
+        try {
+            result = checkAndReturnDate(dateAsString, fieldName);
+        } catch (AppException e) {
+            checkResult.addErrorMessage(e.getCheckResult());
+        }
+        if (throwException && checkResult.foundErrors()) {
+            throw new AppException(checkResult);
         }
         return result;
     }
+
+    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws AppException {
+        LocalDate result = null;
+        checkNotEmpty(dateAsString, fieldName);
+        try {
+            result = LocalDate.parse(dateAsString, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new AppException(new CheckResult(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName)));
+        }
+        return result;
+    }
+
+    public static Integer checkAndReturnInt(String intAsString, String fieldName) throws AppException {
+        Integer result = null;
+        checkNotEmpty(intAsString, fieldName);
+        try {
+            result = Integer.parseInt(intAsString);
+        } catch (NumberFormatException e) {
+            throw new AppException(new CheckResult(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName)));
+        }
+        return result;
+    }
+
 }

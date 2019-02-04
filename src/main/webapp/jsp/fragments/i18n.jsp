@@ -14,4 +14,7 @@
     i18n["common.lengthMenu"] = "<fmt:message key="common.lengthMenu"/>";
     i18n["common.deleted"] = "<fmt:message key="common.deleted"/>";
     i18n["common.saved"] = "<fmt:message key="common.saved"/>";
+    i18n["error.common.noDbConnection"] = "<fmt:message key="error.common.noDbConnection"/>";
+    i18n["error.common.unknownError"] = "<fmt:message key="error.common.unknownError"/>";
+
 </script>

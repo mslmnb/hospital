@@ -116,26 +116,18 @@ CREATE TABLE staff
   FOREIGN KEY (position_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
+CREATE SEQUENCE users_seq;
 CREATE TABLE users
 (
-  staff_id        INTEGER NOT NULL PRIMARY KEY,
+  id              INTEGER PRIMARY KEY DEFAULT nextval('users_seq'),
+  staff_id        INTEGER NOT NULL,
   login           VARCHAR NOT NULL,
   password        VARCHAR NOT NULL,
-  registered      TIMESTAMP DEFAULT now(),
-  enabled         BOOL DEFAULT TRUE,
+  role            VARCHAR,
   CONSTRAINT users_unique_login_idx UNIQUE (login),
+  CONSTRAINT users_unique_staff_role_idx UNIQUE (staff_id, role),
   FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE RESTRICT
 );
---CREATE UNIQUE INDEX users_unique_login_idx ON users (login);
-
-CREATE TABLE user_roles
-(
-  staff_id    INTEGER NOT NULL,
-  role             VARCHAR,
-  CONSTRAINT staff_roles_idx UNIQUE (staff_id, role),
-  FOREIGN KEY (staff_id) REFERENCES users (staff_id) ON DELETE RESTRICT
-);
--- admin, doctor, norse
 
 CREATE SEQUENCE patient_seq;
 CREATE TABLE patient_register
@@ -144,12 +136,9 @@ CREATE TABLE patient_register
   name            VARCHAR NOT NULL,
   additional_name VARCHAR,
   surname         VARCHAR NOT NULL,
-  birth_day       DATE NOT NULL,
+  birthday        DATE NOT NULL,
   phone           VARCHAR NOT NULL,
   email           VARCHAR
-  -- лекарственная непереносимость
-  -- группа крови
-  -- место работы, учебы
 );
 
 CREATE TABLE reception
@@ -224,7 +213,7 @@ ALTER TABLE staff  OWNER TO "user";
 ALTER TABLE staff_seq  OWNER TO "user";
 
 ALTER TABLE users OWNER TO "user";
-ALTER TABLE user_roles OWNER TO "user";
+ALTER TABLE users_seq  OWNER TO "user";
 
 ALTER TABLE patient_register OWNER TO "user";
 ALTER TABLE patient_seq OWNER TO "user";

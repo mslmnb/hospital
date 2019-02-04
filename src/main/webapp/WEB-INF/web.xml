@@ -70,6 +70,10 @@
             com.epam.hospital.action.PatientAction
             com.epam.hospital.action.LoginAction
             com.epam.hospital.action.LogoutAction
+            com.epam.hospital.action.AdminAction
+            com.epam.hospital.action.UserAction
+            com.epam.hospital.action.StaffAction
+            com.epam.hospital.action.RoleAction
         </param-value>
     </context-param>
 

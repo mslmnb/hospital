@@ -2,7 +2,7 @@ package com.epam.hospital.model;
 
 import com.epam.hospital.model.handbk.Position;
 
-public class Staff extends NamedEntity{
+public class Staff extends NamedEntity implements HavingJsonView{
     private String additionalName;
     private String surname;
     private Position position;
@@ -53,7 +53,21 @@ public class Staff extends NamedEntity{
     }
 
     public String getSurnameWithInitials() {
-        return surname + " " + getName().charAt(0) + "." +
+        return surname==null ? "" : surname + " " + getName().charAt(0) + "." +
                 (additionalName.isEmpty() ? "" : additionalName.charAt(0) + ".");
+    }
+
+    @Override
+    public String getJsonString() {
+        return "{ " +
+                "\"id\": " + getId() + ", " +
+                "\"name\": \"" + getSurnameWithInitials() + "\", " +
+                "\"position\": \"" + position.getName() + "\" " +
+                "}";
+    }
+
+    @Override
+    public String toString() {
+        return getSurnameWithInitials();
     }
 }

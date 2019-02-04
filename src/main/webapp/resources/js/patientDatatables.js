@@ -2,7 +2,6 @@ var ajaxUrl = 'patients/';
 var datatableApi;
 
 function updateTable() {
-    debugger;
     $.get(ajaxUrl + "all", updateTableByData);
 }
 
@@ -54,8 +53,7 @@ $(function () {
     birthday.datetimepicker({
         timepicker: false,
         format: 'd-m-Y',
-        formatDate: 'd-m-Y',
-        language: 'ru'
+        formatDate: 'd-m-Y'
     })
 });
 

@@ -18,6 +18,9 @@ import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMET
 
 public class FrontControllerServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(FrontControllerServlet.class);
+
+    private static final String JSON_MIMETYPE = "application/json;charset=UTF-8";
+
     private String errorMessage;
 
     @Override
@@ -28,32 +31,35 @@ public class FrontControllerServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            if (errorMessage != null) {
-                LOG.error(errorMessage);
-                throw new IllegalStateException(errorMessage);
-            }
-            ActionFactory actionFactory = (ActionFactory) getServletContext()
-                    .getAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY);
-            Action action = actionFactory.getAction(request);
-            String viewWithPrefix = action.execute(request, response);
-            String view = getViewWithoutPrefix(viewWithPrefix);
+        if (errorMessage != null) {
+            LOG.error(errorMessage);
+            throw new IllegalStateException(errorMessage);
+        }
+        ActionFactory actionFactory = (ActionFactory) getServletContext()
+                .getAttribute(CONTEXT_PARAMETER_FOR_ACTION_FACTORY);
+        Action action = actionFactory.getAction(request);
+        String viewWithPrefix = action.execute(request, response);
+        String view = getViewWithoutPrefix(viewWithPrefix);
 
-            switch (getViewPrefix(viewWithPrefix)) {
-                case JSON_VIEW_PREFIX:
-                        PrintWriter writer = response.getWriter();
-                        writer.print(view);
-                        writer.flush();
-                    break;
-                case FORWARD_VIEW_PREFIX:
-                    request.getRequestDispatcher(view).forward(request, response);
-                    break;
-                case REDIRECT_VIEW_PREFIX:
-                    response.sendRedirect(view);
-                    break;
-                default:
-                    LOG.error("Action is not defined for URI:" + request.getRequestURI());
-                    throw new IllegalStateException("Action is not defined for URI:" + request.getRequestURI());
-            }
+        switch (getViewPrefix(viewWithPrefix)) {
+            case JSON_VIEW_PREFIX:
+                if (!view.isEmpty()) {
+                    response.setContentType(JSON_MIMETYPE);
+                    PrintWriter writer = response.getWriter();
+                    writer.print(view);
+                    writer.flush();
+                }
+                break;
+            case FORWARD_VIEW_PREFIX:
+                request.getRequestDispatcher(view).forward(request, response);
+                break;
+            case REDIRECT_VIEW_PREFIX:
+                response.sendRedirect(view);
+                break;
+            default:
+                LOG.error("Action is not defined for URI:" + request.getRequestURI());
+                throw new IllegalStateException("Action is not defined for URI:" + request.getRequestURI());
+        }
     }
 
     private ViewPrefixType getViewPrefix(String view) {

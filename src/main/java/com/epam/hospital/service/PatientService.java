@@ -1,22 +1,33 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.model.Patient;
-import com.epam.hospital.util.exception.NotFoundException;
+import com.epam.hospital.model.User;
+import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
 public interface PatientService {
+    String ID_PARAMETER = "id";
+    String NAME_PARAMETER = "name";
+    String ADDITIONAL_NAME_PARAMETER = "additionalName";
+    String SURNAME_PARAMETER = "surname";
+    String PHONE_PARAMETER = "phone";
+    String EMAIL_PARAMETER = "email";
+    String BITHDAY_PARAMETER = "birthday";
 
-    Patient create(Patient patient);
+    void save(String idAsString, String name, String additionalName, String surname,
+              String birthdayAsString, String phone, String email) throws AppException;
 
-    Patient save(Patient patient);
+    void save(Patient patient) throws AppException;
 
-    void delete(int id) throws NotFoundException;
+    void delete(String idAsString) throws AppException;
 
-    Patient get(int id) throws NotFoundException;
+    void delete(int id) throws AppException;
+
+    User get(String idAsString) throws AppException;
+
+    Patient get(int id) throws AppException;
 
     List<Patient> getAll();
-
-    void update(Patient patient);
 
 }

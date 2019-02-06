@@ -1,17 +1,14 @@
 package com.epam.hospital.model.handbk;
 
-import com.epam.hospital.model.NamedEntity;
+import static com.epam.hospital.model.handbk.HandbkType.POSITION;
 
-import static com.epam.hospital.model.handbk.Handbk.POSITION;
-
-public class Position extends NamedEntity implements UsingHandbk {
+public class Position extends Handbk {
 
     public Position(Integer id, String name) {
-        super(id, name);
+        super(id, name, POSITION);
     }
 
-    @Override
-    public Handbk getHandbk() {
-        return POSITION;
+    public Position(Integer id) {
+        super(id, null, POSITION);
     }
 }

@@ -5,11 +5,9 @@ DELETE FROM staff;
 DELETE FROM handbk_item_translate;
 DELETE FROM handbk_items;
 DELETE FROM lang_dictionary;
-DELETE FROM lang;
 
 ALTER SEQUENCE handbk_items_seq RESTART WITH 100000;
 ALTER SEQUENCE lang_dictionary_seq RESTART WITH 100000;
-ALTER SEQUENCE lang_seq RESTART WITH 100000;
 ALTER SEQUENCE users_seq RESTART WITH 100000;
 ALTER SEQUENCE staff_seq RESTART WITH 100000;
 ALTER SEQUENCE patient_seq RESTART WITH 100000;
@@ -25,29 +23,25 @@ INSERT INTO patient_register (name, additional_name, surname, birthday, phone, e
   ('Дархан', 'Алиевич', 'Оразалиев', '1980-06-08', '+7(721)2345560', ''),
   ('Таисия', 'Сагындыковна', 'Бейбутова', '1940-05-01', '+7(721)2534571', '');
 
-INSERT INTO lang (name) VALUES
-  ('русский'), --100000
-  ('english'); --100001
-
-INSERT INTO lang_dictionary (lang_id, word) VALUES
-  (100000, 'программист'),                --100000
-  (100000, 'врач высшей категории'),      --100001
-  (100000, 'врач 1 категории'),           --100002
-  (100000, 'старшая медсестра'),          --100003
-  (100000, 'медсестра'),                  --100004
-  (100001, 'system manager'),             --100005
-  (100001, 'doctor of higher category '), --100006
-  (100001, 'doctor of first category'),   --100007
-  (100001, 'chief nurse'),                --100008
-  (100001, 'nurse');                      --100009
+INSERT INTO lang_dictionary (lang, word) VALUES
+  ('ru', 'программист'),                --100000
+  ('ru', 'врач высшей категории'),      --100001
+  ('ru', 'врач 1 категории'),           --100002
+  ('ru', 'старшая медсестра'),          --100003
+  ('ru', 'медсестра'),                  --100004
+  ('en', 'system manager'),             --100005
+  ('en', 'doctor of higher category '), --100006
+  ('en', 'doctor of first category'),   --100007
+  ('en', 'chief nurse'),                --100008
+  ('en', 'nurse');                      --100009
 
 
 INSERT INTO handbk_items (handbk) VALUES
-  ('POSITIONS'), --100000
-  ('POSITIONS'), --100001
-  ('POSITIONS'), --100002
-  ('POSITIONS'), --100003
-  ('POSITIONS'); --100004
+  ('POSITION'), --100000
+  ('POSITION'), --100001
+  ('POSITION'), --100002
+  ('POSITION'), --100003
+  ('POSITION'); --100004
 
 
 INSERT INTO handbk_item_translate (item_id, lang_dictionary_id) VALUES

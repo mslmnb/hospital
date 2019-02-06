@@ -7,16 +7,24 @@ import com.epam.hospital.util.exception.AppException;
 import java.util.List;
 
 public interface StaffService {
+    String ID_PARAMETER = "id";
+    String NAME_PARAMETER = "name";
+    String ADDITIONAL_NAME_PARAMETER = "additionalName";
+    String SURNAME_PARAMETER = "surname";
+    String POSITION_ID_PARAMETER = "positionId";
 
-    User create(Staff staff) throws AppException;
+    void save(String idAsString, String name, String additionalName,
+              String surname, String positionIdAsString) throws AppException;
 
-    void update(Staff staff) throws AppException;
+    void save(Staff staff) throws AppException;
+
+    void delete(String idAsString) throws AppException;
 
     void delete(int id) throws AppException;
 
+    Staff get(String idAsString) throws AppException;
+
     Staff get(int id) throws AppException;
 
-    List<Staff> getAll();
-
-
+    List<Staff> getAll(String lang);
 }

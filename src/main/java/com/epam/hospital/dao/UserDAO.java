@@ -20,5 +20,4 @@ public interface UserDAO {
 
     // empty if not found
     List<User> getAll();
-
 }

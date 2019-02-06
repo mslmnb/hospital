@@ -1,9 +1,21 @@
 package com.epam.hospital.model.handbk;
 
-public enum Handbk {
-    POSITION,
-    DIAGNOSIS,
-    DIAGNOSIS_TYPE,
-    PRESCRPTN_TYPE,
-    INSPECTN_TYPE
+import com.epam.hospital.model.HavingJsonView;
+import com.epam.hospital.model.NamedEntity;
+
+public class Handbk extends NamedEntity implements HavingJsonView{
+    HandbkType type;
+
+    public Handbk(Integer id, String name, HandbkType type) {
+        super(id, name);
+        this.type = type;
+    }
+
+    @Override
+    public String getJsonString() {
+        return "{ " +
+                "\"id\": " + getId() + ", " +
+                "\"name\": \"" + getName() + "\" " +
+                "}";
+    }
 }

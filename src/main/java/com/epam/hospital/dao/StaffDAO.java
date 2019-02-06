@@ -8,15 +8,15 @@ import java.util.List;
 public interface StaffDAO {
     Staff create(Staff staff);
 
-    Staff update(User staff);
+    Staff update(Staff staff);
 
     // false if not found
     boolean delete(int staff_id);
 
     // null if not found
-    User get(int staff_id);
+    Staff get(int staff_id);
 
     // empty if not found
-    List<Staff> getAll();
+    List<Staff> getAll(String lang);
 
 }

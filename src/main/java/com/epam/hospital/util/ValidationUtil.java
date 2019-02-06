@@ -136,6 +136,20 @@ public class ValidationUtil {
         return result;
     }
 
+    public static Integer checkAndReturnInt(String intAsString, String fieldName,
+                                            CheckResult checkResult, boolean throwException) throws AppException {
+        Integer result = null;
+        try {
+            result = checkAndReturnInt(intAsString, fieldName);
+        } catch (AppException e) {
+            checkResult.addErrorMessage(e.getCheckResult());
+        }
+        if (throwException && checkResult.foundErrors()) {
+            throw new AppException(checkResult);
+        }
+        return result;
+    }
+
     public static Integer checkAndReturnInt(String intAsString, String fieldName) throws AppException {
         Integer result = null;
         checkNotEmpty(intAsString, fieldName);

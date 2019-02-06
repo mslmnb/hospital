@@ -24,6 +24,8 @@ public interface UserService {
 
     User get(String idAsString) throws AppException;
 
+    User get(int id) throws AppException;
+
     // null if not found
     User getByLogin(String login);
 

@@ -49,9 +49,6 @@ function addUser() {
     form.find(":input").val("");
     form.find('.disabled').removeClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
-    // $('#login').removeAttribute("disabled");
-    // $('#staffId').removeAttribute("disabled");
-    // $('#role').removeAttribute("disabled");
     drawStaffOptions();
     drawRoleOptions();
     $('#editRow').modal();
@@ -66,8 +63,6 @@ function updatePassword(id) {
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $("#id").val(data.id);
         $("#login").val(data.login);
-        $("#login").attr("value",data.login);
-        $("#role").attr("value",data.role);
         drawStaffOptions(data.staffId);
         drawRoleOptions(data.role);
     });
@@ -91,7 +86,7 @@ function drawStaffOptions(staffId) {
             for (choice in data) {
                 var option = $("<option>");
                 option.val(data[choice].id)
-                    .html(data[choice].name)
+                    .html(data[choice].surname + " " + data[choice].name + " " + data[choice].additionalName)
                     .appendTo(staffSelect)
                 if(data[choice].id == staffId) {
                         option.attr("selected", true)

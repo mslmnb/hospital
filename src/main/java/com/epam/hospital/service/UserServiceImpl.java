@@ -27,15 +27,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(String idAsString, String staffIdAsString,
                      String login, String password, String roleAsString) throws AppException {
-
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER);
+        CheckResult checkResult = new CheckResult();
+        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer staffId = checkAndReturnInt(staffIdAsString, STAFF_ID_PARAMETER, checkResult, false);
         Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(STAFF_ID_PARAMETER, staffIdAsString);
         parameters.put(LOGIN_PARAMETER, login);
         parameters.put(ROLE_PARAMETER, roleAsString);
         parameters.put(PASSWORD_PARAMETER, password);
-        checkNotEmpty(parameters);
-        Staff staff = new Staff(Integer.parseInt(staffIdAsString));
+        checkNotEmpty(parameters, checkResult, true);
+        Staff staff = new Staff(staffId);
         User user = new User(id, staff, login, DigestUtils.md5Hex(password), Role.valueOf(roleAsString));
         save(user);
     }
@@ -61,8 +61,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(String idAsString) throws AppException {
-        checkNotEmpty(idAsString, ID_PARAMETER);
         Integer id = checkAndReturnInt(idAsString, ID_PARAMETER);
+        return get(id);
+    }
+
+    @Override
+    public User get(int id) throws AppException {
         return checkNotFound(dao.get(id));
     }
 

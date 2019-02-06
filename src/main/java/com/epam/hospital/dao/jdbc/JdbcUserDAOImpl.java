@@ -11,10 +11,11 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.epam.hospital.util.exception.AppException.NO_DB_CONNECTION_ERROR;
-import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
+import static com.epam.hospital.util.DaoUtil.*;
 
 public class JdbcUserDAOImpl implements UserDAO {
     private static final Logger LOG = Logger.getLogger(JdbcUserDAOImpl.class);
@@ -28,6 +29,12 @@ public class JdbcUserDAOImpl implements UserDAO {
     private static final String LOGIN_FIELDNAME = "login";
     private static final String PASSWORD_FIELDNAME = "password";
 
+    private static final String LOGIN_UNIQUE_IDX = "users_unique_login_idx";
+    private static final String ROLE_UNIQUE_IDX = "users_unique_staff_role_idx";
+    private static final String NOT_UNIQUE_LOGIN = "notUniqueLogin";
+    private static final String NOT_UNIQUE_STAFF_AND_ROLE = "notUniqueStaffAndRole";
+    private static final Map<String, String> errorResolver;
+
     private static final String SELECT_BY_LOGIN = "SELECT users.id, users.staff_id, users.password, users.role, " +
             "staff.name, staff.additional_name, staff.surname " +
             "FROM users " +
@@ -37,13 +44,18 @@ public class JdbcUserDAOImpl implements UserDAO {
             "users.login, staff.name, staff.additional_name, staff.surname " +
             "FROM users " +
             "LEFT JOIN staff ON users.staff_id = staff.id ";
-    private static final String SELECT_BY_ID = "SELECT users.id, users.staff_id, " +
-            "users.role, users.login " +
+    private static final String SELECT_BY_ID = "SELECT id, staff_id, role, login " +
             "FROM users WHERE users.id = ? ";
     private static final String INSERT_INTO = "INSERT INTO users" +
             "(staff_id,  login,  password, role) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
-    private static final String DELETE = "DELETE FROM users WHERE id = ?";
+    private static final String USERS_TABLE_NAME = "users";
+
+    static {
+        errorResolver = new HashMap<>();
+        errorResolver.put(LOGIN_UNIQUE_IDX, NOT_UNIQUE_LOGIN);
+        errorResolver.put(ROLE_UNIQUE_IDX, NOT_UNIQUE_STAFF_AND_ROLE);
+    }
 
     private final ConnectionPool pool;
 
@@ -69,20 +81,12 @@ public class JdbcUserDAOImpl implements UserDAO {
             } catch (SQLException e) {
                 String errorMsg = e.getMessage();
                 LOG.error(errorMsg);
-                CheckResult checkResult = new CheckResult();
-                if (errorMsg.contains("users_unique_login_idx")) {
-                    checkResult.addErrorMessage("notUniqueLogin");
-                } else if (errorMsg.contains("users_unique_staff_role_idx")) {
-                    checkResult.addErrorMessage("notUniqueStaffAndRole");
-                } else {
-                    checkResult.addErrorMessage(UNKNOWN_ERROR);
-                }
+                CheckResult checkResult = AnalyzerSQLException(errorResolver, e);
                 throw new AppException(checkResult);
             }
             pool.freeConnection(con);
         } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
+            logAndThrowForNoDbConnectionError(LOG);
         }
         return user;
     }
@@ -94,43 +98,23 @@ public class JdbcUserDAOImpl implements UserDAO {
             try (PreparedStatement statement = con.prepareStatement(UPDATE_PASSWORD)) {
                 statement.setString(1, user.getPassword());
                 statement.setInt(2, user.getId());
-                if (statement.executeUpdate()==0) {
+                if (statement.executeUpdate() == 0) {
                     user = null;
-                };
+                }
+                ;
             } catch (SQLException e) {
-                String errorMsg = e.getMessage();
-                LOG.error(errorMsg);
-                throw new AppException(new CheckResult(UNKNOWN_ERROR));
+                logAndThrowForUnknowError(LOG, e);
             }
             pool.freeConnection(con);
         } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
+            logAndThrowForNoDbConnectionError(LOG);
         }
         return user;
     }
 
     @Override
     public boolean delete(int id) {
-        boolean result = false;
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(DELETE)) {
-                statement.setInt(1, id);
-                if (statement.executeUpdate()>0) {
-                    result = true;
-                };
-            } catch (SQLException e) {
-                String errorMsg = e.getMessage();
-                LOG.error(errorMsg);
-                throw new AppException(new CheckResult(UNKNOWN_ERROR));
-            }
-            pool.freeConnection(con);
-        } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
-        }
-        return result;
+        return deleteFromTable(USERS_TABLE_NAME, LOG, pool, id, errorResolver);
     }
 
     @Override
@@ -147,13 +131,11 @@ public class JdbcUserDAOImpl implements UserDAO {
                     }
                 }
             } catch (SQLException e) {
-                LOG.error(e.getMessage());
-                throw new AppException(new CheckResult(UNKNOWN_ERROR));
+                logAndThrowForUnknowError(LOG, e);
             }
             pool.freeConnection(con);
         } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
+            logAndThrowForNoDbConnectionError(LOG);
         }
         return user;
     }
@@ -172,13 +154,11 @@ public class JdbcUserDAOImpl implements UserDAO {
                     }
                 }
             } catch (SQLException e) {
-                LOG.error(e.getMessage());
-                throw new AppException(new CheckResult(UNKNOWN_ERROR));
+                logAndThrowForUnknowError(LOG, e);
             }
             pool.freeConnection(con);
         } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
+            logAndThrowForNoDbConnectionError(LOG);
         }
         return user;
     }
@@ -194,13 +174,11 @@ public class JdbcUserDAOImpl implements UserDAO {
                     resultList.add(getUser(resultSet, null));
                 }
             } catch (SQLException e) {
-                LOG.error(e.getMessage());
-                throw new AppException(new CheckResult(UNKNOWN_ERROR));
+                logAndThrowForUnknowError(LOG, e);
             }
             pool.freeConnection(con);
         } else {
-            LOG.error("There is no database connection.");
-            throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
+            logAndThrowForNoDbConnectionError(LOG);
         }
         return resultList;
     }

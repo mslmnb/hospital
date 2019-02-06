@@ -12,21 +12,12 @@ ALTER DATABASE hospital OWNER TO "user";
 
 \connect hospital
 
-CREATE SEQUENCE lang_seq ;
-CREATE TABLE lang
-(
-  id              INTEGER PRIMARY KEY DEFAULT nextval('lang_seq'),
-  name            VARCHAR NOT NULL
-);
-CREATE UNIQUE INDEX lang_unique_name_idx ON lang (name);
-
 CREATE SEQUENCE lang_dictionary_seq ;
 CREATE TABLE lang_dictionary
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('lang_dictionary_seq'),
-  lang_id         INTEGER NOT NULL,
-  word            VARCHAR NOT NULL,
-  FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
+  lang            VARCHAR NOT NULL,
+  word            VARCHAR NOT NULL
 );
 
 CREATE SEQUENCE handbk_items_seq ;
@@ -44,67 +35,6 @@ CREATE TABLE handbk_item_translate
   FOREIGN KEY (lang_dictionary_id) REFERENCES lang_dictionary (id) ON DELETE RESTRICT
 );
 
--- *********************************
--- CREATE SEQUENCE position_seq;
--- CREATE TABLE positions
--- (
---   id              INTEGER PRIMARY KEY DEFAULT nextval('position_seq'),
---   lang_id         INTEGER NOT NULL,
---   name            VARCHAR NOT NULL,
---   FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
--- );
---
--- CREATE SEQUENCE diagnosis_type_seq;
--- CREATE TABLE diagnosis_type
--- (
---   id              INTEGER PRIMARY KEY DEFAULT nextval('diagnosis_type_seq'),
---   lang_id         INTEGER NOT NULL,
---   name            VARCHAR NOT NULL,
---   FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
---   -- initial первичный, clinical клинический, concomitant сопутствующий, final окончательный
--- );
---
--- CREATE SEQUENCE diagnosis_seq;
--- CREATE TABLE diagnosis
--- (
---   id              INTEGER PRIMARY KEY DEFAULT nextval('diagnosis_seq'),
---   lang_id         INTEGER NOT NULL,
---   name            VARCHAR NOT NULL,
---   FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
--- );
---
--- CREATE SEQUENCE prescription_type_seq;
--- CREATE TABLE prescription_type
--- (
---   id              INTEGER PRIMARY KEY DEFAULT nextval('prescription_type_seq'),
---   lang_id         INTEGER NOT NULL,
---   name            VARCHAR NOT NULL,
---   FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
---   -- лекарственный препарат, процедуру, операцию, обследование
--- );
---
--- CREATE SEQUENCE inspection_type_seq;
--- CREATE TABLE inspection_type
--- (
---   id              INTEGER PRIMARY KEY DEFAULT nextval('prescription_type_seq'),
---   lang_id         INTEGER NOT NULL,
---   name            VARCHAR NOT NULL,
---   FOREIGN KEY (lang_id) REFERENCES lang (id) ON DELETE RESTRICT
---   -- primary(первичный), repeated(повторный),
--- );
---
--- ALTER TABLE positions OWNER TO "user";
--- ALTER TABLE position_seq OWNER TO "user";
--- ALTER TABLE diagnosis_type_seq OWNER TO "user";
--- ALTER TABLE diagnosis_type OWNER TO "user";
--- ALTER TABLE diagnosis_seq OWNER TO "user";
--- ALTER TABLE diagnosis OWNER TO "user";
--- ALTER TABLE prescription_type_seq OWNER TO "user";
--- ALTER TABLE prescription_type OWNER TO "user";
--- ALTER TABLE inspection_type_seq OWNER TO "user";
--- ALTER TABLE inspection_type OWNER TO "user";
-
--- *********************************
 CREATE SEQUENCE staff_seq;
 CREATE TABLE staff
 (
@@ -206,9 +136,6 @@ ALTER TABLE handbk_item_translate OWNER TO "user";
 ALTER TABLE lang_dictionary_seq OWNER TO "user";
 ALTER TABLE lang_dictionary OWNER TO "user";
 
-ALTER TABLE lang OWNER TO "user";
-ALTER TABLE lang_seq OWNER TO "user";
-
 ALTER TABLE staff  OWNER TO "user";
 ALTER TABLE staff_seq  OWNER TO "user";
 
@@ -237,11 +164,6 @@ ALTER TABLE inspection_register OWNER TO "user";
 
 -- вопросы на консультации
 -- приемлимо ли ON DELETE RESTRICT
--- для сообщений логера использовать только английский и напрямую строковые литералы, без создания строковых констант
-
 
 -- планы
--- добавить кеширование пароля
--- мапу (роли -> доступ к ресурсу) перенести из SecutityFilter в security.xml файл
 -- на этапе формирования запросов проверить индексы
--- сделать отдельно языкой фильтр

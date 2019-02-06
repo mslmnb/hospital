@@ -64,31 +64,51 @@
                         <label for="name" class="control-label col-xs-3"><fmt:message key="patients.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="patients.name"/>">
+                            <input type="text"
+                                   class="form-control"
+                                   id="name" name="name"
+                                   placeholder="<fmt:message key="patients.name"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="additionalName" class="control-label col-xs-3"><fmt:message key="patients.additionalName"/></label>
+                        <label for="additionalName" class="control-label col-xs-3">
+                            <fmt:message key="patients.additionalName"/>
+                        </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="additionalName" name="additionalName" placeholder="<fmt:message key="patients.additionalName"/>"/>
+                            <input type="text"
+                                   class="form-control"
+                                   id="additionalName"
+                                   name="additionalName"
+                                   placeholder="<fmt:message key="patients.additionalName"/>"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="surname" class="control-label col-xs-3"><fmt:message key="patients.surname"/></label>
+                        <label for="surname" class="control-label col-xs-3">
+                            <fmt:message key="patients.surname"/>
+                        </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="surname" name="surname" placeholder="<fmt:message key="patients.surname"/>"/>
+                            <input type="text"
+                                   class="form-control"
+                                   id="surname"
+                                   name="surname"
+                                   placeholder="<fmt:message key="patients.surname"/>"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="birthday" class="control-label col-xs-3"><fmt:message key="patients.birthday"/></label>
+                        <label for="birthday" class="control-label col-xs-3">
+                            <fmt:message key="patients.birthday"/>
+                        </label>
 
                         <div class="col-xs-9">
-                            <input class="form-control" id="birthday" name="birthday" placeholder="<fmt:message key="patients.birthday"/>">
+                            <input class="form-control"
+                                   id="birthday"
+                                   name="birthday"
+                                   placeholder="<fmt:message key="patients.birthday"/>">
                         </div>
                     </div>
 
@@ -96,7 +116,10 @@
                         <label for="phone" class="control-label col-xs-3"><fmt:message key="patients.phone"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="<fmt:message key="patients.phone"/>"/>
+                            <input type="text"
+                                   class="form-control"
+                                   id="phone" name="phone"
+                                   placeholder="<fmt:message key="patients.phone"/>"/>
                         </div>
                     </div>
 
@@ -105,7 +128,10 @@
                         <label for="email" class="control-label col-xs-3"><fmt:message key="patients.email"/></label>
 
                         <div class="col-xs-9">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="<fmt:message key="patients.email"/>"/>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email" name="email"
+                                   placeholder="<fmt:message key="patients.email"/>"/>
                         </div>
                     </div>
 

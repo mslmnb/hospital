@@ -1,6 +1,7 @@
 package com.epam.hospital.servlet;
 
 import com.epam.hospital.dao.ConnectionPool;
+import com.epam.hospital.dao.jdbc.JdbcHandbkDAOImpl;
 import com.epam.hospital.dao.jdbc.JdbcPatientDAOImpl;
 import com.epam.hospital.dao.jdbc.JdbcStaffDAOImpl;
 import com.epam.hospital.dao.jdbc.JdbcUserDAOImpl;
@@ -28,6 +29,7 @@ public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_PATIENT_SERVICE = "patientService";
     public static final String CONTEXT_PARAMETER_FOR_USER_SERVICE = "userService";
     public static final String CONTEXT_PARAMETER_FOR_STAFF_SERVICE = "staffService";
+    public static final String CONTEXT_PARAMETER_FOR_HANDBK_SERVICE = "handbkService";
 
     public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
@@ -78,9 +80,11 @@ public class AppServletContextListner implements ServletContextListener {
             PatientService patientService = new PatientServiceImpl(new JdbcPatientDAOImpl(connectionPool));
             UserService userService = new UserServiceImpl(new JdbcUserDAOImpl(connectionPool));
             StaffService staffService = new StaffServiceImpl(new JdbcStaffDAOImpl(connectionPool));
+            HandbkService handbkService = new HandbkServiceImpl(new JdbcHandbkDAOImpl(connectionPool));
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_SERVICE, patientService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_USER_SERVICE, userService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_STAFF_SERVICE, staffService);
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_HANDBK_SERVICE, handbkService);
         }
     }
 

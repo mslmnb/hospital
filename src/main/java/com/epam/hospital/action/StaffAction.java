@@ -2,14 +2,16 @@ package com.epam.hospital.action;
 
 import com.epam.hospital.service.StaffService;
 import com.epam.hospital.util.ActionUtil;
+import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
+import static com.epam.hospital.service.StaffService.*;
 import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_STAFF_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
-import static com.epam.hospital.util.ActionUtil.SAVE;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
@@ -32,17 +34,51 @@ public class StaffAction extends AbstractActionWithService {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;
-        String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
+        String direction = getDirection(request.getPathInfo(), URI);
+        String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
 
         switch (direction) {
             case FORWARD_TO_JSP:
                 result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
                 break;
             case GET_ALL:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(lang));
+                break;
+            case GET:
+                try {
+                    String idAsString = request.getParameter(ID_PARAMETER);
+                    result = service.get(idAsString).getJsonString();
+                } catch (AppException e) {
+                    response.setStatus(422);
+                    result = e.getCheckResult().getJsonString();
+                }
+                result = JSON_VIEW_PREFIX.getPrefix() + result;
                 break;
             case SAVE:
-                result = JSON_VIEW_PREFIX.getPrefix(); //+ result;
+                String idAsString = request.getParameter(ID_PARAMETER);
+                String name = request.getParameter(NAME_PARAMETER);
+                String additionalNAme = request.getParameter(ADDITIONAL_NAME_PARAMETER);
+                String surname = request.getParameter(SURNAME_PARAMETER);
+                String positionIdAsString = request.getParameter(POSITION_ID_PARAMETER);
+                try {
+                    service.save(idAsString, name, additionalNAme, surname, positionIdAsString);
+                    result = "";
+                } catch (AppException e) {
+                    response.setStatus(422);
+                    result = e.getCheckResult().getJsonString();
+                }
+                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                break;
+            case DELETE:
+                idAsString = request.getParameter(ID_PARAMETER);
+                try {
+                    service.delete(idAsString);
+                    result = "";
+                } catch (AppException e) {
+                    response.setStatus(422);
+                    result = e.getCheckResult().getJsonString();
+                }
+                result = JSON_VIEW_PREFIX.getPrefix() + result;
                 break;
             default:
                 LOG.error("Actions are not defined for direction: " + direction);
@@ -50,9 +86,5 @@ public class StaffAction extends AbstractActionWithService {
                 break;
         }
         return result;
-
-
-
-
     }
 }

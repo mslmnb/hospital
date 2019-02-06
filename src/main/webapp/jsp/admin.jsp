@@ -17,10 +17,13 @@
         <br>
         <br>
         <div class="shadow">
-            <a class="btn btn-info" href="users"><fmt:message key="admin.users"/></a>
+            <a class="btn btn-info col-xs-4" href="users"><fmt:message key="admin.users"/></a>
             <br>
             <br>
-            <a class="btn btn-info" href="handbks"><fmt:message key="admin.handbks"/></a>
+            <a class="btn btn-info col-xs-4" href="staff"><fmt:message key="admin.staff"/></a>
+            <br>
+            <br>
+            <a class="btn btn-info col-xs-4" href="handbks"><fmt:message key="admin.handbks"/></a>
         </div>
     </div>
 </div>

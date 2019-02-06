@@ -61,7 +61,10 @@ public class Staff extends NamedEntity implements HavingJsonView{
     public String getJsonString() {
         return "{ " +
                 "\"id\": " + getId() + ", " +
-                "\"name\": \"" + getSurnameWithInitials() + "\", " +
+                "\"name\": \"" + getName() + "\", " +
+                "\"additionalName\": \"" + additionalName + "\", " +
+                "\"surname\": \"" + surname + "\", " +
+                "\"positionId\": " + getPosition().getId() + ", " +
                 "\"position\": \"" + position.getName() + "\" " +
                 "}";
     }

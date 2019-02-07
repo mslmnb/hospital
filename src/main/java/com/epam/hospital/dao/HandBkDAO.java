@@ -9,10 +9,8 @@ import java.util.List;
 public interface HandBkDAO {
     Handbk create(Handbk handbk);
 
-    Staff create(Staff staff);
-
     // null if not found
-    Staff update(Staff staff);
+    Handbk update(Handbk handbk);
 
     // false if not found
     boolean delete(int id);
@@ -21,5 +19,8 @@ public interface HandBkDAO {
     Handbk get(int id);
 
     // empty if not found
-    List<Handbk> getAll(String lang, HandbkType handbkType);
+    List<Handbk> getAll(HandbkType handbkType);
+
+    // empty if not found
+    List<Handbk> getAllTranslations(String lang, HandbkType handbkType);
 }

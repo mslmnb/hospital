@@ -36,12 +36,11 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT staff.id, staff.name, staff.additional_name, " +
-            "staff.surname, staff.position_item_id, lang_dictionary.word As position " +
-            "FROM staff, handbk_items, lang_dictionary, handbk_item_translate " +
+            "staff.surname, staff.position_item_id, handbk_item_translate.translation As position " +
+            "FROM staff, handbk_items, handbk_item_translate " +
             "WHERE staff.position_item_id = handbk_items.id AND " +
             "handbk_items.id = handbk_item_translate.item_id AND " +
-            "handbk_item_translate.lang_dictionary_id = lang_dictionary.id AND " +
-            "lang_dictionary.lang = ?";
+            "handbk_item_translate.lang = ?";
 
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, position_item_id " +
             "FROM staff WHERE id = ? ";

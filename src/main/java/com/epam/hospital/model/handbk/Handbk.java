@@ -11,6 +11,10 @@ public class Handbk extends NamedEntity implements HavingJsonView{
         this.type = type;
     }
 
+    public HandbkType getType() {
+        return type;
+    }
+
     @Override
     public String getJsonString() {
         return "{ " +

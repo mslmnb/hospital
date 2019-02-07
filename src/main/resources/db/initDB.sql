@@ -12,28 +12,23 @@ ALTER DATABASE hospital OWNER TO "user";
 
 \connect hospital
 
-CREATE SEQUENCE lang_dictionary_seq ;
-CREATE TABLE lang_dictionary
-(
-  id              INTEGER PRIMARY KEY DEFAULT nextval('lang_dictionary_seq'),
-  lang            VARCHAR NOT NULL,
-  word            VARCHAR NOT NULL
-);
-
 CREATE SEQUENCE handbk_items_seq ;
 CREATE TABLE handbk_items
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('handbk_items_seq'),
-  handbk          VARCHAR NOT NULL
+  name            VARCHAR NOT NULL,
+  type     VARCHAR NOT NULL
+
 );
 
 CREATE TABLE handbk_item_translate
 (
-  item_id             INTEGER NOT NULL,
-  lang_dictionary_id  INTEGER NOT NULL,
-  FOREIGN KEY (item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
-  FOREIGN KEY (lang_dictionary_id) REFERENCES lang_dictionary (id) ON DELETE RESTRICT
+  item_id         INTEGER NOT NULL,
+  lang            VARCHAR NOT NULL,
+  translation     VARCHAR NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES handbk_items (id) ON DELETE CASCADE
 );
+CREATE UNIQUE INDEX translate_unique_item_lang_idx ON handbk_item_translate(item_id, lang);
 
 CREATE SEQUENCE staff_seq;
 CREATE TABLE staff
@@ -76,11 +71,9 @@ CREATE TABLE reception
   patient_id   INTEGER NOT NULL,
   admission_datetime    TIMESTAMP NOT NULL DEFAULT now(),
   discharge_datetime    TIMESTAMP,
-  FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT
-
---  признак поступления
---  если истина, то надо указать в какое отделение направлен
---  если ложь, то указать причину отказа
+  final_diagnosis_id    INTEGER,
+  FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
+  FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
 CREATE TABLE diagnosis_register

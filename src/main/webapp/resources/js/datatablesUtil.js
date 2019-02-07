@@ -10,6 +10,7 @@ function makeEditable() {
 }
 
 function add() {
+    $('#modalTitle').html(i18n["addTitle"]);
     form.find(":input").val("");
     $('#editRow').modal();
 }
@@ -18,13 +19,22 @@ function updateTableByData(data) {
     datatableApi.clear().rows.add(data).draw();
 }
 
+function updateTable() {
+    var requestParameter = $('#requestParameter').val();
+    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
+    $.get(ajaxUrl + "all" + requestParameter, updateTableByData);
+}
+
+
 function save() {
+    var requestParameter = $('#requestParameter').val();
+    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
     var form = $('#detailsForm');
     form.find(':input:disabled').addClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     $.ajax({
         type: "POST",
-        url: ajaxUrl + "save",
+        url: ajaxUrl + "save" + requestParameter,
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
@@ -37,10 +47,12 @@ function save() {
     });
 }
 function extendsOpts(opts) {
+    var requestParameter = $('#requestParameter').val();
+    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
     $.extend(true, opts,
         {
             "ajax": {
-                "url": ajaxUrl + "all",
+                "url": ajaxUrl + "all" + requestParameter,
                 "dataSrc": ""
             },
             "paging": true,

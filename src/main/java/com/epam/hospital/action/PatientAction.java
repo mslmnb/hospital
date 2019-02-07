@@ -49,7 +49,6 @@ public class PatientAction extends AbstractActionWithService {
                 break;
             case SAVE:
                 String idAsString = request.getParameter(ID_PARAMETER);
-                Integer id = idAsString.isEmpty() ? null : Integer.parseInt(idAsString);
                 String name = request.getParameter(NAME_PARAMETER);
                 String additionalName = request.getParameter(ADDITIONAL_NAME_PARAMETER);
                 String surname = request.getParameter(SURNAME_PARAMETER);

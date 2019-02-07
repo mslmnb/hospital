@@ -1,13 +1,10 @@
 DELETE FROM patient_register;
 DELETE FROM users;
 DELETE FROM staff;
-
 DELETE FROM handbk_item_translate;
 DELETE FROM handbk_items;
-DELETE FROM lang_dictionary;
 
 ALTER SEQUENCE handbk_items_seq RESTART WITH 100000;
-ALTER SEQUENCE lang_dictionary_seq RESTART WITH 100000;
 ALTER SEQUENCE users_seq RESTART WITH 100000;
 ALTER SEQUENCE staff_seq RESTART WITH 100000;
 ALTER SEQUENCE patient_seq RESTART WITH 100000;
@@ -23,38 +20,25 @@ INSERT INTO patient_register (name, additional_name, surname, birthday, phone, e
   ('Дархан', 'Алиевич', 'Оразалиев', '1980-06-08', '+7(721)2345560', ''),
   ('Таисия', 'Сагындыковна', 'Бейбутова', '1940-05-01', '+7(721)2534571', '');
 
-INSERT INTO lang_dictionary (lang, word) VALUES
-  ('ru', 'программист'),                --100000
-  ('ru', 'врач высшей категории'),      --100001
-  ('ru', 'врач 1 категории'),           --100002
-  ('ru', 'старшая медсестра'),          --100003
-  ('ru', 'медсестра'),                  --100004
-  ('en', 'system manager'),             --100005
-  ('en', 'doctor of higher category '), --100006
-  ('en', 'doctor of first category'),   --100007
-  ('en', 'chief nurse'),                --100008
-  ('en', 'nurse');                      --100009
+INSERT INTO handbk_items (type, name) VALUES
+  ('POSITION', 'для программист'), --100000
+  ('POSITION', 'для врач высшей категории'), --100001
+  ('POSITION', 'для врач 1 категории'), --100002
+  ('POSITION', 'для старшая медсестра'), --100003
+  ('POSITION', 'для медсестра'); --100004
 
 
-INSERT INTO handbk_items (handbk) VALUES
-  ('POSITION'), --100000
-  ('POSITION'), --100001
-  ('POSITION'), --100002
-  ('POSITION'), --100003
-  ('POSITION'); --100004
-
-
-INSERT INTO handbk_item_translate (item_id, lang_dictionary_id) VALUES
-  (100000, 100000),
-  (100001, 100001),
-  (100002, 100002),
-  (100003, 100003),
-  (100004, 100004),
-  (100000, 100005),
-  (100001, 100006),
-  (100002, 100007),
-  (100003, 100008),
-  (100004, 100009);
+INSERT INTO handbk_item_translate (item_id, lang, translation) VALUES
+  (100000, 'ru', 'программист'),
+  (100001, 'ru', 'врач высшей категории'),
+  (100002, 'ru', 'врач 1 категории'),
+  (100003, 'ru', 'старшая медсестра'),
+  (100004, 'ru', 'медсестра'),
+  (100000, 'en', 'system manager'),
+  (100001, 'en', 'doctor of higher category '),
+  (100002, 'en', 'doctor of first category'),
+  (100003, 'en', 'chief nurse'),
+  (100004, 'en', 'nurse');
 
 
 INSERT INTO staff (name, additional_name, surname, position_item_id) VALUES

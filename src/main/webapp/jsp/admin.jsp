@@ -23,7 +23,10 @@
             <a class="btn btn-info col-xs-4" href="staff"><fmt:message key="admin.staff"/></a>
             <br>
             <br>
-            <a class="btn btn-info col-xs-4" href="handbks"><fmt:message key="admin.handbks"/></a>
+            <a class="btn btn-info col-xs-4" href="handbk?handbk=position"><fmt:message key="admin.positionHandbk"/></a>
+            <br>
+            <br>
+            <a class="btn btn-info col-xs-4" href="handbk?handbk=diagnosis"><fmt:message key="admin.diagnosisHandbk"/></a>
         </div>
     </div>
 </div>

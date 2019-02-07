@@ -63,7 +63,7 @@ function drawPositionOptions(positionId) {
     debugger;
     $.ajax({
         type: "GET",
-        url: "handbk/all?handbk=POSITION",
+        url: "handbk/all_translations?handbk=POSITION",
         success: function (data) {
             var positionSelect = $("#positionId");
             positionSelect.empty();

@@ -34,6 +34,12 @@ public class DaoUtil {
     }
 
     public static boolean deleteFromTable(String tableName, Logger logger,
+                                          ConnectionPool pool, int id) {
+        return deleteFromTable(tableName, logger, pool, id, null);
+    }
+
+
+    public static boolean deleteFromTable(String tableName, Logger logger,
                                           ConnectionPool pool, int id, Map<String, String> errorResolver) {
         boolean result = false;
         Connection con = pool.getConnection();

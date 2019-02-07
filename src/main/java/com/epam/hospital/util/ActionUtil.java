@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class ActionUtil {
     public static final String FORWARD_TO_JSP = "";
     public static final String GET_ALL = "/all";
+    public static final String GET_ALL_TRANSLATIONS = "/all_translations";
     public static final String SAVE = "/save";
     public static final String GET = "/get";
     public static final String DELETE = "/delete";

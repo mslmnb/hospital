@@ -5,8 +5,6 @@ import com.epam.hospital.model.Staff;
 import com.epam.hospital.model.User;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.UserDAO;
-import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -30,7 +28,7 @@ public class JdbcUserDAOImpl implements UserDAO {
     private static final String PASSWORD_FIELDNAME = "password";
 
     private static final String LOGIN_UNIQUE_IDX = "users_unique_login_idx";
-    private static final String ROLE_UNIQUE_IDX = "users_unique_staff_role_idx";
+    private static final String STAFF_AND_ROLE_UNIQUE_IDX = "users_unique_staff_role_idx";
     private static final String NOT_UNIQUE_LOGIN = "notUniqueLogin";
     private static final String NOT_UNIQUE_STAFF_AND_ROLE = "notUniqueStaffAndRole";
     private static final Map<String, String> errorResolver;
@@ -49,12 +47,12 @@ public class JdbcUserDAOImpl implements UserDAO {
     private static final String INSERT_INTO = "INSERT INTO users" +
             "(staff_id,  login,  password, role) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
-    private static final String USERS_TABLE_NAME = "users";
+    private static final String TABLE_NAME = "users";
 
     static {
         errorResolver = new HashMap<>();
         errorResolver.put(LOGIN_UNIQUE_IDX, NOT_UNIQUE_LOGIN);
-        errorResolver.put(ROLE_UNIQUE_IDX, NOT_UNIQUE_STAFF_AND_ROLE);
+        errorResolver.put(STAFF_AND_ROLE_UNIQUE_IDX, NOT_UNIQUE_STAFF_AND_ROLE);
     }
 
     private final ConnectionPool pool;
@@ -79,11 +77,7 @@ public class JdbcUserDAOImpl implements UserDAO {
                     user.setId(id);
                 }
             } catch (SQLException e) {
-                String errorMsg = e.getMessage();
-                LOG.error(errorMsg);
-                CheckResult checkResult = AnalyzerSQLException(errorResolver, e);
-                throw new AppException(checkResult);
-            }
+                logAndThrowForSQLException(errorResolver, e, LOG);                  }
             pool.freeConnection(con);
         } else {
             logAndThrowForNoDbConnectionError(LOG);
@@ -103,7 +97,7 @@ public class JdbcUserDAOImpl implements UserDAO {
                 }
                 ;
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -114,7 +108,7 @@ public class JdbcUserDAOImpl implements UserDAO {
 
     @Override
     public boolean delete(int id) {
-        return deleteFromTable(USERS_TABLE_NAME, LOG, pool, id, errorResolver);
+        return deleteFromTable(TABLE_NAME, LOG, pool, id, errorResolver);
     }
 
     @Override
@@ -131,7 +125,7 @@ public class JdbcUserDAOImpl implements UserDAO {
                     }
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -154,7 +148,7 @@ public class JdbcUserDAOImpl implements UserDAO {
                     }
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -166,21 +160,21 @@ public class JdbcUserDAOImpl implements UserDAO {
     @Override
     public List<User> getAll() {
         Connection con = pool.getConnection();
-        List<User> resultList = new ArrayList<>();
+        List<User> results = new ArrayList<>();
         if (con != null) {
             try (Statement statement = con.createStatement();
                  ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
                 while (resultSet.next()) {
-                    resultList.add(getUser(resultSet, null));
+                    results.add(getUser(resultSet, null));
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return resultList;
+        return results;
     }
 
     private User getUser(ResultSet resultSet, String login) throws SQLException {

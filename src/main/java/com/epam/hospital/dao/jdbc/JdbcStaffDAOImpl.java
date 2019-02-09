@@ -36,11 +36,11 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT staff.id, staff.name, staff.additional_name, " +
-            "staff.surname, staff.position_item_id, handbk_item_translate.translation As position " +
-            "FROM staff, handbk_items, handbk_item_translate " +
+            "staff.surname, staff.position_item_id, handbk_item_translations.translation As position " +
+            "FROM staff, handbk_items, handbk_item_translations " +
             "WHERE staff.position_item_id = handbk_items.id AND " +
-            "handbk_items.id = handbk_item_translate.item_id AND " +
-            "handbk_item_translate.lang = ?";
+            "handbk_items.id = handbk_item_translations.handbk_item_id AND " +
+            "handbk_item_translations.locale = ?";
 
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, position_item_id " +
             "FROM staff WHERE id = ? ";
@@ -48,7 +48,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
             "(name,  additional_name, surname, position_item_id) VALUES (?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE staff SET name = ?, additional_name = ?, " +
             "surname = ?, position_item_id = ?  WHERE id = ?";
-    private static final String STAFF_TABLE_NAME = "staff";
+    private static final String TABLE_NAME = "staff";
 
     static {
         errorResolver = new HashMap<>();
@@ -81,7 +81,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
                     staff.setId(id);
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -104,7 +104,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
                     staff = null;
                 };
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -114,7 +114,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
 
     @Override
     public boolean delete(int id) {
-        return deleteFromTable(STAFF_TABLE_NAME, LOG, pool, id, errorResolver);
+        return deleteFromTable(TABLE_NAME, LOG, pool, id, errorResolver);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
                     }
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -143,23 +143,23 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     @Override
     public List<Staff> getAll(String lang) {
         Connection con = pool.getConnection();
-        List<Staff> resultList = new ArrayList<>();
+        List<Staff> results = new ArrayList<>();
         if (con != null) {
             try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
                 statement.setString(1, lang);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        resultList.add(getStaff(resultSet));
+                        results.add(getStaff(resultSet));
                     }
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return resultList;
+        return results;
     }
 
     private Staff getStaff(ResultSet resultSet) throws SQLException {

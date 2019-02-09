@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages/app"/>
 
-
 <html>
 
 <jsp:include page="fragments/headTag.jsp"/>
@@ -13,22 +12,25 @@
 <body>
 
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
-<script type="text/javascript" src="resources/js/handbkDatatables.js" defer></script>
+<script type="text/javascript" src="resources/js/translationDatatables.js" defer></script>
 
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="handbk.${param.handbk}.title"/></h3>
-                <input type="hidden"
-                       id="handbkParameter"
-                       name="handbkParameter"
-                       value="${param.handbk}">
+            <h3><fmt:message key="translation.title"/> ${param.handbkItemId}</h3>
+            <input type="hidden"
+                   id="handbkParameter"
+                   value="${param.handbk}">
+
+            <input type="hidden"
+                   id="handbkItemIdParameter"
+                   value="${param.handbkItemId}">
 
             <div class="view-box">
 
-                <a class="btn btn-info" onclick="addHandbk()">
+                <a class="btn btn-info" onclick="addTranslation()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <fmt:message key="common.add"/>
                 </a>
@@ -37,8 +39,8 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="handbk.name"/></th>
-                        <th></th>
+                        <th><fmt:message key="translation.locale"/></th>
+                        <th><fmt:message key="translation.translation"/></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -59,18 +61,31 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
                     <input type="hidden"
-                           id="handbk"
-                           name="handbk"
-                           value="${param.handbk}">
+                           id="handbkItemId"
+                           name="handbkItemId"
+                           value="${param.handbkItemId}">
 
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="name" class="control-label col-xs-3"><fmt:message key="handbk.name"/></label>
+                        <label for="locale" class="control-label col-xs-3">
+                            <fmt:message key="translation.locale"/>
+                        </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="<fmt:message key="handbk.name"/>">
+                            <select class="form-control" id="locale" name="locale">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="translation" class="control-label col-xs-3">
+                            <fmt:message key="translation.translation"/>
+                        </label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="translation" name="translation"
+                                   placeholder="<fmt:message key="translation.translation"/>">
                         </div>
                     </div>
 
@@ -91,11 +106,12 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["translation"] = "<fmt:message key="handbk.translation"/>"
-    i18n["addTitle"] = "<fmt:message key="handbk.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="handbk.editTitle"/>"
-    i18n["emptyName"] = "<fmt:message key="error.handbk.emptyName"/>"
+    i18n["addTitle"] = "<fmt:message key="translation.addTitle"/>"
+    i18n["editTitle"] = "<fmt:message key="translation.editTitle"/>"
+    i18n["selectLocale"] = "<fmt:message key="translation.selectLocale"/>"
+    i18n["emptyTranslation"] = "<fmt:message key="error.translation.emptyTranslation"/>"
+    i18n["emptyLocale"] = "<fmt:message key="error.translation.emptyLocale"/>"
+    i18n["notUniqueItemAndLocale"] = "<fmt:message key="error.translation.notUniqueItemAndLocale"/>"
 </script>
 
 </html>
-

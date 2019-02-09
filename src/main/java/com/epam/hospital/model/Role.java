@@ -1,5 +1,9 @@
 package com.epam.hospital.model;
 
+import org.json.JSONObject;
+
+import static com.epam.hospital.service.UserService.ROLE_PARAMETER;
+
 public enum Role implements HavingJsonView {
     ROLE_ADMIN,
     ROLE_DOCTOR,
@@ -7,6 +11,8 @@ public enum Role implements HavingJsonView {
 
     @Override
     public String getJsonString() {
-        return "{ \"role\": \"" + this.name() + "\" }";
+        JSONObject userJsonObj = new JSONObject();
+        userJsonObj.put(ROLE_PARAMETER, this.name());
+        return userJsonObj.toString();
     }
 }

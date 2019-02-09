@@ -12,6 +12,7 @@ public interface StaffService {
     String ADDITIONAL_NAME_PARAMETER = "additionalName";
     String SURNAME_PARAMETER = "surname";
     String POSITION_ID_PARAMETER = "positionId";
+    String POSITION_PARAMETER = "position";
 
     void save(String idAsString, String name, String additionalName,
               String surname, String positionIdAsString) throws AppException;

@@ -3,9 +3,6 @@ package com.epam.hospital.dao.jdbc;
 import com.epam.hospital.model.Patient;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDAO;
-import com.epam.hospital.model.User;
-import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -14,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
-import static com.epam.hospital.util.DaoUtil.logAndThrowForUnknowError;
-import static com.epam.hospital.util.exception.AppException.NO_DB_CONNECTION_ERROR;
-import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
+import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
 
 public class JdbcPatientDAOImpl implements PatientDAO {
     private static final Logger LOG = Logger.getLogger(JdbcPatientDAOImpl.class);
@@ -58,7 +53,7 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                         patient.setId(id);
                     }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
@@ -85,21 +80,21 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     @Override
     public List<Patient> getAll() {
         Connection con = pool.getConnection();
-        List<Patient> resultList = new ArrayList<>();
+        List<Patient> results = new ArrayList<>();
         if (con != null) {
             try (Statement statement = con.createStatement();
                  ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
                 while (resultSet.next()) {
-                    resultList.add(getPatient(resultSet));
+                    results.add(getPatient(resultSet));
                 }
             } catch (SQLException e) {
-                logAndThrowForUnknowError(LOG, e);
+                logAndThrowForSQLException(e, LOG);
             }
             pool.freeConnection(con);
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return resultList;
+        return results;
     }
 
     @Override

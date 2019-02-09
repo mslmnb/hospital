@@ -1,12 +1,15 @@
 package com.epam.hospital.model;
 
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 import static com.epam.hospital.model.Role.ROLE_ADMIN;
+import static com.epam.hospital.service.UserService.*;
 
-public class User extends BaseEntity implements HavingJsonView{
+public class User extends BaseEntity implements HavingJsonView {
 
     private Staff staff;
 
@@ -69,13 +72,13 @@ public class User extends BaseEntity implements HavingJsonView{
 
     @Override
     public String getJsonString() {
-        return "{ " +
-                "\"id\": " + getId() + ", " +
-                "\"staffId\": " + getStaffId() + ", " +
-                "\"staffName\": \"" + staff.getSurnameWithInitials() + "\", " +
-                "\"login\": \"" + login + "\", " +
-                "\"role\": \"" + role + "\" " +
-                "}";
+        JSONObject userJsonObj = new JSONObject();
+        userJsonObj.put(ID_PARAMETER, getId());
+        userJsonObj.put(STAFF_ID_PARAMETER, getStaffId());
+        userJsonObj.put(STAFF_NAME_PARAMETER, staff.getSurnameWithInitials());
+        userJsonObj.put(LOGIN_PARAMETER, login);
+        userJsonObj.put(ROLE_PARAMETER, role);
+        return userJsonObj.toString();
     }
 
     @Override

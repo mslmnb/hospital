@@ -18,5 +18,4 @@ public interface StaffDAO {
 
     // empty if not found
     List<Staff> getAll(String lang);
-
 }

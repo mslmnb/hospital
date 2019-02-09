@@ -1,4 +1,4 @@
-var ajaxUrl = 'staff/';
+var ajaxUrl = 'translation/';
 var datatableApi;
 
 // function updateTable() {
@@ -9,16 +9,10 @@ $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
             {
-                "data": "name"
+                "data": "locale"
             },
             {
-                "data": "additionalName"
-            },
-            {
-                "data": "surname"
-            },
-            {
-                "data": "position"
+                "data": "translation"
             },
             {
                 "orderable": false,
@@ -41,44 +35,48 @@ $(function () {
 
 function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
-    form.find(":input").val("");
+    // form.find(":input").val("");
+    form.find("#id").val("");
+    form.find("#locale").val("");
+    form.find("#translation").val("");
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $("#id").val(data.id);
-        $("#name").val(data.name);
-        $("#additionalName").val(data.additionalName);
-        $("#surname").val(data.surname);
-        drawPositionOptions(data.positionId);
+        $("#locale").val(data.locale);
+        $("#translation").val(data.translation);
+        drawLocaleOptions(data.locale);
     });
     $('#editRow').modal();
 }
 
-function addStaff() {
+function addTranslation() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find(":input").val("");
-    drawPositionOptions();
+    form.find("#id").val("");
+    form.find("#locale").val("");
+    form.find("#translation").val("");
+    drawLocaleOptions();
     $('#editRow').modal();
 }
 
-function drawPositionOptions(positionId) {
+function drawLocaleOptions(locale) {
     $.ajax({
         type: "GET",
-        url: "handbk/all_translations?handbk=POSITION",
+        url: "lang/all",
         success: function (data) {
-            var positionSelect = $("#positionId");
-            positionSelect.empty();
+            var localeSelect = $("#locale");
+            localeSelect.empty();
             var option = $("<option>");
             option.attr("disabled", true)
-                .html(i18n["selectPosition"])
-                .appendTo(positionSelect);
-            if (positionId == undefined) {
+                .html(i18n["selectLocale"])
+                .appendTo(localeSelect);
+            if (locale == undefined) {
                 option.attr("selected", true);
             }
             for (choice in data) {
                 var option = $("<option>");
-                option.val(data[choice].id)
-                    .html(data[choice].name)
-                    .appendTo(positionSelect)
-                if(data[choice].id == positionId) {
+                option.val(data[choice].locale)
+                    .html(data[choice].locale)
+                    .appendTo(localeSelect)
+                if(data[choice].locale == locale) {
                     option.attr("selected", true)
                 }
             }

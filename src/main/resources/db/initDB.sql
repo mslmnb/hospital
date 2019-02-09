@@ -12,6 +12,11 @@ ALTER DATABASE hospital OWNER TO "user";
 
 \connect hospital
 
+CREATE TABLE lang
+(
+  locale           VARCHAR PRIMARY KEY
+);
+
 CREATE SEQUENCE handbk_items_seq ;
 CREATE TABLE handbk_items
 (
@@ -21,14 +26,16 @@ CREATE TABLE handbk_items
 
 );
 
-CREATE TABLE handbk_item_translate
+CREATE SEQUENCE handbk_item_translations_seq ;
+CREATE TABLE handbk_item_translations
 (
-  item_id         INTEGER NOT NULL,
-  lang            VARCHAR NOT NULL,
+  id              INTEGER PRIMARY KEY DEFAULT nextval('handbk_item_translations_seq'),
+  handbk_item_id  INTEGER NOT NULL,
+  locale          VARCHAR NOT NULL,
   translation     VARCHAR NOT NULL,
-  FOREIGN KEY (item_id) REFERENCES handbk_items (id) ON DELETE CASCADE
+  CONSTRAINT translate_unique_item_locale_idx UNIQUE (handbk_item_id, locale),
+  FOREIGN KEY (handbk_item_id) REFERENCES handbk_items (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX translate_unique_item_lang_idx ON handbk_item_translate(item_id, lang);
 
 CREATE SEQUENCE staff_seq;
 CREATE TABLE staff
@@ -63,16 +70,10 @@ CREATE TABLE patient_register
   surname         VARCHAR NOT NULL,
   birthday        DATE NOT NULL,
   phone           VARCHAR NOT NULL,
-  email           VARCHAR
-);
-
-CREATE TABLE reception
-(
-  patient_id   INTEGER NOT NULL,
+  email           VARCHAR,
   admission_datetime    TIMESTAMP NOT NULL DEFAULT now(),
   discharge_datetime    TIMESTAMP,
   final_diagnosis_id    INTEGER,
-  FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
   FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
@@ -120,14 +121,13 @@ CREATE TABLE inspection_register
   FOREIGN KEY  (inspectn_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
+ALTER TABLE lang OWNER TO "user";
 
 ALTER TABLE handbk_items_seq OWNER TO "user";
 ALTER TABLE handbk_items OWNER TO "user";
 
-ALTER TABLE handbk_item_translate OWNER TO "user";
-
-ALTER TABLE lang_dictionary_seq OWNER TO "user";
-ALTER TABLE lang_dictionary OWNER TO "user";
+ALTER TABLE handbk_item_translations_seq OWNER TO "user";
+ALTER TABLE handbk_item_translations OWNER TO "user";
 
 ALTER TABLE staff  OWNER TO "user";
 ALTER TABLE staff_seq  OWNER TO "user";
@@ -138,14 +138,9 @@ ALTER TABLE users_seq  OWNER TO "user";
 ALTER TABLE patient_register OWNER TO "user";
 ALTER TABLE patient_seq OWNER TO "user";
 
-ALTER TABLE reception OWNER TO "user";
 ALTER TABLE diagnosis_register OWNER TO "user";
 ALTER TABLE prescription_register OWNER TO "user";
 ALTER TABLE inspection_register OWNER TO "user";
-
-
--- изсенить собственника для всех объектов БД: таблицы и счетчики
--- REASSIGN OWNED BY postgres TO user
 
 
 
@@ -154,9 +149,11 @@ ALTER TABLE inspection_register OWNER TO "user";
 --выполнение назначений и отмену назначений делает врач или медсестра
 
 
-
--- вопросы на консультации
--- приемлимо ли ON DELETE RESTRICT
-
 -- планы
 -- на этапе формирования запросов проверить индексы
+-- при добавлении пациента добавить поле дата поступления
+-- при редактировании пользователя разрешать изменять только поля телефон? емейл,
+-- по нажатию кнопка выписка редактировать поля дата выписки и окончательный диагноз
+
+-- параметры запроса handbk & handbkItemId ложить в модальное окно, тогда не надо их добавлять в save() в хвост заспроса
+-- для ресурсов использовать дефолт сервлет

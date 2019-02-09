@@ -13,7 +13,7 @@ $(function () {
                 "data": "name"
             },
             {
-                "data": "surName"
+                "data": "surname"
             },
             {
                 "orderable": false,
@@ -60,7 +60,7 @@ $(function () {
 
 function renderInfoBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/info&id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='patients/info?id=" + row.id + "'>"
                                                                            + i18n["infoBtn"]
                                                                            + "</a>";
     }
@@ -68,7 +68,7 @@ function renderInfoBtn(data, type, row) {
 
 function renderReceptionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/reception&id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='patients/reception?id=" + row.id + "'>"
                                                                                 + i18n["receptionBtn"]
                                                                                 + "</a>";
     }
@@ -76,7 +76,7 @@ function renderReceptionBtn(data, type, row) {
 
 function renderDiagnosisBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/diagnosis&id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='patients/diagnosis?id=" + row.id + "'>"
                                                                                 + i18n["diagnosisBtn"]
                                                                                 + "</a>";
     }
@@ -84,7 +84,7 @@ function renderDiagnosisBtn(data, type, row) {
 
 function renderPrescriptionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/prescription&id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='patients/prescription?id=" + row.id + "'>"
                                                                                    + i18n["prescriptionBtn"]
                                                                                    + "</a>";
     }
@@ -92,7 +92,7 @@ function renderPrescriptionBtn(data, type, row) {
 
 function renderInspectionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/inspection&id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='patients/inspection?id=" + row.id + "'>"
                                                                                      + i18n["inspectionBtn"]
                                                                                      + "</a>";
     }

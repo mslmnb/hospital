@@ -9,13 +9,17 @@ import java.util.stream.Collectors;
 
 public class ActionUtil {
     public static final String FORWARD_TO_JSP = "";
+    public static final String FORWARD_TO_TRANSLATION_JSP = "/translation";
     public static final String GET_ALL = "/all";
-    public static final String GET_ALL_TRANSLATIONS = "/all_translations";
+    public static final String GET_ALL_ITEM_TRANSLATIONS = "/all_translations";
     public static final String SAVE = "/save";
     public static final String GET = "/get";
     public static final String DELETE = "/delete";
+    public static final String FORWARD_TO_POSITION_JSP = "/position";
+    public static final String FORWARD_TO_DIAGNOSIS_JSP = "/diagnosis";
 
-    public static String getJsonString(List<? extends HavingJsonView> elements) {  // перенести в JsonUtil class
+
+    public static String getJsonString(List<? extends HavingJsonView> elements) {
         return "[ "
                 + elements.stream().map(el -> el.getJsonString()).collect(Collectors.joining(", "))
                 + "]";

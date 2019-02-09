@@ -1,10 +1,6 @@
 var ajaxUrl = 'handbk/';
 var datatableApi;
 
-// function updateTable() {
-//     $.get(ajaxUrl + "all?handbk=POSITION", updateTableByData);
-// }
-
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
@@ -35,8 +31,18 @@ $(function () {
     }));
 });
 
+function addHandbk() {
+    $('#modalTitle').html(i18n["addTitle"]);
+    form.find("#id").val("");
+    form.find("#name").val("");
+    $('#editRow').modal();
+}
+
 function renderTranslationBtn(data, type, row) {
+    var handbkParameter = '?handbk=' + $('#handbkParameter').val();
     if (type === 'display') {
-        return '<a href="">' + i18n['translation'] + '</a>';
+        return "<a href='translation" + handbkParameter + "&handbkItemId=" + row.id + "'>"
+                                                                             + i18n['translation']
+                                                                             + '</a>';
     }
 }

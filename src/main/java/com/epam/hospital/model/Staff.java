@@ -1,6 +1,9 @@
 package com.epam.hospital.model;
 
 import com.epam.hospital.model.handbk.Position;
+import org.json.JSONObject;
+
+import static com.epam.hospital.service.StaffService.*;
 
 public class Staff extends NamedEntity implements HavingJsonView{
     private String additionalName;
@@ -59,14 +62,14 @@ public class Staff extends NamedEntity implements HavingJsonView{
 
     @Override
     public String getJsonString() {
-        return "{ " +
-                "\"id\": " + getId() + ", " +
-                "\"name\": \"" + getName() + "\", " +
-                "\"additionalName\": \"" + additionalName + "\", " +
-                "\"surname\": \"" + surname + "\", " +
-                "\"positionId\": " + getPosition().getId() + ", " +
-                "\"position\": \"" + position.getName() + "\" " +
-                "}";
+        JSONObject userJsonObj = new JSONObject();
+        userJsonObj.put(ID_PARAMETER, getId());
+        userJsonObj.put(NAME_PARAMETER, getName());
+        userJsonObj.put(ADDITIONAL_NAME_PARAMETER, additionalName);
+        userJsonObj.put(SURNAME_PARAMETER, surname);
+        userJsonObj.put(POSITION_ID_PARAMETER, getPosition().getId());
+        userJsonObj.put(POSITION_PARAMETER, getPosition().getName());
+        return userJsonObj.toString();
     }
 
     @Override

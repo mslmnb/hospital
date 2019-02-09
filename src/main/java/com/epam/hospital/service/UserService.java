@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserService {
     String ID_PARAMETER = "id";
     String STAFF_ID_PARAMETER = "staffId";
+    String STAFF_NAME_PARAMETER = "staffName";
     String LOGIN_PARAMETER = "login";
     String ROLE_PARAMETER = "role";
     String PASSWORD_PARAMETER = "password";

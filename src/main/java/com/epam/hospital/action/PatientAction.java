@@ -1,6 +1,5 @@
 package com.epam.hospital.action;
 
-import com.epam.hospital.model.Patient;
 import com.epam.hospital.service.PatientService;
 import com.epam.hospital.util.ActionUtil;
 import com.epam.hospital.util.CheckResult;
@@ -10,14 +9,12 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.time.LocalDate;
-
 import static com.epam.hospital.service.PatientService.*;
 import static com.epam.hospital.util.ActionUtil.*;
-import static com.epam.hospital.util.ValidationUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_SERVICE;
+import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
 public class PatientAction extends AbstractActionWithService {
     private static final Logger LOG = Logger.getLogger(PatientAction.class);
@@ -66,7 +63,8 @@ public class PatientAction extends AbstractActionWithService {
                 break;
             default:
                 LOG.error("Actions are not defined for direction: " + direction);
-                result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
+                response.setStatus(422);
+                result = new CheckResult(UNKNOWN_ERROR).getJsonString();
                 break;
         }
         return result;

@@ -1,10 +1,7 @@
 package com.epam.hospital.servlet;
 
 import com.epam.hospital.dao.ConnectionPool;
-import com.epam.hospital.dao.jdbc.JdbcHandbkDAOImpl;
-import com.epam.hospital.dao.jdbc.JdbcPatientDAOImpl;
-import com.epam.hospital.dao.jdbc.JdbcStaffDAOImpl;
-import com.epam.hospital.dao.jdbc.JdbcUserDAOImpl;
+import com.epam.hospital.dao.jdbc.*;
 import com.epam.hospital.service.*;
 import com.epam.hospital.action.AbstractActionWithService;
 import com.epam.hospital.action.Action;
@@ -30,6 +27,8 @@ public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_USER_SERVICE = "userService";
     public static final String CONTEXT_PARAMETER_FOR_STAFF_SERVICE = "staffService";
     public static final String CONTEXT_PARAMETER_FOR_HANDBK_SERVICE = "handbkService";
+    public static final String CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE = "translationService";
+    public static final String CONTEXT_PARAMETER_FOR_LANG_SERVICE = "langService";
 
     public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
@@ -80,11 +79,15 @@ public class AppServletContextListner implements ServletContextListener {
             PatientService patientService = new PatientServiceImpl(new JdbcPatientDAOImpl(connectionPool));
             UserService userService = new UserServiceImpl(new JdbcUserDAOImpl(connectionPool));
             StaffService staffService = new StaffServiceImpl(new JdbcStaffDAOImpl(connectionPool));
-            HandbkService handbkService = new HandbkServiceImpl(new JdbcHandbkDAOImpl(connectionPool));
+            HandbkItemService handbkService = new HandbkItemServiceImpl(new JdbcHandbkItemDAOImpl(connectionPool));
+            TranslationService translationService = new TranslationServiceImpl(new JdbcTranslationDAOImpl(connectionPool));
+            LangService langService = new LangServiceImpl(new JdbcLangDAOImpl(connectionPool));
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_SERVICE, patientService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_USER_SERVICE, userService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_STAFF_SERVICE, staffService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_HANDBK_SERVICE, handbkService);
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE, translationService);
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_LANG_SERVICE, langService);
         }
     }
 

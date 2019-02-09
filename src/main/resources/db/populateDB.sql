@@ -1,13 +1,19 @@
 DELETE FROM patient_register;
 DELETE FROM users;
 DELETE FROM staff;
-DELETE FROM handbk_item_translate;
+DELETE FROM handbk_item_translations;
 DELETE FROM handbk_items;
 
 ALTER SEQUENCE handbk_items_seq RESTART WITH 100000;
+ALTER SEQUENCE handbk_item_translations_seq RESTART WITH 100000;
 ALTER SEQUENCE users_seq RESTART WITH 100000;
 ALTER SEQUENCE staff_seq RESTART WITH 100000;
 ALTER SEQUENCE patient_seq RESTART WITH 100000;
+
+INSERT INTO lang (locale) VALUES
+  ('ru'),
+  ('en');
+
 
 INSERT INTO patient_register (name, additional_name, surname, birthday, phone, email) VALUES
   ('Анатолий', 'Сергеевич', 'Скоробогатов', '1968-01-05', '+7(721)2345678', 'anatoliy@mail.ru'),
@@ -28,7 +34,7 @@ INSERT INTO handbk_items (type, name) VALUES
   ('POSITION', 'для медсестра'); --100004
 
 
-INSERT INTO handbk_item_translate (item_id, lang, translation) VALUES
+INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) VALUES
   (100000, 'ru', 'программист'),
   (100001, 'ru', 'врач высшей категории'),
   (100002, 'ru', 'врач 1 категории'),

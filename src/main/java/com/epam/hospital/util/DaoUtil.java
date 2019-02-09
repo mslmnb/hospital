@@ -16,28 +16,32 @@ public class DaoUtil {
     private static String DELETE_FROM_START = "DELETE FROM ";
     private static String DELETE_FROM_END = " WHERE id = ?";
 
-    public static CheckResult AnalyzerSQLException(Map<String, String> errorResolver, SQLException e) {
-        CheckResult result = new CheckResult();
+    public static void logAndThrowForSQLException(SQLException e, Logger logger) {
+        logAndThrowForSQLException(null, e, logger);
+    }
+
+    public static void logAndThrowForSQLException(Map<String, String> errorResolver, SQLException e, Logger logger) {
         String errorMsg = e.getMessage();
+        logger.error(errorMsg);
+        CheckResult checkResult = new CheckResult();
         if (errorResolver!=null) {
             for (Map.Entry<String, String> pair : errorResolver.entrySet()) {
                 if (errorMsg.contains(pair.getKey())) {
-                    result.addErrorMessage(pair.getValue());
+                    checkResult.addErrorMessage(pair.getValue());
                     break;
                 }
             }
         }
-        if (!result.foundErrors()) {
-            result.addErrorMessage(UNKNOWN_ERROR);
+        if (!checkResult.foundErrors()) {
+            checkResult.addErrorMessage(UNKNOWN_ERROR);
         }
-        return result;
+        throw new AppException(checkResult);
     }
 
     public static boolean deleteFromTable(String tableName, Logger logger,
                                           ConnectionPool pool, int id) {
         return deleteFromTable(tableName, logger, pool, id, null);
     }
-
 
     public static boolean deleteFromTable(String tableName, Logger logger,
                                           ConnectionPool pool, int id, Map<String, String> errorResolver) {
@@ -50,25 +54,17 @@ public class DaoUtil {
                     result = true;
                 }
             } catch (SQLException e) {
-                CheckResult checkResult = AnalyzerSQLException(errorResolver, e);
-                throw new AppException(checkResult);
+                logAndThrowForSQLException(errorResolver, e, logger);
             }
             pool.freeConnection(con);
         } else {
             logAndThrowForNoDbConnectionError(logger);
         }
         return result;
-
     }
 
     public static void logAndThrowForNoDbConnectionError(Logger logger) {
         logger.error("There is no database connection.");
         throw new AppException(new CheckResult(NO_DB_CONNECTION_ERROR));
     }
-
-    public static void logAndThrowForUnknowError(Logger logger, SQLException e) {
-        logger.error(e.getMessage());
-        throw new AppException(new CheckResult(UNKNOWN_ERROR));
-    }
-
 }

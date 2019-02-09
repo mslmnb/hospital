@@ -1,7 +1,7 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.model.handbk.HandbkType;
-import com.epam.hospital.service.HandbkItemService;
+import com.epam.hospital.service.TranslationService;
 import com.epam.hospital.util.ActionUtil;
 import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
@@ -11,29 +11,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
-import static com.epam.hospital.service.HandbkItemService.ID_PARAMETER;
-import static com.epam.hospital.service.HandbkItemService.NAME_PARAMETER;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_HANDBK_SERVICE;
+import static com.epam.hospital.service.TranslationService.*;
+import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
-public class HandbkAction extends AbstractActionWithService{
-
+public class TranslationAction extends AbstractActionWithService{
     private static final Logger LOG = Logger.getLogger(HandbkAction.class);
 
-    private static final String URI = "handbk";
-    private static final String JSP_FILE_NAME = "/jsp/handbk.jsp";
+    private static final String URI = "translation";
+    private static final String JSP_FILE_NAME = "/jsp/translation.jsp";
 
-    private HandbkItemService service;
+    private TranslationService service;
 
-    public HandbkAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_HANDBK_SERVICE);
+    public TranslationAction() {
+        super(URI, CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE);
     }
 
     private void setService(Object service) {
-        this.service = (HandbkItemService) service;
+        this.service = (TranslationService) service;
     }
 
     @Override
@@ -50,11 +48,9 @@ public class HandbkAction extends AbstractActionWithService{
             case FORWARD_TO_JSP:
                 result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
                 break;
-            case GET_ALL_ITEM_TRANSLATIONS:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAllTranslations(lang, handbkType));
-                break;
             case GET_ALL:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(handbkType));
+                String handbkItemIdAsString = request.getParameter(HANDBK_ITEM_ID_PARAMETER);
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(handbkItemIdAsString));
                 break;
             case GET:
                 try {
@@ -68,9 +64,11 @@ public class HandbkAction extends AbstractActionWithService{
                 break;
             case SAVE:
                 String idAsString = request.getParameter(ID_PARAMETER);
-                String name = request.getParameter(NAME_PARAMETER);
+                handbkItemIdAsString = request.getParameter(HANDBK_ITEM_ID_PARAMETER);
+                String locale = request.getParameter(LOCALE_PARAMETER);
+                String translation = request.getParameter(TRANSLATION_PARAMETER);
                 try {
-                    service.save(idAsString, name, handbkType);
+                    service.save(idAsString, handbkItemIdAsString, locale, translation);
                     result = "";
                 } catch (AppException e) {
                     response.setStatus(422);

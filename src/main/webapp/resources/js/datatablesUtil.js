@@ -20,21 +20,23 @@ function updateTableByData(data) {
 }
 
 function updateTable() {
-    var requestParameter = $('#requestParameter').val();
-    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
+    var handbkParameter = $('#handbkParameter').val();
+    var requestParameter = handbkParameter==undefined ? '' : '?handbk=' + handbkParameter;
+    var sign = handbkParameter==undefined ? '?' : '&'
+    var handbkItemIdParameter = $('#handbkItemIdParameter').val();
+    requestParameter = requestParameter +
+                       (handbkItemIdParameter==undefined ? '' : sign + 'handbkItemId=' + handbkItemIdParameter);
     $.get(ajaxUrl + "all" + requestParameter, updateTableByData);
 }
 
 
 function save() {
-    var requestParameter = $('#requestParameter').val();
-    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
     var form = $('#detailsForm');
     form.find(':input:disabled').addClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     $.ajax({
         type: "POST",
-        url: ajaxUrl + "save" + requestParameter,
+        url: ajaxUrl + "save",
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
@@ -47,8 +49,12 @@ function save() {
     });
 }
 function extendsOpts(opts) {
-    var requestParameter = $('#requestParameter').val();
-    requestParameter = requestParameter==undefined ? '' : '?handbk=' + requestParameter;
+    var handbkParameter = $('#handbkParameter').val();
+    var requestParameter = handbkParameter==undefined ? '' : '?handbk=' + handbkParameter;
+    var sign = handbkParameter==undefined ? '?' : '&'
+    var handbkItemIdParameter = $('#handbkItemIdParameter').val();
+    requestParameter = requestParameter +
+        (handbkItemIdParameter==undefined ? '' : sign + 'handbkItemId=' + handbkItemIdParameter);
     $.extend(true, opts,
         {
             "ajax": {

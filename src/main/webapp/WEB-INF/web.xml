@@ -75,6 +75,8 @@
             com.epam.hospital.action.StaffAction
             com.epam.hospital.action.RoleAction
             com.epam.hospital.action.HandbkAction
+            com.epam.hospital.action.TranslationAction
+            com.epam.hospital.action.LangAction
         </param-value>
     </context-param>
 

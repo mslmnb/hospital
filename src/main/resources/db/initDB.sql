@@ -79,15 +79,15 @@ CREATE TABLE patient_register
 
 CREATE TABLE diagnosis_register
 (
-  patient_id        INTEGER NOT NULL,
-  datetime          TIMESTAMP NOT NULL DEFAULT now(),
-  diagnosis_id      INTEGER NOT NULL,
-  diagnosis_type_id INTEGER NOT NULL,
-  staff_id          INTEGER NOT NULL,
+  patient_id             INTEGER NOT NULL,
+  datetime               TIMESTAMP NOT NULL DEFAULT now(),
+  diagnosis_item_id      INTEGER NOT NULL,
+  diagnosis_type_item_id INTEGER NOT NULL,
+  staff_id               INTEGER NOT NULL,
   FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
   FOREIGN KEY (staff_id) REFERENCES  staff (id) ON DELETE RESTRICT,
-  FOREIGN KEY (diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
-  FOREIGN KEY (diagnosis_type_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
+  FOREIGN KEY (diagnosis_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
+  FOREIGN KEY (diagnosis_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
 -- назначения (дата, заключение, кто провел, кто назначил

@@ -14,7 +14,7 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
-public class TranslationServiceImpl implements TranslationService {
+public class TranslationServiceImpl implements TranslationService{
     private final TranslationDAO dao;
 
     public TranslationServiceImpl(TranslationDAO dao) {

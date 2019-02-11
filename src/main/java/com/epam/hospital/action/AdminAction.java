@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ActionUtil.FORWARD_TO_JSP;
+import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
+import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 public class AdminAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(AdminAction.class);
@@ -29,8 +31,7 @@ public class AdminAction extends AbstractAction {
                 result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

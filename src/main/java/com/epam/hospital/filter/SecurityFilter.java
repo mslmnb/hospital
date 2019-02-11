@@ -20,15 +20,17 @@ public class SecurityFilter implements Filter {
 
     private static final Map<String, Set<Role>> accessMap = new HashMap<>();
     static {
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.ROLE_DOCTOR);
-        roles.add(Role.ROLE_NURSE);
-        accessMap.put("/patients", roles);
-        roles = new HashSet<>();
-        roles.add(Role.ROLE_ADMIN);
-        accessMap.put("/admin", roles);
-        accessMap.put("/users", roles);
-        accessMap.put("/handbks", roles);
+        Set<Role> doctorAndNurseRoles = new HashSet<>();
+        doctorAndNurseRoles.add(Role.ROLE_DOCTOR);
+        doctorAndNurseRoles.add(Role.ROLE_NURSE);
+        accessMap.put("/patients", doctorAndNurseRoles);
+        Set<Role> adminRole = new HashSet<>();
+        adminRole.add(Role.ROLE_ADMIN);
+        accessMap.put("/admin", adminRole);
+        accessMap.put("/staff", adminRole);
+        accessMap.put("/users", adminRole);
+        accessMap.put("/handbk", adminRole);
+        accessMap.put("/translation", adminRole);
     }
 
     public void destroy() {

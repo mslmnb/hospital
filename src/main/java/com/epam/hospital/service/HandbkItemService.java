@@ -6,11 +6,12 @@ import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
-public interface HandbkItemService {
+public interface HandbkItemService extends HavingDeleteMethod, HavingGetMethod {
     String ID_PARAMETER = "id";
     String NAME_PARAMETER = "name";
+    String TYPE_PARAMETER = "type";
 
-    void save(String idAsString, String name, HandbkType handbkType) throws AppException;
+    void save(String idAsString, String name, String typeAsString) throws AppException;
 
     void save(HandbkItem handbkItem) throws AppException;
 

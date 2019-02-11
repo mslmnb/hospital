@@ -20,12 +20,8 @@ function updateTableByData(data) {
 }
 
 function updateTable() {
-    var handbkParameter = $('#handbkParameter').val();
-    var requestParameter = handbkParameter==undefined ? '' : '?handbk=' + handbkParameter;
-    var sign = handbkParameter==undefined ? '?' : '&'
-    var handbkItemIdParameter = $('#handbkItemIdParameter').val();
-    requestParameter = requestParameter +
-                       (handbkItemIdParameter==undefined ? '' : sign + 'handbkItemId=' + handbkItemIdParameter);
+    var requestParameter = $('#requestParameter').val();
+    requestParameter = requestParameter == undefined ? '' : requestParameter;
     $.get(ajaxUrl + "all" + requestParameter, updateTableByData);
 }
 
@@ -49,12 +45,8 @@ function save() {
     });
 }
 function extendsOpts(opts) {
-    var handbkParameter = $('#handbkParameter').val();
-    var requestParameter = handbkParameter==undefined ? '' : '?handbk=' + handbkParameter;
-    var sign = handbkParameter==undefined ? '?' : '&'
-    var handbkItemIdParameter = $('#handbkItemIdParameter').val();
-    requestParameter = requestParameter +
-        (handbkItemIdParameter==undefined ? '' : sign + 'handbkItemId=' + handbkItemIdParameter);
+    var requestParameter = $('#requestParameter').val();
+    requestParameter = requestParameter == undefined ? '' : requestParameter;
     $.extend(true, opts,
         {
             "ajax": {

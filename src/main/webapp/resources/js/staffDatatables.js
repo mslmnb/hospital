@@ -1,10 +1,6 @@
 var ajaxUrl = 'staff/';
 var datatableApi;
 
-// function updateTable() {
-//     $.get(ajaxUrl + "all", updateTableByData);
-// }
-
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
@@ -62,7 +58,7 @@ function addStaff() {
 function drawPositionOptions(positionId) {
     $.ajax({
         type: "GET",
-        url: "handbk/all_translations?handbk=POSITION",
+        url: "handbk/translation?type=position",
         success: function (data) {
             var positionSelect = $("#positionId");
             positionSelect.empty();

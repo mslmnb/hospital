@@ -20,11 +20,11 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="handbk.${param.handbk}.title"/></h3>
-                <input type="hidden"
-                       id="handbkParameter"
-                       name="handbkParameter"
-                       value="${param.handbk}">
+            <h3><fmt:message key="handbk.${param.type}.title"/></h3>
+            <input type="hidden"
+                   id="requestParameter"
+                   name="requestParameter"
+                   value="?type=${param.type}">
 
             <div class="view-box">
 
@@ -59,9 +59,9 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
                     <input type="hidden"
-                           id="handbk"
-                           name="handbk"
-                           value="${param.handbk}">
+                           id="type"
+                           name="type"
+                           value="${param.type}">
 
                     <input type="hidden" id="id" name="id">
 
@@ -95,6 +95,8 @@
     i18n["addTitle"] = "<fmt:message key="handbk.addTitle"/>"
     i18n["editTitle"] = "<fmt:message key="handbk.editTitle"/>"
     i18n["emptyName"] = "<fmt:message key="error.handbk.emptyName"/>"
+    i18n["impossibleRemovingForStaff"] = "<fmt:message key="error.handbk.impossibleRemovingForStaff"/>"
+    i18n["impossibleRemovingForDiagnosis"] = "<fmt:message key="error.handbk.impossibleRemovingForDiagnosis"/>"
 </script>
 
 </html>

@@ -18,8 +18,8 @@ public interface HandbkItemDAO {
     HandbkItem get(int id);
 
     // empty if not found
-    List<HandbkItem> getAll(HandbkType handbkType);
+    List<HandbkItem> getAll(HandbkType type);
 
     // empty if not found
-    List<HandbkItem> getAllTranslations(String lang, HandbkType handbkType);
+    List<HandbkItem> getAllTranslations(String lang, HandbkType type);
 }

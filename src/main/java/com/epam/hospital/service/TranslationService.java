@@ -5,7 +5,7 @@ import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
-public interface TranslationService {
+public interface TranslationService extends HavingDeleteMethod, HavingGetMethod {
     String ID_PARAMETER = "id";
     String HANDBK_ITEM_ID_PARAMETER = "handbkItemId";
     String LOCALE_PARAMETER = "locale";

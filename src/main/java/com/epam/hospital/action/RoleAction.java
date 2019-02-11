@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import static com.epam.hospital.util.ActionUtil.GET_ALL;
 import static com.epam.hospital.util.ActionUtil.getJsonString;
+import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 public class RoleAction extends AbstractAction{
@@ -31,8 +32,7 @@ public class RoleAction extends AbstractAction{
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(Arrays.asList(Role.values()));
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                result = JSON_VIEW_PREFIX.getPrefix();
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

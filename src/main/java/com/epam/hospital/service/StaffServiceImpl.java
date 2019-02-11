@@ -14,7 +14,7 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
-public class StaffServiceImpl implements StaffService{
+public class StaffServiceImpl implements StaffService {
     private final StaffDAO dao;
 
     public StaffServiceImpl(StaffDAO dao) {

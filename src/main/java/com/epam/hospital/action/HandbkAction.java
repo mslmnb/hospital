@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
 import static com.epam.hospital.service.HandbkItemService.ID_PARAMETER;
 import static com.epam.hospital.service.HandbkItemService.NAME_PARAMETER;
+import static com.epam.hospital.service.HandbkItemService.TYPE_PARAMETER;
 import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_HANDBK_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
@@ -41,7 +42,7 @@ public class HandbkAction extends AbstractActionWithService{
         String result;
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
         String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
-        String handbkTypeAsString = request.getParameter("handbk");
+        String handbkTypeAsString = request.getParameter(TYPE_PARAMETER);
         HandbkType handbkType = null;
         if (handbkTypeAsString!=null&&!handbkTypeAsString.isEmpty()) {
             handbkType = HandbkType.valueOf(handbkTypeAsString.toUpperCase());
@@ -56,43 +57,29 @@ public class HandbkAction extends AbstractActionWithService{
             case GET_ALL:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(handbkType));
                 break;
-            case GET:
-                try {
-                    String idAsString = request.getParameter(ID_PARAMETER);
-                    result = service.get(idAsString).getJsonString();
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
-                break;
             case SAVE:
                 String idAsString = request.getParameter(ID_PARAMETER);
                 String name = request.getParameter(NAME_PARAMETER);
+                String typeAsString = request.getParameter(TYPE_PARAMETER);
                 try {
-                    service.save(idAsString, name, handbkType);
+                    service.save(idAsString, name, typeAsString);
                     result = "";
                 } catch (AppException e) {
                     response.setStatus(422);
                     result = e.getCheckResult().getJsonString();
                 }
                 result = JSON_VIEW_PREFIX.getPrefix() + result;
+                break;
+            case GET:
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                        getJsonViewForGetDirection(request, response, service, ID_PARAMETER);
                 break;
             case DELETE:
-                idAsString = request.getParameter(ID_PARAMETER);
-                try {
-                    service.delete(idAsString);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                        getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                response.setStatus(422);
-                result = new CheckResult(UNKNOWN_ERROR).getJsonString();
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

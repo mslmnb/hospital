@@ -44,16 +44,6 @@ public class StaffAction extends AbstractActionWithService {
             case GET_ALL:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(lang));
                 break;
-            case GET:
-                try {
-                    String idAsString = request.getParameter(ID_PARAMETER);
-                    result = service.get(idAsString).getJsonString();
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
-                break;
             case SAVE:
                 String idAsString = request.getParameter(ID_PARAMETER);
                 String name = request.getParameter(NAME_PARAMETER);
@@ -69,20 +59,16 @@ public class StaffAction extends AbstractActionWithService {
                 }
                 result = JSON_VIEW_PREFIX.getPrefix() + result;
                 break;
+            case GET:
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                        getJsonViewForGetDirection(request, response, service, ID_PARAMETER);
+                break;
             case DELETE:
-                idAsString = request.getParameter(ID_PARAMETER);
-                try {
-                    service.delete(idAsString);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                        getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

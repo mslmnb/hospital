@@ -39,9 +39,9 @@ function addHandbk() {
 }
 
 function renderTranslationBtn(data, type, row) {
-    var handbkParameter = '?handbk=' + $('#handbkParameter').val();
+    var requestParameter = $('#requestParameter').val();
     if (type === 'display') {
-        return "<a href='translation" + handbkParameter + "&handbkItemId=" + row.id + "'>"
+        return "<a href='translation" + requestParameter + "&id=" + row.id + "&name=" + row.name + "'>"
                                                                              + i18n['translation']
                                                                              + '</a>';
     }

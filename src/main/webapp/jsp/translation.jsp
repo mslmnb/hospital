@@ -19,14 +19,11 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="translation.title"/> ${param.handbkItemId}</h3>
+            <h3><fmt:message key="translation.title"/> ${param.name}</h3>
             <input type="hidden"
-                   id="handbkParameter"
-                   value="${param.handbk}">
-
-            <input type="hidden"
-                   id="handbkItemIdParameter"
-                   value="${param.handbkItemId}">
+                   id="requestParameter"
+                   name="requestParameter"
+                   value="?type=${param.type}&id=${param.id}&name=${param.name}">
 
             <div class="view-box">
 
@@ -63,7 +60,7 @@
                     <input type="hidden"
                            id="handbkItemId"
                            name="handbkItemId"
-                           value="${param.handbkItemId}">
+                           value="${param.id}">
 
                     <input type="hidden" id="id" name="id">
 

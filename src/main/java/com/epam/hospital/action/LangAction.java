@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_LANG_SERVICE;
 import static com.epam.hospital.util.ActionUtil.GET_ALL;
 import static com.epam.hospital.util.ActionUtil.getJsonString;
+import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
@@ -39,9 +40,7 @@ public class LangAction extends AbstractActionWithService {
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                response.setStatus(422);
-                result = new CheckResult(UNKNOWN_ERROR).getJsonString();
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

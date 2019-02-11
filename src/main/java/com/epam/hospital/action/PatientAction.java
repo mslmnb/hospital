@@ -62,9 +62,7 @@ public class PatientAction extends AbstractActionWithService {
                 result = JSON_VIEW_PREFIX.getPrefix() + result;
                 break;
             default:
-                LOG.error("Actions are not defined for direction: " + direction);
-                response.setStatus(422);
-                result = new CheckResult(UNKNOWN_ERROR).getJsonString();
+                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;
         }
         return result;

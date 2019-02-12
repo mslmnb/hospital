@@ -124,6 +124,7 @@
     i18n["impossibleRemovingForUsers"] = "<fmt:message key="error.staff.impossibleRemovingForUsers"/>"
     i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.staff.impossibleRemovingForDiagnosises"/>"
     i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.staff.impossibleRemovingForInspections"/>"
+    i18n["impossibleRemovingForPatients"] = "<fmt:message key="error.staff.impossibleRemovingForPatients"/>"
     i18n["impossibleRemovingForPrescription"] = "<fmt:message key="error.staff.impossibleRemovingForPrescription"/>"
 </script>
 

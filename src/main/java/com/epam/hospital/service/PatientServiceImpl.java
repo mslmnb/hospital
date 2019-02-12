@@ -25,7 +25,8 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void save(String idAsString, String name, String additionalName, String surname,
-                     String birthdayAsString, String phone, String email) throws AppException {
+                     String birthdayAsString, String phone, String email,
+                     String admissionDateAsString) throws AppException {
         Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(NAME_PARAMETER,name);
@@ -34,9 +35,11 @@ public class PatientServiceImpl implements PatientService {
         checkNotEmpty(parameters, checkResult, false);
         LocalDate birthday = checkAndReturnDate(birthdayAsString, BITHDAY_PARAMETER, checkResult, false);
         checkPhone(phone, checkResult, false);
-        checkEmail(email, checkResult, true);
+        checkEmail(email, checkResult, false);
+        LocalDate admissionDate = checkAndReturnDate(admissionDateAsString,
+                                                     ADMISSION_DATE_PARAMETER, checkResult, true);
         Patient patient = new Patient(id, name, additionalName, surname,
-                birthday, phone, email);
+                birthday, phone, email, admissionDate);
         save(patient);
     }
 
@@ -49,26 +52,25 @@ public class PatientServiceImpl implements PatientService {
         }
     }
 
-
     @Override
     public void delete(String idAsString) throws AppException {
-
+        delete(checkAndReturnInt(idAsString, ID_PARAMETER));
     }
 
     @Override
     public void delete(int id) throws AppException {
-//        checkNotFoundWithId(dao.delete(id), id);
+        checkNotFound(dao.delete(id));
     }
 
     @Override
-    public User get(String idAsString) throws AppException {
-        return null;
+    public Patient get(String idAsString) throws AppException {
+        Integer id = checkAndReturnInt(idAsString, ID_PARAMETER);
+        return get(id);
     }
 
     @Override
     public Patient get(int id) throws AppException {
-  //      return checkNotFoundWithId(dao.get(id), id);
-        return null;
+        return checkNotFound(dao.get(id));
     }
 
     @Override

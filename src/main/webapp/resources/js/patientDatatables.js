@@ -10,15 +10,13 @@ $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
             {
-                "data": "name"
-            },
-            {
                 "data": "surname"
             },
             {
-                "orderable": false,
-                "defaultContent": "",
-                "render": renderInfoBtn
+                "data": "name"
+            },
+            {
+                "data": "additionalName"
             },
             {
                 "orderable": false,
@@ -58,17 +56,9 @@ $(function () {
 });
 
 
-function renderInfoBtn(data, type, row) {
-    if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/info?id=" + row.id + "'>"
-                                                                           + i18n["infoBtn"]
-                                                                           + "</a>";
-    }
-}
-
 function renderReceptionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/reception?id=" + row.id + "'>"
+        return "<a class='btn btn-xs btn-primary' href='reception?id=" + row.id + "& name=" + fullName(row) + "'>"
                                                                                 + i18n["receptionBtn"]
                                                                                 + "</a>";
     }
@@ -96,4 +86,8 @@ function renderInspectionBtn(data, type, row) {
                                                                                      + i18n["inspectionBtn"]
                                                                                      + "</a>";
     }
+}
+
+function fullName(row) {
+    return row.surname + " " +  row.name + " " + row.additionalName;
 }

@@ -25,14 +25,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     private static final String POSITION_FIELDNAME = "position";
 
     private static final String FOREIGN_KEY_IN_USERS = "users_staff_id_fkey";
-    private static final String FOREIGN_KEY_IN_DIAGNOSISES = "diagnosis_register_staff_id_fkey";
-    private static final String FOREIGN_KEY_IN_INSPECTIONS = "inspection_register_staff_id_fkey";
-    private static final String APPLICANT_FOREIGN_KEY_IN_PRESCRIPTIONS = "prescription_register_applicant_id_fkey";
-    private static final String EXECUTOR_FOREIGN_KEY_IN_PRESCRIPTIONS = "prescription_register_executor_id_fkey";
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_USERS = "impossibleRemovingForUsers";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSISES = "impossibleRemovingForDiagnosises";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTIONS = "impossibleRemovingForInspections";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS = "impossibleRemovingForPrescription";
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT staff.id, staff.name, staff.additional_name, " +
@@ -53,10 +46,6 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     static {
         errorResolver = new HashMap<>();
         errorResolver.put(FOREIGN_KEY_IN_USERS, IMPOSSIBLE_REMOVING_ERROR_FOR_USERS);
-        errorResolver.put(FOREIGN_KEY_IN_DIAGNOSISES, IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSISES);
-        errorResolver.put(FOREIGN_KEY_IN_INSPECTIONS, IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTIONS);
-        errorResolver.put(APPLICANT_FOREIGN_KEY_IN_PRESCRIPTIONS, IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS);
-        errorResolver.put(EXECUTOR_FOREIGN_KEY_IN_PRESCRIPTIONS, IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS);
     }
 
     private final ConnectionPool pool;

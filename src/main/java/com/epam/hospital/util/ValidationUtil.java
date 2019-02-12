@@ -1,7 +1,6 @@
 package com.epam.hospital.util;
 
 import com.epam.hospital.util.exception.AppException;
-import com.sun.deploy.association.utility.AppAssociationReader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

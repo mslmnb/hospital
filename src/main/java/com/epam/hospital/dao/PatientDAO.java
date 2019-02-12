@@ -17,7 +17,4 @@ public interface PatientDAO {
     Patient get(int id);
 
     List<Patient> getAll();
-
-    boolean connectionPoolIsNull();
-
 }

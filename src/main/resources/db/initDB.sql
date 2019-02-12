@@ -64,28 +64,26 @@ CREATE TABLE users
 CREATE SEQUENCE patient_seq;
 CREATE TABLE patient_register
 (
-  id              INTEGER PRIMARY KEY DEFAULT nextval('patient_seq'),
-  name            VARCHAR NOT NULL,
-  additional_name VARCHAR,
-  surname         VARCHAR NOT NULL,
-  birthday        DATE NOT NULL,
-  phone           VARCHAR NOT NULL,
-  email           VARCHAR,
-  admission_datetime    TIMESTAMP NOT NULL DEFAULT now(),
-  discharge_datetime    TIMESTAMP,
-  final_diagnosis_id    INTEGER,
-  FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
+  id                            INTEGER PRIMARY KEY DEFAULT nextval('patient_seq'),
+  name                          VARCHAR NOT NULL,
+  additional_name               VARCHAR,
+  surname                       VARCHAR NOT NULL,
+  birthday                      DATE NOT NULL,
+  phone                         VARCHAR NOT NULL,
+  email                         VARCHAR,
+  admission_date                DATE NOT NULL DEFAULT now(),
+  discharge_date                DATE,
+  final_diagnosis_id            INTEGER,
+  FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
 );
 
 CREATE TABLE diagnosis_register
 (
   patient_id             INTEGER NOT NULL,
-  datetime               TIMESTAMP NOT NULL DEFAULT now(),
+  date                   DATE NOT NULL DEFAULT now(),
   diagnosis_item_id      INTEGER NOT NULL,
   diagnosis_type_item_id INTEGER NOT NULL,
-  staff_id               INTEGER NOT NULL,
   FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
-  FOREIGN KEY (staff_id) REFERENCES  staff (id) ON DELETE RESTRICT,
   FOREIGN KEY (diagnosis_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
   FOREIGN KEY (diagnosis_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
@@ -94,16 +92,11 @@ CREATE TABLE diagnosis_register
 CREATE TABLE prescription_register (
   patient_id                 INTEGER NOT NULL,
   prescrptn_type_item_id     INTEGER NOT NULL,
-  application_datetime       TIMESTAMP NOT NULL DEFAULT now(),
-  applicant_id               INTEGER NOT NULL,
+  application_date           DATE NOT NULL DEFAULT now(),
   description                TEXT NOT NULL,
-  execution_datetime         TIMESTAMP,
-  executor_id                INTEGER,
-  cancelled                  BOOLEAN,   -- признак отмены назначения
+  execution_date             DATE,
   result                     TEXT,
   FOREIGN KEY  (prescrptn_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
-  FOREIGN KEY (applicant_id) REFERENCES staff (id) ON DELETE RESTRICT,
-  FOREIGN KEY (executor_id) REFERENCES staff (id) ON DELETE RESTRICT,
   FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT
 );
 
@@ -111,13 +104,11 @@ CREATE TABLE prescription_register (
 CREATE TABLE inspection_register
 (
   patient_id             INTEGER NOT NULL,
-  datetime               TIMESTAMP NOT NULL DEFAULT now(),
+  date                   DATE NOT NULL DEFAULT now(),
   inspectn_type_item_id  INTEGER NOT NULL,
   inspection             TEXT NOT NULL,
   complaints             TEXT NOT NULL,   -- жалобы
-  staff_id               INTEGER NOT NULL,
   FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
-  FOREIGN KEY (staff_id) REFERENCES  staff (id) ON DELETE RESTRICT,
   FOREIGN KEY  (inspectn_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 

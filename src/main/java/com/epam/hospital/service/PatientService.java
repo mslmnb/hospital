@@ -4,6 +4,7 @@ import com.epam.hospital.model.Patient;
 import com.epam.hospital.model.User;
 import com.epam.hospital.util.exception.AppException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
@@ -14,9 +15,12 @@ public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
     String PHONE_PARAMETER = "phone";
     String EMAIL_PARAMETER = "email";
     String BITHDAY_PARAMETER = "birthday";
+    String ADMISSION_DATE_PARAMETER = "admissionDate";
+    String DISCHARGE_DATE_PARAMETER = "dischargeDate";
 
     void save(String idAsString, String name, String additionalName, String surname,
-              String birthdayAsString, String phone, String email) throws AppException;
+              String birthdayAsString, String phone, String email,
+              String admissionDateAsString) throws AppException;
 
     void save(Patient patient) throws AppException;
 
@@ -24,7 +28,7 @@ public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
 
     void delete(int id) throws AppException;
 
-    User get(String idAsString) throws AppException;
+    Patient get(String idAsString) throws AppException;
 
     Patient get(int id) throws AppException;
 

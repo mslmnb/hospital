@@ -17,16 +17,10 @@
         <br>
         <br>
         <div class="shadow">
-            <a class="btn btn-info col-xs-4" href="staff"><fmt:message key="admin.staff"/></a>
+            <a class="btn btn-info col-xs-4" href="reception"><fmt:message key="noAdmin.reception"/></a>
             <br>
             <br>
-            <a class="btn btn-info col-xs-4" href="users"><fmt:message key="admin.users"/></a>
-            <br>
-            <br>
-            <a class="btn btn-info col-xs-4" href="handbk?type=position"><fmt:message key="admin.positionHandbk"/></a>
-            <br>
-            <br>
-            <a class="btn btn-info col-xs-4" href="handbk?type=diagnosis"><fmt:message key="admin.diagnosisHandbk"/></a>
+            <a class="btn btn-info col-xs-4" href="patients"><fmt:message key="noAdmin.patients"/></a>
         </div>
     </div>
 </div>

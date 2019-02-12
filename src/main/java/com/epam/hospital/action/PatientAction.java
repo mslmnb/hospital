@@ -44,23 +44,23 @@ public class PatientAction extends AbstractActionWithService {
             case GET_ALL:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
                 break;
-            case SAVE:
-                String idAsString = request.getParameter(ID_PARAMETER);
-                String name = request.getParameter(NAME_PARAMETER);
-                String additionalName = request.getParameter(ADDITIONAL_NAME_PARAMETER);
-                String surname = request.getParameter(SURNAME_PARAMETER);
-                String phone = request.getParameter(PHONE_PARAMETER);
-                String email = request.getParameter(EMAIL_PARAMETER);
-                String birthdayAsString = request.getParameter(BITHDAY_PARAMETER);
-                try {
-                    service.save(idAsString, name, additionalName, surname, birthdayAsString, phone, email);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
-                break;
+//            case SAVE:
+//                String idAsString = request.getParameter(ID_PARAMETER);
+//                String name = request.getParameter(NAME_PARAMETER);
+//                String additionalName = request.getParameter(ADDITIONAL_NAME_PARAMETER);
+//                String surname = request.getParameter(SURNAME_PARAMETER);
+//                String phone = request.getParameter(PHONE_PARAMETER);
+//                String email = request.getParameter(EMAIL_PARAMETER);
+//                String birthdayAsString = request.getParameter(BITHDAY_PARAMETER);
+//                try {
+//                    service.save(idAsString, name, additionalName, surname, birthdayAsString, phone, email);
+//                    result = "";
+//                } catch (AppException e) {
+//                    response.setStatus(422);
+//                    result = e.getCheckResult().getJsonString();
+//                }
+//                result = JSON_VIEW_PREFIX.getPrefix() + result;
+//                break;
             default:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
                 break;

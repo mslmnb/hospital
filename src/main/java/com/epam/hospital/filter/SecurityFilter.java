@@ -23,7 +23,8 @@ public class SecurityFilter implements Filter {
         Set<Role> doctorAndNurseRoles = new HashSet<>();
         doctorAndNurseRoles.add(Role.ROLE_DOCTOR);
         doctorAndNurseRoles.add(Role.ROLE_NURSE);
-        accessMap.put("/patients", doctorAndNurseRoles);
+        Set<Role> nurseRole = new HashSet<>();
+        nurseRole.add(Role.ROLE_NURSE);
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(Role.ROLE_ADMIN);
         accessMap.put("/admin", adminRole);
@@ -31,6 +32,9 @@ public class SecurityFilter implements Filter {
         accessMap.put("/users", adminRole);
         accessMap.put("/handbk", adminRole);
         accessMap.put("/translation", adminRole);
+        accessMap.put("/patients", doctorAndNurseRoles);
+        accessMap.put("/reception", nurseRole);
+
     }
 
     public void destroy() {

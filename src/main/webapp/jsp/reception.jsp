@@ -13,14 +13,14 @@
 <body>
 
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
-<script type="text/javascript" src="resources/js/patientDatatables.js" defer></script>
+<script type="text/javascript" src="resources/js/receptionDatatables.js" defer></script>
 
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="patients.title"/></h3>
+            <h3><fmt:message key="reception.title"/></h3>
 
             <div class="view-box">
 
@@ -29,20 +29,20 @@
                     <fmt:message key="common.add"/>
                 </a>
                 <hr>
-            <hr>
-            <table class="table table-striped display" id="datatable">
-                <thead>
-                <tr>
-                    <th><fmt:message key="patients.surname"/></th>
-                    <th><fmt:message key="patients.name"/></th>
-                    <th><fmt:message key="patients.additionalName"/></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-            </table>
+                <hr>
+                <table class="table table-striped display" id="datatable">
+                    <thead>
+                    <tr>
+                        <th><fmt:message key="patients.surname"/></th>
+                        <th><fmt:message key="patients.name"/></th>
+                        <th><fmt:message key="patients.additionalName"/></th>
+                        <th><fmt:message key="reception.admissionDate"/></th>
+                        <th><fmt:message key="reception.dischargeDate"/></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><fmt:message key="patients.add"/></h2>
+                <h2 class="modal-title"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
@@ -101,39 +101,54 @@
 
                     <div class="form-group">
                         <label for="birthday" class="control-label col-xs-3">
-                            <fmt:message key="patients.birthday"/>
+                            <fmt:message key="reception.birthday"/>
                         </label>
 
                         <div class="col-xs-9">
                             <input class="form-control"
                                    id="birthday"
                                    name="birthday"
-                                   placeholder="<fmt:message key="patients.birthday"/>">
+                                   placeholder="<fmt:message key="reception.birthday"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone" class="control-label col-xs-3"><fmt:message key="patients.phone"/></label>
+                        <label for="phone" class="control-label col-xs-3"><fmt:message key="reception.phone"/></label>
 
                         <div class="col-xs-9">
                             <input type="text"
                                    class="form-control"
                                    id="phone" name="phone"
-                                   placeholder="<fmt:message key="patients.phone"/>"/>
+                                   placeholder="<fmt:message key="reception.phone"/>"/>
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <label for="email" class="control-label col-xs-3"><fmt:message key="patients.email"/></label>
+                        <label for="email" class="control-label col-xs-3"><fmt:message key="reception.email"/></label>
 
                         <div class="col-xs-9">
                             <input type="email"
                                    class="form-control"
                                    id="email" name="email"
-                                   placeholder="<fmt:message key="patients.email"/>"/>
+                                   placeholder="<fmt:message key="reception.email"/>"/>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="birthday" class="control-label col-xs-3">
+                            <fmt:message key="reception.admissionDate"/>
+                        </label>
+
+                        <div class="col-xs-9">
+                            <input class="form-control"
+                                   id="admissionDate"
+                                   name="admissionDate"
+                                   placeholder="<fmt:message key="reception.admissionDate"/>">
+                        </div>
+                    </div>
+
+
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
@@ -152,15 +167,14 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["diagnosisBtn"] = "<fmt:message key="patients.diagnosis"/>";
-    i18n["prescriptionBtn"] = "<fmt:message key="patients.prescription"/>";
-    i18n["inspectionBtn"] = "<fmt:message key="patients.inspection"/>";
-    i18n["invalidEmail"] = "<fmt:message key="error.patient.invalidEmail"/>";
-    i18n["invalidPhone"] = "<fmt:message key="error.patient.invalidPhone"/>";
-    i18n["emptyName"] = "<fmt:message key="error.patient.emptyName"/>";
-    i18n["emptySurname"] = "<fmt:message key="error.patient.emptySurname"/>";
-    i18n["emptyBirthday"] = "<fmt:message key="error.patient.emptyBirthday"/>";
-    i18n["invalidBirthday"] = "<fmt:message key="error.patient.invalidBirthday"/>";
+    i18n["invalidEmail"] = "<fmt:message key="error.reception.invalidEmail"/>";
+    i18n["invalidPhone"] = "<fmt:message key="error.reception.invalidPhone"/>";
+    i18n["emptyName"] = "<fmt:message key="error.reception.emptyName"/>";
+    i18n["emptySurname"] = "<fmt:message key="error.reception.emptySurname"/>";
+    i18n["emptyBirthday"] = "<fmt:message key="error.reception.emptyBirthday"/>";
+    i18n["invalidBirthday"] = "<fmt:message key="error.reception.invalidBirthday"/>";
+    i18n["emptyAdmissionDate"] = "<fmt:message key="error.reception.emptyAdmissionDate"/>";
+    i18n["invalidAdmissionDate"] = "<fmt:message key="error.reception.invalidAdmissionDate"/>";
 </script>
 
 </html>

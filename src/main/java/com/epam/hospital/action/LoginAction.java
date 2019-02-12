@@ -15,7 +15,7 @@ import static com.epam.hospital.servlet.AppServletContextListner.SESSION_ATTRIBU
 public class LoginAction extends AbstractActionWithService {
     private static final String URI = "login";
 
-    private static final String VIEW_NAME_FOR_USER = "patients";
+    private static final String VIEW_NAME_FOR_NOADMIN = "noAdmin";
     private static final String VIEW_NAME_FOR_ADMIN = "admin";
     private static final String JSP_FILE_NAME_WITH_ERROR_PARAMETER = "/jsp/login.jsp?error=true";
     private static final String LOGIN_POST_PARAMETER = "login";
@@ -45,7 +45,7 @@ public class LoginAction extends AbstractActionWithService {
             if (user.isAdmin()) {
                 result = REDIRECT_VIEW_PREFIX.getPrefix() + VIEW_NAME_FOR_ADMIN;
             } else {
-                result = REDIRECT_VIEW_PREFIX.getPrefix() + VIEW_NAME_FOR_USER;
+                result = REDIRECT_VIEW_PREFIX.getPrefix() + VIEW_NAME_FOR_NOADMIN;
             }
         } else {
             result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME_WITH_ERROR_PARAMETER;

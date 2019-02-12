@@ -1,8 +1,10 @@
 package com.epam.hospital.model;
 
+import com.epam.hospital.model.handbk.Diagnosis;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.epam.hospital.service.PatientService.*;
 
@@ -12,19 +14,36 @@ public class Patient extends NamedEntity implements HavingJsonView{
     private LocalDate birthday;
     private String phone;
     private String email;
+    private LocalDate admissionDate;
+    private LocalDate dischargeDate;
+    private Diagnosis finalDiagnosis;
 
     public Patient() {
     }
 
-    public Patient(Integer id, String name, String additionalName, String surname,
-                   LocalDate birthday, String phone, String email) {
+    public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthday,
+                    String phone, String email, LocalDate admissionDate, LocalDate dischargeDate) {
         super(id, name);
         this.additionalName = additionalName;
         this.surname = surname;
         this.birthday = birthday;
         this.phone = phone;
         this.email = email;
+        this.admissionDate = admissionDate;
+        this.dischargeDate = dischargeDate;
     }
+
+    public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthday,
+                   String phone, String email, LocalDate admissionDate) {
+        super(id, name);
+        this.additionalName = additionalName;
+        this.surname = surname;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.email = email;
+        this.admissionDate = admissionDate;
+    }
+
 
     public String getAdditionalName() {
         return additionalName;
@@ -46,8 +65,25 @@ public class Patient extends NamedEntity implements HavingJsonView{
         return email;
     }
 
+    public LocalDate getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public LocalDate getDischargeDate() {
+        return dischargeDate;
+    }
+
+    public Diagnosis getFinalDiagnosis() {
+        return finalDiagnosis;
+    }
+
+    public void setFinalDiagnosis(Diagnosis finalDiagnosis) {
+        this.finalDiagnosis = finalDiagnosis;
+    }
+
     @Override
     public String getJsonString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         JSONObject userJsonObj = new JSONObject();
         userJsonObj.put(ID_PARAMETER, getId());
         userJsonObj.put(NAME_PARAMETER, getName());
@@ -55,7 +91,9 @@ public class Patient extends NamedEntity implements HavingJsonView{
         userJsonObj.put(SURNAME_PARAMETER, surname);
         userJsonObj.put(PHONE_PARAMETER, phone);
         userJsonObj.put(EMAIL_PARAMETER, email);
-        userJsonObj.put(BITHDAY_PARAMETER, getBirthday());
+        userJsonObj.put(BITHDAY_PARAMETER, birthday.format(formatter));
+        userJsonObj.put(ADMISSION_DATE_PARAMETER, admissionDate.format(formatter));
+        userJsonObj.put(DISCHARGE_DATE_PARAMETER, dischargeDate == null ? "" : dischargeDate.format(formatter));
         return userJsonObj.toString();
     }
 }

@@ -34,7 +34,8 @@ CREATE TABLE handbk_item_translations
   locale          VARCHAR NOT NULL,
   translation     VARCHAR NOT NULL,
   CONSTRAINT translate_unique_item_locale_idx UNIQUE (handbk_item_id, locale),
-  FOREIGN KEY (handbk_item_id) REFERENCES handbk_items (id) ON DELETE CASCADE
+  FOREIGN KEY (handbk_item_id) REFERENCES handbk_items (id) ON DELETE CASCADE,
+  FOREIGN KEY (locale) REFERENCES lang (locale) ON DELETE RESTRICT
 );
 
 CREATE SEQUENCE staff_seq;
@@ -74,11 +75,15 @@ CREATE TABLE patient_register
   admission_date                DATE NOT NULL DEFAULT now(),
   discharge_date                DATE,
   final_diagnosis_id            INTEGER,
+  primary_diagnosis_id          INTEGER,
   FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
+  FOREIGN KEY (primary_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
+CREATE SEQUENCE diagnosis_register_seq;
 CREATE TABLE diagnosis_register
 (
+  id                     INTEGER PRIMARY KEY DEFAULT nextval('diagnosis_register_seq'),
   patient_id             INTEGER NOT NULL,
   date                   DATE NOT NULL DEFAULT now(),
   diagnosis_item_id      INTEGER NOT NULL,
@@ -88,8 +93,9 @@ CREATE TABLE diagnosis_register
   FOREIGN KEY (diagnosis_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
--- назначения (дата, заключение, кто провел, кто назначил
+CREATE SEQUENCE prescription_register_seq;
 CREATE TABLE prescription_register (
+  id                         INTEGER PRIMARY KEY DEFAULT nextval('prescription_register_seq'),
   patient_id                 INTEGER NOT NULL,
   prescrptn_type_item_id     INTEGER NOT NULL,
   application_date           DATE NOT NULL DEFAULT now(),
@@ -100,9 +106,10 @@ CREATE TABLE prescription_register (
   FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT
 );
 
--- осмотры
+CREATE SEQUENCE inspection_register_seq;
 CREATE TABLE inspection_register
 (
+  id                     INTEGER PRIMARY KEY DEFAULT nextval('inspection_register_seq'),
   patient_id             INTEGER NOT NULL,
   date                   DATE NOT NULL DEFAULT now(),
   inspectn_type_item_id  INTEGER NOT NULL,
@@ -130,21 +137,11 @@ ALTER TABLE patient_register OWNER TO "user";
 ALTER TABLE patient_seq OWNER TO "user";
 
 ALTER TABLE diagnosis_register OWNER TO "user";
+ALTER TABLE diagnosis_register_seq OWNER TO "user";
 ALTER TABLE prescription_register OWNER TO "user";
+ALTER TABLE prescription_register_seq OWNER TO "user";
 ALTER TABLE inspection_register OWNER TO "user";
+ALTER TABLE inspection_register_seq OWNER TO "user";
 
 
 
---Общую информацию о поступлении в стационар,заполняет медсестра приемного отделения
---Назначения  делает врач
---выполнение назначений и отмену назначений делает врач или медсестра
-
-
--- планы
--- на этапе формирования запросов проверить индексы
--- при добавлении пациента добавить поле дата поступления
--- при редактировании пользователя разрешать изменять только поля телефон? емейл,
--- по нажатию кнопка выписка редактировать поля дата выписки и окончательный диагноз
-
--- параметры запроса handbk & handbkItemId ложить в модальное окно, тогда не надо их добавлять в save() в хвост заспроса
--- для ресурсов использовать дефолт сервлет

@@ -43,7 +43,7 @@ function updateRow(id) {
         $("#name").val(data.name);
         $("#additionalName").val(data.additionalName);
         $("#surname").val(data.surname);
-        drawPositionOptions(data.positionId);
+        drawOptions("#positionId", "handbk/translation?type=position", "selectPosition", data.positionId);
     });
     $('#editRow').modal();
 }
@@ -51,35 +51,8 @@ function updateRow(id) {
 function addStaff() {
     $('#modalTitle').html(i18n["addTitle"]);
     form.find(":input").val("");
-    drawPositionOptions();
+    drawOptions("#positionId", "handbk/translation?type=position", "selectPosition");
     $('#editRow').modal();
-}
-
-function drawPositionOptions(positionId) {
-    $.ajax({
-        type: "GET",
-        url: "handbk/translation?type=position",
-        success: function (data) {
-            var positionSelect = $("#positionId");
-            positionSelect.empty();
-            var option = $("<option>");
-            option.attr("disabled", true)
-                .html(i18n["selectPosition"])
-                .appendTo(positionSelect);
-            if (positionId == undefined) {
-                option.attr("selected", true);
-            }
-            for (choice in data) {
-                var option = $("<option>");
-                option.val(data[choice].id)
-                    .html(data[choice].name)
-                    .appendTo(positionSelect)
-                if(data[choice].id == positionId) {
-                    option.attr("selected", true)
-                }
-            }
-        }
-    });
 }
 
 

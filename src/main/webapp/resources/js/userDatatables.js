@@ -1,10 +1,6 @@
 var ajaxUrl = 'users/';
 var datatableApi;
 
-function updateTable() {
-    $.get(ajaxUrl + "all", updateTableByData);
-}
-
 function renderEditBtn(data, type, row) {
     if (type == 'display') {
         return '<a onclick="updatePassword(' + row.id + ');">' +
@@ -50,7 +46,7 @@ function addUser() {
     form.find('.disabled').removeClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     drawStaffOptions();
-    drawRoleOptions();
+    drawOptions("#role", "role/all", "selectRole");
     $('#editRow').modal();
 }
 
@@ -64,7 +60,7 @@ function updatePassword(id) {
         $("#id").val(data.id);
         $("#login").val(data.login);
         drawStaffOptions(data.staffId);
-        drawRoleOptions(data.role);
+        drawOptions("#role", "role/all", "selectRole", data.staffId);
     });
     $('#editRow').modal();
 }
@@ -96,32 +92,6 @@ function drawStaffOptions(staffId) {
     });
 }
 
-function drawRoleOptions(role) {
-    $.ajax({
-        type: "GET",
-        url: "role/all",
-        success: function (data) {
-            var roleSelect = $("#role");
-            roleSelect.empty();
-            var option = $("<option>")
-            option.attr("disabled", true)
-                .html(i18n["selectRole"])
-                .appendTo(roleSelect);
-            if (role == undefined) {
-                option.attr("selected", true);
-            }
-            for (choice in data) {
-                var option = $("<option>");
-                option.val(data[choice].role)
-                    .html(data[choice].role)
-                    .appendTo(roleSelect)
-                if (data[choice].role == role) {
-                    option.attr("selected", true);
-                }
-            }
-        }
-    });
-}
 
 
 

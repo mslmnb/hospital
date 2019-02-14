@@ -16,15 +16,13 @@ import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
 public class ActionUtil {
     public static final String FORWARD_TO_JSP = "";
-    public static final String FORWARD_TO_TRANSLATION_JSP = "/translation";
     public static final String GET_ALL = "/all";
     public static final String GET_ALL_ITEM_TRANSLATIONS = "/translation";
     public static final String SAVE = "/save";
     public static final String GET = "/get";
     public static final String DELETE = "/delete";
-    public static final String FORWARD_TO_POSITION_JSP = "/position";
-    public static final String FORWARD_TO_DIAGNOSIS_JSP = "/diagnosis";
-
+    public static final String GET_PRIMARY_DIAGNOSIS = "primary_diagnosis";
+    public static final String GET_FINAL_DIAGNOSIS = "final_diagnosis";
 
     public static String getJsonString(List<? extends HavingJsonView> elements) {
         return "[ "

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static com.epam.hospital.service.PatientService.*;
 
@@ -16,13 +17,18 @@ public class Patient extends NamedEntity implements HavingJsonView{
     private String email;
     private LocalDate admissionDate;
     private LocalDate dischargeDate;
+    private Diagnosis primaryDiagnosis;
     private Diagnosis finalDiagnosis;
 
     public Patient() {
     }
 
+    public Patient(Integer id) {
+        super(id, null);
+    }
+
     public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthday,
-                    String phone, String email, LocalDate admissionDate, LocalDate dischargeDate) {
+                   String phone, String email, LocalDate admissionDate, LocalDate dischargeDate) {
         super(id, name);
         this.additionalName = additionalName;
         this.surname = surname;
@@ -31,6 +37,7 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.email = email;
         this.admissionDate = admissionDate;
         this.dischargeDate = dischargeDate;
+
     }
 
     public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthday,
@@ -43,7 +50,6 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.email = email;
         this.admissionDate = admissionDate;
     }
-
 
     public String getAdditionalName() {
         return additionalName;
@@ -81,6 +87,14 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.finalDiagnosis = finalDiagnosis;
     }
 
+    public Diagnosis getPrimaryDiagnosis() {
+        return primaryDiagnosis;
+    }
+
+    public void setPrimaryDiagnosis(Diagnosis primaryDiagnosis) {
+        this.primaryDiagnosis = primaryDiagnosis;
+    }
+
     @Override
     public String getJsonString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -94,6 +108,9 @@ public class Patient extends NamedEntity implements HavingJsonView{
         userJsonObj.put(BITHDAY_PARAMETER, birthday.format(formatter));
         userJsonObj.put(ADMISSION_DATE_PARAMETER, admissionDate.format(formatter));
         userJsonObj.put(DISCHARGE_DATE_PARAMETER, dischargeDate == null ? "" : dischargeDate.format(formatter));
+        userJsonObj.put(PRIMARY_DIAGNOSIS_ID_PARAMETER, primaryDiagnosis.getId());
+        userJsonObj.put(FINAL_DIAGNOSIS_ID_PARAMETER, finalDiagnosis.getId());
+
         return userJsonObj.toString();
     }
 }

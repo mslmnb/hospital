@@ -1,11 +1,6 @@
 var ajaxUrl = 'reception/';
 var datatableApi;
 
-// function updateTable() {
-//     $.get(ajaxUrl + "all", updateTableByData);
-// }
-
-
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [

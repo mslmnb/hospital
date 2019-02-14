@@ -13,18 +13,22 @@
 <body>
 
 <script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
-<script type="text/javascript" src="resources/js/staffDatatables.js" defer></script>
+<script type="text/javascript" src="resources/js/diagnosisDatatables.js" defer></script>
 
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="staff.title"/></h3>
+            <h3><fmt:message key="diagnosis.title"/>: ${param.name}</h3>
+            <input type="hidden"
+                   id="requestParameter"
+                   name="requestParameter"
+                   value="?id=${param.id}&name=${param.name}">
+
 
             <div class="view-box">
-
-                <a class="btn btn-info" onclick="addStaff()">
+                <a class="btn btn-info" onclick="addDiagnosis()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <fmt:message key="common.add"/>
                 </a>
@@ -33,10 +37,9 @@
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="staff.name"/></th>
-                        <th><fmt:message key="staff.additionalName"/></th>
-                        <th><fmt:message key="staff.surname"/></th>
-                        <th><fmt:message key="staff.position"/></th>
+                        <th><fmt:message key="diagnosis.data"/></th>
+                        <th><fmt:message key="diagnosis.diagnosisType"/></th>
+                        <th><fmt:message key="diagnosis.diagnosis"/></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -56,44 +59,36 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <input class="entry-field" type="hidden" id="id" name="id">
+                    <input type="hidden" id="patientId" name="patientId" value="${param.id}">
 
                     <div class="form-group">
-                        <label for="name" class="control-label col-xs-3"><fmt:message key="staff.name"/></label>
+                        <label for="date" class="control-label col-xs-3"><fmt:message key="diagnosis.data"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="<fmt:message key="staff.name"/>">
+                            <input type="text" class="form-control entry-field" id="date" name="date"
+                                   placeholder="<fmt:message key="diagnosis.data"/>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="additionalName" class="control-label col-xs-3">
-                            <fmt:message key="staff.additionalName"/>
+                        <label for="diagnosisTypeId" class="control-label col-xs-3">
+                            <fmt:message key="diagnosis.diagnosisType"/>
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="additionalName" name="additionalName"
-                                   placeholder="<fmt:message key="staff.additionalName"/>">
+                            <select class="form-control  entry-field" id="diagnosisTypeId" name="diagnosisTypeId">
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="surname" class="control-label col-xs-3"><fmt:message key="staff.surname"/></label>
-
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" id="surname" name="surname"
-                                   placeholder="<fmt:message key="staff.surname"/>">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="positionId" class="control-label col-xs-3">
-                            <fmt:message key="staff.position"/>
+                        <label for="diagnosisId" class="control-label col-xs-3">
+                            <fmt:message key="diagnosis.diagnosis"/>
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control" id="positionId" name="positionId">
+                            <select class="form-control entry-field" id="diagnosisId" name="diagnosisId">
                             </select>
                         </div>
                     </div>
@@ -115,13 +110,12 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="staff.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="staff.editTitle"/>"
-    i18n["selectPosition"] = "<fmt:message key="staff.selectPosition"/>"
-    i18n["emptyName"] = "<fmt:message key="error.staff.emptyName"/>"
-    i18n["emptySurname"] = "<fmt:message key="error.staff.emptySurname"/>"
-    i18n["emptyPositionId"] = "<fmt:message key="error.staff.emptyPositionId"/>"
-    i18n["impossibleRemovingForUsers"] = "<fmt:message key="error.staff.impossibleRemovingForUsers"/>"
+    i18n["addTitle"] = "<fmt:message key="diagnosis.addTitle"/>"
+    i18n["editTitle"] = "<fmt:message key="diagnosis.editTitle"/>"
+    i18n["selectDiagnosisType"] = "<fmt:message key="diagnosis.selectDiagnosisType"/>"
+    i18n["selectDiagnosis"] = "<fmt:message key="diagnosis.selectDiagnosis"/>"
+    i18n["emptyDate"] = "<fmt:message key="error.diagnosis.emptyDate"/>"
+    i18n["emptyDiagnosisTypeId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisTypeId"/>"
+    i18n["emptyDiagnosisId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisId"/>"
+    i18n["emptyPatientId"] = "<fmt:message key="error.diagnosis.emptyPatientId"/>"
 </script>
-
-</html>

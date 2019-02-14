@@ -30,6 +30,7 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     private static final String ADMISSION_DATE_FIELDNAME = "admission_date";
     private static final String DISCHARGE_DATE_FIELDNAME = "discharge_date";
     private static final String FINAL_DIAGNOSIS_ID_FIELDNAME = "final_diagnosis_id";
+    private static final String PRIMARY_DIAGNOSIS_ID_FIELDNAME = "primary_diagnosis_id";
     private static final String FINAL_DIAGNOSIS_NAME_FIELDNAME = "final_diagnosis_name";
 
     private static final String FOREIGN_KEY_IN_DIAGNOSISES = "diagnosis_register_patient_id_fkey";
@@ -37,14 +38,13 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     private static final String FOREIGN_KEY_IN_PRESCRIPTIONS = "prescription_register_patient_id_fkey";
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSISES = "impossibleRemovingForDiagnosises";
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTIONS = "impossibleRemovingForInspections";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS = "impossibleRemovingForPrescription";
+    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS = "impossibleRemovingForPrescriptions";
 
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT * FROM patient_register";
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, " +
-            "birthday, phone, email, admission_date, " +
-            "discharge_date " +
+            "birthday, phone, email, admission_date, discharge_date, final_diagnosis_id, primary_diagnosis_id " +
             "FROM patient_register WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO patient_register " +
             "(name,  additional_name,  surname, birthday, phone, email, admission_date)" +
@@ -136,7 +136,8 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        patient = getPatientWithLazyFinalDiagnosis(resultSet);
+                        //patient = getPatientWithLazyFinalDiagnosis(resultSet);
+                        patient = getPatient(resultSet);
                         break;
                     }
                 }
@@ -158,7 +159,7 @@ public class JdbcPatientDAOImpl implements PatientDAO {
             try (Statement statement = con.createStatement();
                  ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
                 while (resultSet.next()) {
-                    results.add(getPatientWithLazyFinalDiagnosis(resultSet));
+                    results.add(getPatient(resultSet));
                 }
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
@@ -187,9 +188,11 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     private Patient getPatient(ResultSet resultSet) throws SQLException {
         Patient patient = getPatientWithLazyFinalDiagnosis(resultSet);
-        String finalDiagnosisName = resultSet.getString(FINAL_DIAGNOSIS_NAME_FIELDNAME);
+        //String finalDiagnosisName = resultSet.getString(FINAL_DIAGNOSIS_NAME_FIELDNAME);
         Integer finalDiagnosisId = resultSet.getInt(FINAL_DIAGNOSIS_ID_FIELDNAME);
-        patient.setFinalDiagnosis(new Diagnosis(finalDiagnosisId, finalDiagnosisName));
+        Integer primaryDiagnosisId = resultSet.getInt(PRIMARY_DIAGNOSIS_ID_FIELDNAME);
+        patient.setFinalDiagnosis(new Diagnosis(finalDiagnosisId));
+        patient.setPrimaryDiagnosis(new Diagnosis(primaryDiagnosisId));
         return patient;
     }
 

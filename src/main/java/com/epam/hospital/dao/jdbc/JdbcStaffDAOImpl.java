@@ -34,7 +34,6 @@ public class JdbcStaffDAOImpl implements StaffDAO {
             "WHERE staff.position_item_id = handbk_items.id AND " +
             "handbk_items.id = handbk_item_translations.handbk_item_id AND " +
             "handbk_item_translations.locale = ?";
-
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, position_item_id " +
             "FROM staff WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO staff" +
@@ -130,12 +129,12 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     }
 
     @Override
-    public List<Staff> getAll(String lang) {
+    public List<Staff> getAll(String locale) {
         Connection con = pool.getConnection();
         List<Staff> results = new ArrayList<>();
         if (con != null) {
             try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
-                statement.setString(1, lang);
+                statement.setString(1, locale);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         results.add(getStaff(resultSet));

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface PatientDAO {
 
-    Patient create(Patient user);
+    Patient create(Patient patient);
 
-    Patient update(Patient user);
+    Patient update(Patient patient);
 
     // false if not found
     boolean delete(int id);
@@ -17,4 +17,5 @@ public interface PatientDAO {
     Patient get(int id);
 
     List<Patient> getAll();
+
 }

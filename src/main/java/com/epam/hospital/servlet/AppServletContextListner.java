@@ -1,6 +1,7 @@
 package com.epam.hospital.servlet;
 
 import com.epam.hospital.dao.ConnectionPool;
+import com.epam.hospital.dao.PatientDiagnosisDAO;
 import com.epam.hospital.dao.jdbc.*;
 import com.epam.hospital.service.*;
 import com.epam.hospital.action.AbstractActionWithService;
@@ -29,6 +30,7 @@ public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_HANDBK_SERVICE = "handbkService";
     public static final String CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE = "translationService";
     public static final String CONTEXT_PARAMETER_FOR_LANG_SERVICE = "langService";
+    public static final String CONTEXT_PARAMETER_FOR_PATIENT_DIAGNOSIS_SERVICE = "patientDiagnosisService";
 
     public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
@@ -82,12 +84,15 @@ public class AppServletContextListner implements ServletContextListener {
             HandbkItemService handbkService = new HandbkItemServiceImpl(new JdbcHandbkItemDAOImpl(connectionPool));
             TranslationService translationService = new TranslationServiceImpl(new JdbcTranslationDAOImpl(connectionPool));
             LangService langService = new LangServiceImpl(new JdbcLangDAOImpl(connectionPool));
+            PatientDiagnosisDAO patientDiagnosisDAO = new JdbcPatientDiagnosisDAOImpl(connectionPool);
+            PatientDiagnosisService patientDiagnosisService = new PatientDiagnosisServiceImpl(patientDiagnosisDAO);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_SERVICE, patientService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_USER_SERVICE, userService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_STAFF_SERVICE, staffService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_HANDBK_SERVICE, handbkService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_TRANSLATION_SERVICE, translationService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_LANG_SERVICE, langService);
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_DIAGNOSIS_SERVICE, patientDiagnosisService);
         }
     }
 

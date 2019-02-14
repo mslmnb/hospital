@@ -54,7 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"></h2>
+                <h2 class="modal-title" id="modalTitle"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
@@ -167,6 +167,8 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
+    i18n["addTitle"] = "<fmt:message key="reception.addTitle"/>"
+    i18n["editTitle"] = "<fmt:message key="reception.editTitle"/>"
     i18n["invalidEmail"] = "<fmt:message key="error.reception.invalidEmail"/>";
     i18n["invalidPhone"] = "<fmt:message key="error.reception.invalidPhone"/>";
     i18n["emptyName"] = "<fmt:message key="error.reception.emptyName"/>";
@@ -175,6 +177,10 @@
     i18n["invalidBirthday"] = "<fmt:message key="error.reception.invalidBirthday"/>";
     i18n["emptyAdmissionDate"] = "<fmt:message key="error.reception.emptyAdmissionDate"/>";
     i18n["invalidAdmissionDate"] = "<fmt:message key="error.reception.invalidAdmissionDate"/>";
+    i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnosises"/>"
+    i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.reception.impossibleRemovingForInspections"/>"
+    i18n["impossibleRemovingForPrescriptions"] = "<fmt:message key="error.reception.impossibleRemovingForPrescriptions"/>"
+
 </script>
 
 </html>

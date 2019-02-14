@@ -17,5 +17,5 @@ public interface StaffDAO {
     Staff get(int staff_id);
 
     // empty if not found
-    List<Staff> getAll(String lang);
+    List<Staff> getAll(String locale);
 }

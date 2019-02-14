@@ -66,7 +66,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Staff> getAll(String lang) {
-        return dao.getAll(lang);
+    public List<Staff> getAll(String locale) {
+        return dao.getAll(locale);
     }
 }

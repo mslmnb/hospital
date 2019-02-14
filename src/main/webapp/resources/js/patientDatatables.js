@@ -1,11 +1,6 @@
 var ajaxUrl = 'patients/';
 var datatableApi;
 
-function updateTable() {
-    $.get(ajaxUrl + "all", updateTableByData);
-}
-
-
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
@@ -17,11 +12,6 @@ $(function () {
             },
             {
                 "data": "additionalName"
-            },
-            {
-                "orderable": false,
-                "defaultContent": "",
-                "render": renderReceptionBtn
             },
             {
                 "orderable": false,
@@ -56,38 +46,34 @@ $(function () {
 });
 
 
-function renderReceptionBtn(data, type, row) {
-    if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='reception?id=" + row.id + "& name=" + fullName(row) + "'>"
-                                                                                + i18n["receptionBtn"]
-                                                                                + "</a>";
-    }
-}
-
 function renderDiagnosisBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/diagnosis?id=" + row.id + "'>"
-                                                                                + i18n["diagnosisBtn"]
-                                                                                + "</a>";
+        return "<a class='btn btn-xs btn-primary' href='diagnosis?id=" + row.id
+                                                                       + "&name=" + getFullName(row) + "'>"
+                                                                       + i18n["diagnosisBtn"]
+                                                                       + "</a>";
     }
 }
 
 function renderPrescriptionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/prescription?id=" + row.id + "'>"
-                                                                                   + i18n["prescriptionBtn"]
-                                                                                   + "</a>";
+        return "<a class='btn btn-xs btn-primary' href='prescription?id=" + row.id
+                                                                          + "&name=" + getFullName(row) + "'>"
+                                                                          + i18n["prescriptionBtn"]
+                                                                          + "</a>";
     }
 }
 
 function renderInspectionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='patients/inspection?id=" + row.id + "'>"
-                                                                                     + i18n["inspectionBtn"]
-                                                                                     + "</a>";
+        return "<a class='btn btn-xs btn-primary' href='inspection?id=" + row.id
+                                                                        + "&name=" + getFullName(row) + "'>"
+                                                                        + i18n["inspectionBtn"]
+                                                                        + "</a>";
     }
 }
 
-function fullName(row) {
-    return row.surname + " " +  row.name + " " + row.additionalName;
+function getFullName(row) {
+    return row.surname + " " + row.name + " " + row.additionalName;
+
 }

@@ -62,7 +62,7 @@
                            name="handbkItemId"
                            value="${param.id}">
 
-                    <input type="hidden" id="id" name="id">
+                    <input class="entry-field" type="hidden" id="id" name="id">
 
                     <div class="form-group">
                         <label for="locale" class="control-label col-xs-3">
@@ -70,7 +70,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control" id="locale" name="locale">
+                            <select class="form-control entry-field" id="locale" name="locale">
                             </select>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="translation" name="translation"
+                            <input type="text" class="form-control entry-field" id="translation" name="translation"
                                    placeholder="<fmt:message key="translation.translation"/>">
                         </div>
                     </div>

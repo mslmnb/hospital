@@ -1,10 +1,6 @@
 var ajaxUrl = 'translation/';
 var datatableApi;
 
-// function updateTable() {
-//     $.get(ajaxUrl + "all", updateTableByData);
-// }
-
 $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
@@ -43,45 +39,17 @@ function updateRow(id) {
         $("#id").val(data.id);
         $("#locale").val(data.locale);
         $("#translation").val(data.translation);
-        drawLocaleOptions(data.locale);
+        drawOptions("#locale", "lang/all", "selectLocale", data.locale);
     });
     $('#editRow').modal();
 }
 
 function addTranslation() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find("#id").val("");
-    form.find("#locale").val("");
-    form.find("#translation").val("");
-    drawLocaleOptions();
+    form.find(".entry-field").val("");
+    drawOptions("#locale", "lang/all", "selectLocale");
     $('#editRow').modal();
 }
 
-function drawLocaleOptions(locale) {
-    $.ajax({
-        type: "GET",
-        url: "lang/all",
-        success: function (data) {
-            var localeSelect = $("#locale");
-            localeSelect.empty();
-            var option = $("<option>");
-            option.attr("disabled", true)
-                .html(i18n["selectLocale"])
-                .appendTo(localeSelect);
-            if (locale == undefined) {
-                option.attr("selected", true);
-            }
-            for (choice in data) {
-                var option = $("<option>");
-                option.val(data[choice].locale)
-                    .html(data[choice].locale)
-                    .appendTo(localeSelect)
-                if(data[choice].locale == locale) {
-                    option.attr("selected", true)
-                }
-            }
-        }
-    });
-}
 
 

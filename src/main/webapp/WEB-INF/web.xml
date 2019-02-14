@@ -79,6 +79,7 @@
             com.epam.hospital.action.LangAction
             com.epam.hospital.action.PatientAction
             com.epam.hospital.action.ReceptionAction
+            com.epam.hospital.action.PatientDiagnosisAction
         </param-value>
     </context-param>
 

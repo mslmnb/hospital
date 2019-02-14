@@ -74,6 +74,26 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public Patient savePrimaryDiagnosis(String idAsString, String diagnosisIdAsString) throws AppException {
+        return null;
+    }
+
+    @Override
+    public Patient savePrimaryDiagnosis(Patient patient) throws AppException {
+        return null;
+    }
+
+    @Override
+    public Patient saveFinalDiagnosis(String idAsString, String diagnosisIdAsString) throws AppException {
+        return null;
+    }
+
+    @Override
+    public Patient saveFinalDiagnosis(Patient patient) throws AppException {
+        return null;
+    }
+
+    @Override
     public List<Patient> getAll() {
         return dao.getAll();
     }

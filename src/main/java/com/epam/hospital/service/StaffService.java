@@ -27,5 +27,5 @@ public interface StaffService extends HavingDeleteMethod, HavingGetMethod {
 
     Staff get(int id) throws AppException;
 
-    List<Staff> getAll(String lang);
+    List<Staff> getAll(String locale);
 }

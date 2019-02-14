@@ -1,19 +1,25 @@
+DELETE FROM prescription_register;
+DELETE FROM inspection_register;
+DELETE FROM diagnosis_register;
 DELETE FROM patient_register;
 DELETE FROM users;
 DELETE FROM staff;
 DELETE FROM handbk_item_translations;
 DELETE FROM handbk_items;
+DELETE FROM lang;
 
 ALTER SEQUENCE handbk_items_seq RESTART WITH 100000;
 ALTER SEQUENCE handbk_item_translations_seq RESTART WITH 100000;
 ALTER SEQUENCE users_seq RESTART WITH 100000;
 ALTER SEQUENCE staff_seq RESTART WITH 100000;
 ALTER SEQUENCE patient_seq RESTART WITH 100000;
+ALTER SEQUENCE diagnosis_register_seq RESTART WITH 100000;
+ALTER SEQUENCE inspection_register_seq RESTART WITH 100000;
+ALTER SEQUENCE prescription_register_seq RESTART WITH 100000;
 
 INSERT INTO lang (locale) VALUES
   ('ru'),
   ('en');
-
 
 INSERT INTO patient_register (name, additional_name, surname, birthday, phone, email) VALUES
   ('Анатолий', 'Сергеевич', 'Скоробогатов', '1968-01-05', '+7(721)2345678', 'anatoliy@mail.ru'),
@@ -27,12 +33,16 @@ INSERT INTO patient_register (name, additional_name, surname, birthday, phone, e
   ('Таисия', 'Сагындыковна', 'Бейбутова', '1940-05-01', '+7(721)2534571', '');
 
 INSERT INTO handbk_items (type, name) VALUES
-  ('POSITION', 'для программист'), --100000
-  ('POSITION', 'для врач высшей категории'), --100001
-  ('POSITION', 'для врач 1 категории'), --100002
-  ('POSITION', 'для старшая медсестра'), --100003
-  ('POSITION', 'для медсестра'); --100004
-
+  ('POSITION', 'программист'), --100000
+  ('POSITION', 'врач высшей категории'), --100001
+  ('POSITION', 'врач 1 категории'), --100002
+  ('POSITION', 'старшая медсестра'), --100003
+  ('POSITION', 'медсестра'), --100004
+  ('DIAGNOSIS_TYPE', 'сопутствующий'), --100005
+  ('DIAGNOSIS_TYPE', 'основной'), --100006
+  ('DIAGNOSIS', 'диагноз1'), --100007
+  ('DIAGNOSIS', 'диагноз2'), --100008
+  ('DIAGNOSIS', 'диагноз3'); --100009
 
 INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) VALUES
   (100000, 'ru', 'программист'),
@@ -44,8 +54,22 @@ INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) VALUE
   (100001, 'en', 'doctor of higher category '),
   (100002, 'en', 'doctor of first category'),
   (100003, 'en', 'chief nurse'),
-  (100004, 'en', 'nurse');
+  (100004, 'en', 'nurse'),
+  (100005, 'ru', 'сопутствующий'),
+  (100006, 'ru', 'основной'),
+  (100005, 'en', 'accompanying'),
+  (100006, 'en', 'basically'),
+  (100007, 'ru', 'диагноз1'),
+  (100008, 'ru', 'диагноз2'),
+  (100009, 'ru', 'диагноз3'),
+  (100007, 'en', 'diagnosis1'),
+  (100008, 'en', 'diagnosis2'),
+  (100009, 'en', 'diagnosis3');
 
+INSERT INTO diagnosis_register (patient_id, diagnosis_item_id, diagnosis_type_item_id) VALUES
+  (100000, 100008, 100005),
+  (100000, 100009, 100006),
+  (100001, 100007, 100005);
 
 INSERT INTO staff (name, additional_name, surname, position_item_id) VALUES
   ('Валерий', 'Алексеевич', 'Вигель', 100000),

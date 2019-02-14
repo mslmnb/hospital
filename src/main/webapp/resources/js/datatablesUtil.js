@@ -137,3 +137,32 @@ function renderDeleteBtn(data, type, row) {
     }
 }
 
+function drawOptions(selectElementName, url, defaultOption, selectedOptionId) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            debugger;
+            var selectElement = $(selectElementName);
+            selectElement.empty();
+            var optionElement = $("<option>");
+            optionElement.attr("disabled", true)
+                .html(i18n[defaultOption])
+                .appendTo(selectElement);
+            if (selectedOptionId == undefined) {
+                optionElement.attr("selected", true);
+            }
+            for (choice in data) {
+                var optionElement = $("<option>");
+                optionElement.val(data[choice].id)
+                    .html(data[choice].name)
+                    .appendTo(selectElement)
+                if(data[choice].id == selectedOptionId) {
+                    optionElement.attr("selected", true)
+                }
+            }
+        }
+    });
+}
+
+

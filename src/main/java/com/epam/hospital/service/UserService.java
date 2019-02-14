@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface UserService extends HavingDeleteMethod, HavingGetMethod {
     String ID_PARAMETER = "id";
+    String NAME_PARAMETER = "name";
     String STAFF_ID_PARAMETER = "staffId";
     String STAFF_NAME_PARAMETER = "staffName";
     String LOGIN_PARAMETER = "login";

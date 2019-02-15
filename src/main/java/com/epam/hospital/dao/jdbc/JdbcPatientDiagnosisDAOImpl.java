@@ -11,9 +11,7 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.DaoUtil.deleteFromTable;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
@@ -29,36 +27,30 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
     private static final String DIAGNOSIS_TYPE_ITEM_ID_FIELDNAME = "diagnosis_type_item_id";
     private static final String DIAGNOSIS_FIELDNAME = "diagnosis";
     private static final String DIAGNOSIS_TYPE_FIELDNAME = "diagnosis_type";
+    private static final String DIAGNOSIS_TYPE_ID_FIELDNAME = "diagnosis_type_id";
+    private static final String DIAGNOSIS_ID_FIELDNAME = "diagnosis_id";
 
-    private static final String FOREIGN_KEY_IN_DIAGNOSIS = "diagnosis_register_patient_id_fkey";
-    private static final String FOREIGN_KEY_IN_INSPECTION = "inspection_register_patient_id_fkey";
-    private static final String FOREIGN_KEY_IN_PRESCRIPTION = "prescription_register_patient_id_fkey";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSIS = "impossibleRemovingForDiagnosis";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTION = "impossibleRemovingForInspection";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTION = "impossibleRemovingForPrescription";
-    private static final Map<String, String> errorResolver;
-
-    private static final String SELECT_ALL = "SELECT dr.id, dr.patient_id, dr.date, dr.diagnosis_item_id, " +
-            "dr.diagnosis_type_item_id, hi.id as diagnosis_id, hi_type.id AS diagnosis_type_id, " +
-            "hit.translation as diagnosis, hit_type.translation AS diagnosis_type " +
-            "FROM diagnosis_register AS dr, handbk_items as hi, handbk_item_translations as hit, " +
-            "handbk_items as hi_type, handbk_item_translations as hit_type " +
-            "WHERE dr.diagnosis_item_id = hi.id AND dr.diagnosis_type_item_id =  hi_type.id  AND " +
-            "hi.id = hit.handbk_item_id AND hi_type.id = hit_type.handbk_item_id AND " +
-            "hit.locale = ? AND  hit_type.locale = ? AND patient_id = ?";
+    private static final String SELECT_ALL = "SELECT dr.id, dr.patient_id, dr.date, " +
+                                                 "dr.diagnosis_item_id as diagnosis_id, " +
+                                                 "dr.diagnosis_type_item_id AS diagnosis_type_id, " +
+                                                 "hit.translation as diagnosis, " +
+                                                 "hit_type.translation AS diagnosis_type " +
+                                             "FROM diagnosis_register AS dr, handbk_items as hi, " +
+                                                 "handbk_item_translations as hit, " +
+                                                 "handbk_items as hi_type, handbk_item_translations as hit_type " +
+                                             "WHERE dr.diagnosis_item_id = hi.id AND " +
+                                                 "dr.diagnosis_type_item_id =  hi_type.id  AND " +
+                                                 "hi.id = hit.handbk_item_id AND " +
+                                                 "hi_type.id = hit_type.handbk_item_id AND " +
+                                                 "hit.locale = ? AND  hit_type.locale = ? AND patient_id = ?";
     private static final String SELECT_BY_ID = "SELECT * FROM diagnosis_register WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO diagnosis_register" +
-            "(patient_id,  date, diagnosis_item_id, diagnosis_type_item_id) VALUES (?, ?, ?, ?)";
+                                                  "(patient_id,  date, diagnosis_item_id, diagnosis_type_item_id) " +
+                                              "VALUES (?, ?, ?, ?)";
     private static final String UPDATE = "UPDATE diagnosis_register SET date = ?, diagnosis_item_id = ?, " +
-            "diagnosis_type_item_id = ? WHERE id = ?";
+                                             "diagnosis_type_item_id = ? " +
+                                         "WHERE id = ?";
     private static final String TABLE_NAME = "diagnosis_register";
-
-    static {
-        errorResolver = new HashMap<>();
-        errorResolver.put(FOREIGN_KEY_IN_DIAGNOSIS, IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSIS);
-        errorResolver.put(FOREIGN_KEY_IN_INSPECTION, IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTION);
-        errorResolver.put(FOREIGN_KEY_IN_PRESCRIPTION, IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTION);
-    }
 
     private final ConnectionPool pool;
 
@@ -115,7 +107,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
 
     @Override
     public boolean delete(int id) {
-        return deleteFromTable(TABLE_NAME, LOG, pool, id, errorResolver);
+        return deleteFromTable(TABLE_NAME, LOG, pool, id);
     }
 
     @Override
@@ -174,21 +166,21 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
         Integer diagnosisId = resultSet.getInt(DIAGNOSIS_ITEM_ID_FIELDNAME);
         Diagnosis diagnosis = new Diagnosis(diagnosisId);
 
-        return new PatientDiagnosis(id, new Patient(id), date, diagnosisType, diagnosis);
+        return new PatientDiagnosis(id, new Patient(patientId), date, diagnosisType, diagnosis);
     }
 
     private PatientDiagnosis getPatientDiagnosis(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         int patientId = resultSet.getInt(PATIENT_ID_FIELDNAME);
         LocalDate date = new Date(resultSet.getDate(DATE_FIELDNAME).getTime()).toLocalDate();
-        Integer diagnosisTypeId = resultSet.getInt(DIAGNOSIS_TYPE_ITEM_ID_FIELDNAME);
+        Integer diagnosisTypeId = resultSet.getInt(DIAGNOSIS_TYPE_ID_FIELDNAME);
         String diagnosisTypeName = resultSet.getString(DIAGNOSIS_TYPE_FIELDNAME);
         DiagnosisType diagnosisType = new DiagnosisType(diagnosisTypeId, diagnosisTypeName);
-        Integer diagnosisId = resultSet.getInt(DIAGNOSIS_ITEM_ID_FIELDNAME);
+        Integer diagnosisId = resultSet.getInt(DIAGNOSIS_ID_FIELDNAME);
         String diagnosisName = resultSet.getString(DIAGNOSIS_FIELDNAME);
         Diagnosis diagnosis = new Diagnosis(diagnosisId, diagnosisName);
 
-        return new PatientDiagnosis(id, new Patient(id), date, diagnosisType, diagnosis);
+        return new PatientDiagnosis(id, new Patient(patientId), date, diagnosisType, diagnosis);
     }
 
 }

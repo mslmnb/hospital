@@ -1,4 +1,4 @@
-package com.epam.hospital.dao.jdbc;
+package com.epam.hospital.dao;
 
 import com.epam.hospital.model.handbk.Lang;
 

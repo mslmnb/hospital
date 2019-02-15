@@ -42,7 +42,11 @@ INSERT INTO handbk_items (type, name) VALUES
   ('DIAGNOSIS_TYPE', 'основной'), --100006
   ('DIAGNOSIS', 'диагноз1'), --100007
   ('DIAGNOSIS', 'диагноз2'), --100008
-  ('DIAGNOSIS', 'диагноз3'); --100009
+  ('DIAGNOSIS', 'диагноз3'), --100009
+  ('PRESCRPTN_TYPE', 'обследование'), --100010
+  ('PRESCRPTN_TYPE', 'леч.процедуры'), --100011
+  ('PRESCRPTN_TYPE', 'лекарства'); --100012
+
 
 INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) VALUES
   (100000, 'ru', 'программист'),
@@ -64,7 +68,14 @@ INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) VALUE
   (100009, 'ru', 'диагноз3'),
   (100007, 'en', 'diagnosis1'),
   (100008, 'en', 'diagnosis2'),
-  (100009, 'en', 'diagnosis3');
+  (100009, 'en', 'diagnosis3'),
+  (100010, 'ru', 'обследование'),
+  (100011, 'ru', 'леч.процедура'),
+  (100012, 'ru', 'лекарства'),
+  (100010, 'en', 'medical examination'),
+  (100011, 'en', 'medical procedure'),
+  (100012, 'en', 'drug');
+
 
 INSERT INTO diagnosis_register (patient_id, diagnosis_item_id, diagnosis_type_item_id) VALUES
   (100000, 100008, 100005),

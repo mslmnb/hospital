@@ -22,9 +22,10 @@ public class TranslationServiceImpl implements TranslationService{
     }
 
     @Override
-    public void save(String idAsString, String handbkItemIdAsString, String locale, String translation) throws AppException {
+    public void save(String idAsString, String handbkItemIdAsString,
+                     String locale, String translation) throws AppException {
         CheckResult checkResult = new CheckResult();
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer handbkItemId = checkAndReturnInt(handbkItemIdAsString, HANDBK_ITEM_ID_PARAMETER, checkResult, false);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(LOCALE_PARAMETER, locale);

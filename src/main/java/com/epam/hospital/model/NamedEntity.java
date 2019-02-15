@@ -17,7 +17,7 @@ public class NamedEntity extends BaseEntity {
     }
 
     public String getName() {
-        return this.name == null ? "" : this.name;
+        return ((this.name == null) ? "" : this.name);
     }
 
     @Override

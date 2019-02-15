@@ -30,5 +30,4 @@ public interface PatientDiagnosisService extends HavingGetMethod, HavingDeleteMe
     List<PatientDiagnosis> getAll(String patientIdAsString, String locale);
 
     List<PatientDiagnosis> getAll(int patientId, String locale);
-
 }

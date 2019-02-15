@@ -36,7 +36,7 @@ public class BaseEntity {
 
     @Override
     public int hashCode() {
-        return (id == null) ? 0 : id;
+        return ((id == null) ? 0 : id);
     }
 
 }

@@ -28,7 +28,7 @@
 
 
             <div class="view-box">
-                <a class="btn btn-info" onclick="addDiagnosis()">
+                <a class="btn btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <fmt:message key="common.add"/>
                 </a>
@@ -38,7 +38,7 @@
                     <thead>
                     <tr>
                         <th><fmt:message key="diagnosis.data"/></th>
-                        <th><fmt:message key="diagnosis.diagnosisType"/></th>
+                        <th><fmt:message key="diagnosis.type"/></th>
                         <th><fmt:message key="diagnosis.diagnosis"/></th>
                         <th></th>
                         <th></th>
@@ -73,7 +73,7 @@
 
                     <div class="form-group">
                         <label for="diagnosisTypeId" class="control-label col-xs-3">
-                            <fmt:message key="diagnosis.diagnosisType"/>
+                            <fmt:message key="diagnosis.type"/>
                         </label>
 
                         <div class="col-xs-9">
@@ -118,4 +118,5 @@
     i18n["emptyDiagnosisTypeId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisTypeId"/>"
     i18n["emptyDiagnosisId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisId"/>"
     i18n["emptyPatientId"] = "<fmt:message key="error.diagnosis.emptyPatientId"/>"
+    i18n["notFound"] = "<fmt:message key="error.diagnosis.notFound"/>"
 </script>

@@ -26,10 +26,11 @@ public class PatientDiagnosisServiceImpl implements PatientDiagnosisService {
     public void save(String idAsString, String patientIdAsString, String dateAsString,
                      String diagnosisIdAsString, String diagnosisTypeIdAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer patientId = checkAndReturnInt(patientIdAsString, PATIENT_ID_PARAMETER, checkResult, false);
         LocalDate date = checkAndReturnDate(dateAsString, DATE_PARAMETER, checkResult, false);
-        Integer diagnosisTypeId = checkAndReturnInt(diagnosisTypeIdAsString, DIAGNOSIS_TYPE_ITEM_ID_PARAMETER, checkResult, false);
+        Integer diagnosisTypeId = checkAndReturnInt(diagnosisTypeIdAsString,
+                                                    DIAGNOSIS_TYPE_ITEM_ID_PARAMETER, checkResult, false);
         Integer diagnosisId = checkAndReturnInt(diagnosisIdAsString, DIAGNOSIS_ID_PARAMETER, checkResult, true);
         Patient patient = new Patient(patientId);
         DiagnosisType diagnosisType = new DiagnosisType(diagnosisTypeId);

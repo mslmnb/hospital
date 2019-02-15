@@ -17,5 +17,4 @@ public interface PatientDiagnosisDAO {
     PatientDiagnosis get(int id);
 
     List<PatientDiagnosis> getAll(int patientId, String locale);
-
 }

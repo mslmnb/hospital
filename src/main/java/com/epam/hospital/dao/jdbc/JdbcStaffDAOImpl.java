@@ -28,18 +28,20 @@ public class JdbcStaffDAOImpl implements StaffDAO {
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_USERS = "impossibleRemovingForUsers";
     private static final Map<String, String> errorResolver;
 
-    private static final String SELECT_ALL = "SELECT staff.id, staff.name, staff.additional_name, " +
-            "staff.surname, staff.position_item_id, handbk_item_translations.translation As position " +
-            "FROM staff, handbk_items, handbk_item_translations " +
-            "WHERE staff.position_item_id = handbk_items.id AND " +
-            "handbk_items.id = handbk_item_translations.handbk_item_id AND " +
-            "handbk_item_translations.locale = ?";
+    private static final String SELECT_ALL = "SELECT s.id, s.name, s.additional_name, s.surname, " +
+                                                 "s.position_item_id, hit.translation As position " +
+                                             "FROM staff AS s, handbk_items AS hi, handbk_item_translations AS hit " +
+                                             "WHERE s.position_item_id = hi.id AND " +
+                                                 "hi.id = hit.handbk_item_id AND hit.locale = ?";
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, position_item_id " +
-            "FROM staff WHERE id = ? ";
+                                               "FROM staff " +
+                                               "WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO staff" +
-            "(name,  additional_name, surname, position_item_id) VALUES (?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE staff SET name = ?, additional_name = ?, " +
-            "surname = ?, position_item_id = ?  WHERE id = ?";
+                                                  "(name,  additional_name, surname, position_item_id) " +
+                                              "VALUES (?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE staff " +
+                                         "SET name = ?, additional_name = ?, surname = ?, position_item_id = ?  " +
+                                         "WHERE id = ?";
     private static final String TABLE_NAME = "staff";
 
     static {

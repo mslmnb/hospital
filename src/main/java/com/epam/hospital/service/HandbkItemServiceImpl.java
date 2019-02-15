@@ -24,7 +24,7 @@ public class HandbkItemServiceImpl implements HandbkItemService {
     @Override
     public void save(String idAsString, String name, String typeAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(NAME_PARAMETER, name);
         checkNotEmpty(parameters, checkResult, true);

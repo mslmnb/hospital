@@ -29,15 +29,14 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSIS = "impossibleRemovingForDiagnosis";
     private static final Map<String, String> errorResolver;
 
-    private static final String SELECT_ALL_TRANSLATIONS = "SELECT handbk_items.id, " +
-            "handbk_item_translations.translation AS name, type " +
-            "FROM handbk_items, handbk_item_translations " +
-            "WHERE handbk_items.id = handbk_item_translations.handbk_item_id AND " +
-            "handbk_item_translations.locale = ? AND handbk_items.type = ?";
-    private static final String SELECT_ALL = "SELECT id, name, type FROM handbk_items " +
-            "WHERE handbk_items.type = ?";
+    private static final String SELECT_ALL_TRANSLATIONS = "SELECT hi.id, hit.translation AS name, type " +
+                                                          "FROM handbk_items AS hi, handbk_item_translations AS hit " +
+                                                          "WHERE hi.id = hit.handbk_item_id AND " +
+                                                              "hit.locale = ? AND hi.type = ?";
+    private static final String SELECT_ALL = "SELECT id, name, type " +
+                                             "FROM handbk_items " +
+                                             "WHERE handbk_items.type = ?";
     private static final String SELECT_BY_ID = "SELECT id, name,  type FROM handbk_items WHERE id = ? ";
-
     private static final String INSERT_INTO = "INSERT INTO handbk_items (name, type) VALUES (?, ?)";
     private static final String UPDATE = "UPDATE handbk_items SET name = ?, type = ? WHERE id = ?";
     private static final String TABLE_NAME = "handbk_items";

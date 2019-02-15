@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public void save(String idAsString, String staffIdAsString,
                      String login, String password, String roleAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer staffId = checkAndReturnInt(staffIdAsString, STAFF_ID_PARAMETER, checkResult, false);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(LOGIN_PARAMETER, login);

@@ -25,7 +25,7 @@ public class StaffServiceImpl implements StaffService {
     public void save(String idAsString, String name, String additionalName,
                      String surname, String positionIdAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(NAME_PARAMETER, name);
         parameters.put(SURNAME_PARAMETER, surname);

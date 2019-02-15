@@ -44,14 +44,18 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     private static final String SELECT_ALL = "SELECT * FROM patient_register";
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, " +
-            "birthday, phone, email, admission_date, discharge_date, final_diagnosis_id, primary_diagnosis_id " +
-            "FROM patient_register WHERE id = ? ";
+                                                   "birthday, phone, email, admission_date, discharge_date, " +
+                                                   "final_diagnosis_id, primary_diagnosis_id " +
+                                               "FROM patient_register " +
+                                               "WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO patient_register " +
-            "(name,  additional_name,  surname, birthday, phone, email, admission_date)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE patient_register SET name = ?, additional_name = ?, " +
-            "surname = ?, birthday = ?, phone = ?, email = ?, " +
-            "admission_date = ? WHERE id = ?";
+                                                  "(name,  additional_name,  surname, birthday, " +
+                                                        "phone, email, admission_date)" +
+                                              "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE = "UPDATE patient_register " +
+                                         "SET name = ?, additional_name = ?, surname = ?, birthday = ?, " +
+                                             "phone = ?, email = ?, admission_date = ? " +
+                                         "WHERE id = ?";
     private static final String TABLE_NAME = "patient_register";
 
     static {
@@ -136,7 +140,6 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        //patient = getPatientWithLazyFinalDiagnosis(resultSet);
                         patient = getPatient(resultSet);
                         break;
                     }
@@ -188,7 +191,6 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     private Patient getPatient(ResultSet resultSet) throws SQLException {
         Patient patient = getPatientWithLazyFinalDiagnosis(resultSet);
-        //String finalDiagnosisName = resultSet.getString(FINAL_DIAGNOSIS_NAME_FIELDNAME);
         Integer finalDiagnosisId = resultSet.getInt(FINAL_DIAGNOSIS_ID_FIELDNAME);
         Integer primaryDiagnosisId = resultSet.getInt(PRIMARY_DIAGNOSIS_ID_FIELDNAME);
         patient.setFinalDiagnosis(new Diagnosis(finalDiagnosisId));

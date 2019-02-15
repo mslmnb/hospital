@@ -42,7 +42,6 @@ function renderTranslationBtn(data, type, row) {
     var requestParameter = $('#requestParameter').val();
     if (type === 'display') {
         return "<a href='translation" + requestParameter + "&id=" + row.id + "&name=" + row.name + "'>"
-                                                                             + i18n['translation']
-                                                                             + '</a>';
+                                                                           + i18n['translation'] + '</a>';
     }
 }

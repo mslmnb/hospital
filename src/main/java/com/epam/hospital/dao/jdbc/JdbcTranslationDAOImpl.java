@@ -27,15 +27,17 @@ public class JdbcTranslationDAOImpl implements TranslationDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT id, handbk_item_id, locale, translation " +
-            "FROM handbk_item_translations " +
-            "WHERE handbk_item_id = ?";
+                                             "FROM handbk_item_translations " +
+                                             "WHERE handbk_item_id = ?";
 
     private static final String SELECT_BY_ID = "SELECT id, handbk_item_id, locale, translation " +
-                                                        "FROM handbk_item_translations " +
-                                                        "WHERE id = ?";
-    private static final String INSERT_INTO = "INSERT INTO handbk_item_translations (handbk_item_id, locale, translation) " +
+                                               "FROM handbk_item_translations " +
+                                               "WHERE id = ?";
+    private static final String INSERT_INTO = "INSERT INTO handbk_item_translations " +
+                                                  "(handbk_item_id, locale, translation) " +
                                               "VALUES (?, ?, ?)";
-    private static final String UPDATE = "UPDATE handbk_item_translations SET locale = ?, translation = ? " +
+    private static final String UPDATE = "UPDATE handbk_item_translations " +
+                                         "SET locale = ?, translation = ? " +
                                          "WHERE id = ?";
     private static final String TABLE_NAME = "handbk_item_translations";
 

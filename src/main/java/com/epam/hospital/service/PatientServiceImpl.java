@@ -27,7 +27,7 @@ public class PatientServiceImpl implements PatientService {
     public void save(String idAsString, String name, String additionalName, String surname,
                      String birthdayAsString, String phone, String email,
                      String admissionDateAsString) throws AppException {
-        Integer id = idAsString.isEmpty() ? null : checkAndReturnInt(idAsString, ID_PARAMETER);
+        Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER);
         Map<String, String> parameters = new LinkedHashMap<>();
         parameters.put(NAME_PARAMETER,name);
         parameters.put(SURNAME_PARAMETER, surname);

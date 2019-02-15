@@ -1,6 +1,7 @@
 package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.dao.ConnectionPool;
+import com.epam.hospital.dao.LangDAO;
 import com.epam.hospital.model.handbk.Lang;
 import org.apache.log4j.Logger;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
 
-public class JdbcLangDAOImpl implements LangDAO{
+public class JdbcLangDAOImpl implements LangDAO {
     private static final Logger LOG = Logger.getLogger(JdbcLangDAOImpl.class);
 
     private static final String LOACLE_FIELDNAME = "locale";

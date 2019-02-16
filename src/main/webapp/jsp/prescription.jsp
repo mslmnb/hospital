@@ -111,12 +111,12 @@
 
                     <div class="form-group">
                         <label for="result" class="control-label col-xs-3">
-                            <fmt:message key="prescrptn.description"/>
+                            <fmt:message key="prescrptn.result"/>
                         </label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control entry-field" id="result" name="result"
-                                   placeholder="<fmt:message key="prescrptn.description"/>">
+                                   placeholder="<fmt:message key="prescrptn.result"/>">
                         </div>
                     </div>
 

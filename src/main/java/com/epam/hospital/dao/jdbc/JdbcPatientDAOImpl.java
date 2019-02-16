@@ -184,8 +184,9 @@ public class JdbcPatientDAOImpl implements PatientDAO {
         String email = resultSet.getString(EMAIL_FIELDNAME);
         LocalDate admissionDate = new Date(resultSet.getDate(ADMISSION_DATE_FIELDNAME).getTime()).toLocalDate();
         Date dischargeDateAsSqlDate = resultSet.getDate(DISCHARGE_DATE_FIELDNAME);
-        LocalDate dischargeDate = dischargeDateAsSqlDate == null ? null
-                : new Date(dischargeDateAsSqlDate.getTime()).toLocalDate();
+        LocalDate dischargeDate = (dischargeDateAsSqlDate == null)
+                                  ? null
+                                  : new Date(dischargeDateAsSqlDate.getTime()).toLocalDate();
         return new Patient(id, name, additionalName, surname, birthDay, phone, email, admissionDate, dischargeDate);
     }
 

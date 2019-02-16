@@ -112,11 +112,9 @@ CREATE TABLE inspection_register
   id                     INTEGER PRIMARY KEY DEFAULT nextval('inspection_register_seq'),
   patient_id             INTEGER NOT NULL,
   date                   DATE NOT NULL DEFAULT now(),
-  inspectn_type_item_id  INTEGER NOT NULL,
   inspection             TEXT NOT NULL,
   complaints             TEXT NOT NULL,   -- жалобы
-  FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT,
-  FOREIGN KEY  (inspectn_type_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
+  FOREIGN KEY (patient_id) REFERENCES patient_register (id) ON DELETE RESTRICT
 );
 
 ALTER TABLE lang OWNER TO "user";

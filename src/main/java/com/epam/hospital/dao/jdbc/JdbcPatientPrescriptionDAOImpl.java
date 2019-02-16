@@ -1,10 +1,8 @@
 package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.dao.ConnectionPool;
-import com.epam.hospital.dao.PatientDiagnosisDAO;
 import com.epam.hospital.dao.PatientPrescriptionDAO;
 import com.epam.hospital.model.Patient;
-import com.epam.hospital.model.PatientDiagnosis;
 import com.epam.hospital.model.PatientPrescription;
 import com.epam.hospital.model.handbk.PrescriptionType;
 import org.apache.log4j.Logger;
@@ -42,7 +40,7 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
     private static final String SELECT_BY_ID = "SELECT id, patient_id, prescrptn_type_item_id AS prescrptn_type_id, " +
                                                    "application_date, description, execution_date, result " +
                                                 "FROM prescription_register WHERE id = ? ";
-    private static final String INSERT_INTO = "INSERT INTO prescription_register" +
+    private static final String INSERT_INTO = "INSERT INTO prescription_register " +
                                                   "(patient_id,  application_date, " +
                                                       "prescrptn_type_item_id, description) " +
                                               "VALUES (?, ?, ?, ?)";
@@ -59,19 +57,19 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
     }
 
     @Override
-    public PatientPrescription create(PatientPrescription prescription) {
+    public PatientPrescription create(PatientPrescription patientPrescription) {
         Connection con = pool.getConnection();
         if (con != null) {
             try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setInt(1, prescription.getPatient().getId());
-                statement.setDate(2, Date.valueOf(prescription.getApplicationDate()));
-                statement.setInt(3, prescription.getType().getId());
-                statement.setString(4, prescription.getDescription());
+                statement.setInt(1, patientPrescription.getPatient().getId());
+                statement.setDate(2, Date.valueOf(patientPrescription.getApplicationDate()));
+                statement.setInt(3, patientPrescription.getType().getId());
+                statement.setString(4, patientPrescription.getDescription());
                 statement.executeUpdate();
                 try (ResultSet resultSet = statement.getGeneratedKeys()) {
                     resultSet.next();
                     int id = resultSet.getInt(ID_FIELDNAME);
-                    prescription.setId(id);
+                    patientPrescription.setId(id);
                 }
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
@@ -80,24 +78,24 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return prescription;
+        return patientPrescription;
     }
 
     @Override
-    public PatientPrescription update(PatientPrescription prescription) {
+    public PatientPrescription update(PatientPrescription patientPrescription) {
         Connection con = pool.getConnection();
         if (con != null) {
             try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setDate(1, Date.valueOf(prescription.getApplicationDate()));
-                statement.setInt(2, prescription.getType().getId());
-                statement.setString(3, prescription.getDescription());
-                Date executionDate = prescription.getExecutionDate() == null
-                        ? null : Date.valueOf(prescription.getExecutionDate());
+                statement.setDate(1, Date.valueOf(patientPrescription.getApplicationDate()));
+                statement.setInt(2, patientPrescription.getType().getId());
+                statement.setString(3, patientPrescription.getDescription());
+                Date executionDate = patientPrescription.getExecutionDate() == null
+                        ? null : Date.valueOf(patientPrescription.getExecutionDate());
                 statement.setDate(4, executionDate);
-                statement.setString(5, prescription.getResult());
-                statement.setInt(6, prescription.getId());
+                statement.setString(5, patientPrescription.getResult());
+                statement.setInt(6, patientPrescription.getId());
                 if (statement.executeUpdate() == 0) {
-                    prescription = null;
+                    patientPrescription = null;
                 }
                 ;
             } catch (SQLException e) {
@@ -107,7 +105,7 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return prescription;
+        return patientPrescription;
     }
 
     @Override
@@ -118,13 +116,13 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
     @Override
     public PatientPrescription get(int id) {
         Connection con = pool.getConnection();
-        PatientPrescription prescription = null;
+        PatientPrescription patientPrescription = null;
         if (con != null) {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
-                        prescription = getPatientPrescriptionWithLazyType(resultSet);
+                        patientPrescription = getPatientPrescriptionWithLazyType(resultSet);
                         break;
                     }
                 }
@@ -135,7 +133,7 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
         } else {
             logAndThrowForNoDbConnectionError(LOG);
         }
-        return prescription;
+        return patientPrescription;
     }
 
     @Override
@@ -173,7 +171,7 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
         LocalDate executionDate = (date == null) ? null : new Date(date.getTime()).toLocalDate();
         String result = resultSet.getString(RESULT_FIELDNAME);
         return new PatientPrescription(id, new Patient(patientId), applicationDate,
-                prescrptnType, description, executionDate, result);
+                                       prescrptnType, description, executionDate, result);
     }
 
     private PatientPrescription getPatientPrescriptionWithLazyType(ResultSet resultSet) throws SQLException {
@@ -187,6 +185,6 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
         LocalDate executionDate = (date == null) ? null : new Date(date.getTime()).toLocalDate();
         String result = resultSet.getString(RESULT_FIELDNAME);
         return new PatientPrescription(id, new Patient(patientId), applicationDate,
-                prescrptnType, description, executionDate, result);
+                                       prescrptnType, description, executionDate, result);
     }
 }

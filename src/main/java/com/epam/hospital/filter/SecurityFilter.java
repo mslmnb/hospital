@@ -27,13 +27,22 @@ public class SecurityFilter implements Filter {
         nurseRole.add(Role.ROLE_NURSE);
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(Role.ROLE_ADMIN);
+        Set<Role> doctorRole = new HashSet<>();
+        doctorRole.add(Role.ROLE_DOCTOR);
         accessMap.put("/admin", adminRole);
         accessMap.put("/staff", adminRole);
         accessMap.put("/users", adminRole);
+        accessMap.put("/role", adminRole);
         accessMap.put("/handbk", adminRole);
         accessMap.put("/translation", adminRole);
-        accessMap.put("/patients", doctorAndNurseRoles);
         accessMap.put("/reception", nurseRole);
+        accessMap.put("/inspection", doctorRole);
+        accessMap.put("/diagnosis", doctorRole);
+        accessMap.put("/patients", doctorAndNurseRoles);
+        accessMap.put("/prescription", doctorAndNurseRoles);
+        accessMap.put("/noAdmin", doctorAndNurseRoles);
+
+
 
     }
 

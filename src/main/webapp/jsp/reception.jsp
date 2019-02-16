@@ -58,14 +58,14 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" class="entry-field" id="id" name="id">
 
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-3"><fmt:message key="patients.name"/></label>
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control entry-field"
                                    id="name" name="name"
                                    placeholder="<fmt:message key="patients.name"/>">
                         </div>
@@ -78,7 +78,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control entry-field"
                                    id="additionalName"
                                    name="additionalName"
                                    placeholder="<fmt:message key="patients.additionalName"/>"/>
@@ -92,7 +92,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control entry-field"
                                    id="surname"
                                    name="surname"
                                    placeholder="<fmt:message key="patients.surname"/>"/>
@@ -105,7 +105,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input class="form-control"
+                            <input class="form-control entry-field"
                                    id="birthday"
                                    name="birthday"
                                    placeholder="<fmt:message key="reception.birthday"/>">
@@ -117,7 +117,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control entry-field"
                                    id="phone" name="phone"
                                    placeholder="<fmt:message key="reception.phone"/>"/>
                         </div>
@@ -129,7 +129,7 @@
 
                         <div class="col-xs-9">
                             <input type="email"
-                                   class="form-control"
+                                   class="form-control entry-field"
                                    id="email" name="email"
                                    placeholder="<fmt:message key="reception.email"/>"/>
                         </div>
@@ -141,14 +141,12 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input class="form-control"
+                            <input class="form-control entry-field"
                                    id="admissionDate"
                                    name="admissionDate"
                                    placeholder="<fmt:message key="reception.admissionDate"/>">
                         </div>
                     </div>
-
-
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">

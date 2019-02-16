@@ -63,13 +63,13 @@
                            name="type"
                            value="${param.type}">
 
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" class="entry-field" id="id" name="id">
 
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-3"><fmt:message key="handbk.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name"
+                            <input type="text" class="form-control entry-field" id="name" name="name"
                                    placeholder="<fmt:message key="handbk.name"/>">
                         </div>
                     </div>

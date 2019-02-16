@@ -2,10 +2,6 @@ package com.epam.hospital.model;
 
 import org.json.JSONObject;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
 import static com.epam.hospital.model.Role.ROLE_ADMIN;
 import static com.epam.hospital.service.UserService.*;
 

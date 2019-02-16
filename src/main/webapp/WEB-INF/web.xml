@@ -81,6 +81,7 @@
             com.epam.hospital.action.ReceptionAction
             com.epam.hospital.action.PatientDiagnosisAction
             com.epam.hospital.action.PatientPrescriptionAction
+            com.epam.hospital.action.PatientInspectionAction
         </param-value>
     </context-param>
 

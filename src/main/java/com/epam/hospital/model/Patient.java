@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static com.epam.hospital.service.PatientService.*;
 
@@ -37,7 +36,6 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.email = email;
         this.admissionDate = admissionDate;
         this.dischargeDate = dischargeDate;
-
     }
 
     public Patient(Integer id, String name, String additionalName, String surname, LocalDate birthday,

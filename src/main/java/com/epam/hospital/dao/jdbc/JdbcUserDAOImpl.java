@@ -34,18 +34,19 @@ public class JdbcUserDAOImpl implements UserDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_BY_LOGIN = "SELECT users.id, users.staff_id, users.password, users.role, " +
-            "staff.name, staff.additional_name, staff.surname " +
-            "FROM users " +
-            "LEFT JOIN staff ON users.staff_id = staff.id " +
-            "WHERE users.login = ? ";
+                                                      "staff.name, staff.additional_name, staff.surname " +
+                                                  "FROM users " +
+                                                  "LEFT JOIN staff ON users.staff_id = staff.id " +
+                                                   "WHERE users.login = ? ";
     private static final String SELECT_ALL = "SELECT users.id, users.staff_id, users.password, users.role, " +
-            "users.login, staff.name, staff.additional_name, staff.surname " +
-            "FROM users " +
-            "LEFT JOIN staff ON users.staff_id = staff.id ";
+                                                 "users.login, staff.name, staff.additional_name, staff.surname " +
+                                             "FROM users " +
+                                             "LEFT JOIN staff ON users.staff_id = staff.id ";
     private static final String SELECT_BY_ID = "SELECT id, staff_id, role, login " +
-            "FROM users WHERE users.id = ? ";
-    private static final String INSERT_INTO = "INSERT INTO users" +
-            "(staff_id,  login,  password, role) VALUES (?, ?, ?, ?)";
+                                               "FROM users " +
+                                               "WHERE users.id = ? ";
+    private static final String INSERT_INTO = "INSERT INTO users (staff_id,  login,  password, role) " +
+                                              "VALUES (?, ?, ?, ?)";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
     private static final String TABLE_NAME = "users";
 

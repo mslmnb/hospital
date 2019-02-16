@@ -47,11 +47,11 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
     }
 
     @Override
-    public void save(PatientPrescription prescription) throws AppException {
-        if (prescription.isNew()) {
-            dao.create(prescription);
+    public void save(PatientPrescription patientPrescription) throws AppException {
+        if (patientPrescription.isNew()) {
+            dao.create(patientPrescription);
         } else {
-            checkNotFound(dao.update(prescription));
+            checkNotFound(dao.update(patientPrescription));
         }
     }
 

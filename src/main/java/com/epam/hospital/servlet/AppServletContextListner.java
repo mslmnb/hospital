@@ -2,6 +2,7 @@ package com.epam.hospital.servlet;
 
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDiagnosisDAO;
+import com.epam.hospital.dao.PatientInspectionDAO;
 import com.epam.hospital.dao.PatientPrescriptionDAO;
 import com.epam.hospital.dao.jdbc.*;
 import com.epam.hospital.service.*;
@@ -33,6 +34,7 @@ public class AppServletContextListner implements ServletContextListener {
     public static final String CONTEXT_PARAMETER_FOR_LANG_SERVICE = "langService";
     public static final String CONTEXT_PARAMETER_FOR_PATIENT_DIAGNOSIS_SERVICE = "patientDiagnosisService";
     public static final String CONTEXT_PARAMETER_FOR_PATIENT_PRESCRIPTION_SERVICE = "patientPrescriptionService";
+    public static final String CONTEXT_PARAMETER_FOR_PATIENT_INSPECTION_SERVICE = "patientInspectionService";
 
     public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
@@ -90,6 +92,8 @@ public class AppServletContextListner implements ServletContextListener {
             PatientDiagnosisService diagnosisService = new PatientDiagnosisServiceImpl(diagnosisDAO);
             PatientPrescriptionDAO prescriptionDAO = new JdbcPatientPrescriptionDAOImpl(connectionPool);
             PatientPrescriptionService prescriptionService = new PatientPrescriptionServiceImpl(prescriptionDAO);
+            PatientInspectionDAO inspectionDAO = new JdbcPatientInspectionDAOImpl(connectionPool);
+            PatientInspectionService inspectionService = new PatientInspectionServiceImpl(inspectionDAO);
 
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_SERVICE, patientService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_USER_SERVICE, userService);
@@ -99,6 +103,7 @@ public class AppServletContextListner implements ServletContextListener {
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_LANG_SERVICE, langService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_DIAGNOSIS_SERVICE, diagnosisService);
             servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_PRESCRIPTION_SERVICE, prescriptionService);
+            servletContext.setAttribute(CONTEXT_PARAMETER_FOR_PATIENT_INSPECTION_SERVICE, inspectionService);
         }
     }
 

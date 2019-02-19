@@ -29,9 +29,10 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     private static final String EMAIL_FIELDNAME = "email";
     private static final String ADMISSION_DATE_FIELDNAME = "admission_date";
     private static final String DISCHARGE_DATE_FIELDNAME = "discharge_date";
-    private static final String FINAL_DIAGNOSIS_ID_FIELDNAME = "final_diagnosis_id";
-    private static final String PRIMARY_DIAGNOSIS_ID_FIELDNAME = "primary_diagnosis_id";
-    private static final String FINAL_DIAGNOSIS_NAME_FIELDNAME = "final_diagnosis_name";
+    private static final String FINAL_DIAGNOSIS_ID_FIELDNAME = "final_diagnosis_item_id";
+    private static final String PRIMARY_INSPECTION_FIELDNAME = "primary_inspection";
+    private static final String PRIMARY_COMPLAINTS_FIELDNAME = "primary_complaints";
+    private static final String PRIMARY_DIAGNOSIS_ID_FIELDNAME = "primary_diagnosis_item_id";
 
     private static final String FOREIGN_KEY_IN_DIAGNOSISES = "diagnosis_register_patient_id_fkey";
     private static final String FOREIGN_KEY_IN_INSPECTIONS = "inspection_register_patient_id_fkey";
@@ -43,10 +44,7 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_ALL = "SELECT * FROM patient_register";
-    private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, " +
-                                                   "birthday, phone, email, admission_date, discharge_date, " +
-                                                   "final_diagnosis_id, primary_diagnosis_id " +
-                                               "FROM patient_register " +
+    private static final String SELECT_BY_ID = "SELECT * FROM patient_register " +
                                                "WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO patient_register " +
                                                   "(name,  additional_name,  surname, birthday, " +
@@ -56,6 +54,11 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                                          "SET name = ?, additional_name = ?, surname = ?, birthday = ?, " +
                                              "phone = ?, email = ?, admission_date = ? " +
                                          "WHERE id = ?";
+    private static final String UPDATE_DIAGNOSIS = "UPDATE patient_register " +
+                                                   "SET primary_inspection = ?, primary_complaints = ?, " +
+                                                       "primary_diagnosis_item_id = ?, " +
+                                                       "final_diagnosis_item_id = ?, discharge_date = ? " +
+                                                   "WHERE id = ?";
     private static final String TABLE_NAME = "patient_register";
 
     static {
@@ -116,6 +119,42 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                     patient = null;
                 }
                 ;
+            } catch (SQLException e) {
+                logAndThrowForSQLException(e, LOG);
+            }
+            pool.freeConnection(con);
+        } else {
+            logAndThrowForNoDbConnectionError(LOG);
+        }
+        return patient;
+    }
+
+    @Override
+    public Patient updatePrimaryExamAndDischarge(Patient patient) {
+        Connection con = pool.getConnection();
+        if (con != null) {
+            try (PreparedStatement statement = con.prepareStatement(UPDATE_DIAGNOSIS)) {
+                statement.setString(1, patient.getPrimaryInspection());
+                statement.setString(2, patient.getPrimaryComplaints());
+                if (patient.getPrimaryDiagnosis() != null) {
+                    statement.setInt(3, patient.getPrimaryDiagnosis().getId());
+                } else {
+                    statement.setNull(3, Types.INTEGER);
+                }
+                if (patient.getFinalDiagnosis() != null) {
+                    statement.setInt(4, patient.getFinalDiagnosis().getId());
+                } else {
+                    statement.setNull(4, Types.INTEGER);
+                }
+                if (patient.getDischargeDate() != null) {
+                    statement.setDate(5, Date.valueOf(patient.getDischargeDate()));
+                } else {
+                    statement.setNull(5, Types.DATE);
+                }
+                statement.setInt(6, patient.getId());
+                if (statement.executeUpdate() == 0) {
+                    patient = null;
+                }
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }
@@ -193,9 +232,18 @@ public class JdbcPatientDAOImpl implements PatientDAO {
     private Patient getPatient(ResultSet resultSet) throws SQLException {
         Patient patient = getPatientWithLazyFinalDiagnosis(resultSet);
         Integer finalDiagnosisId = resultSet.getInt(FINAL_DIAGNOSIS_ID_FIELDNAME);
+        Diagnosis finalDiagnosis = (finalDiagnosisId == 0) ? null : new Diagnosis(finalDiagnosisId);
         Integer primaryDiagnosisId = resultSet.getInt(PRIMARY_DIAGNOSIS_ID_FIELDNAME);
-        patient.setFinalDiagnosis(new Diagnosis(finalDiagnosisId));
-        patient.setPrimaryDiagnosis(new Diagnosis(primaryDiagnosisId));
+        Diagnosis primaryDiagnosis = (primaryDiagnosisId == 0) ? null : new Diagnosis(primaryDiagnosisId);
+        String primaryInspection = resultSet.getString(PRIMARY_INSPECTION_FIELDNAME);
+        String primaryComplaints = resultSet.getString(PRIMARY_COMPLAINTS_FIELDNAME);
+        Date date = resultSet.getDate(DISCHARGE_DATE_FIELDNAME);
+        LocalDate dischargeDate = (date == null) ? null : new Date(date.getTime()).toLocalDate();
+        patient.setFinalDiagnosis(finalDiagnosis);
+        patient.setPrimaryDiagnosis(primaryDiagnosis);
+        patient.setPrimaryComplaints(primaryComplaints);
+        patient.setPrimaryInspection(primaryInspection);
+        patient.setDischargeDate(dischargeDate);
         return patient;
     }
 

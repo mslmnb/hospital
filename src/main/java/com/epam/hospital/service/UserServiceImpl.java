@@ -8,10 +8,7 @@ import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
@@ -30,11 +27,9 @@ public class UserServiceImpl implements UserService {
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer staffId = checkAndReturnInt(staffIdAsString, STAFF_ID_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(LOGIN_PARAMETER, login);
-        parameters.put(ROLE_PARAMETER, roleAsString);
-        parameters.put(PASSWORD_PARAMETER, password);
-        checkNotEmpty(parameters, checkResult, true);
+        checkNotEmpty(login, LOGIN_PARAMETER, checkResult, false);
+        checkNotEmpty(roleAsString, ROLE_PARAMETER, checkResult, false);
+        checkNotEmpty(password, PASSWORD_PARAMETER, checkResult);
         Staff staff = new Staff(staffId);
         User user = new User(id, staff, login, DigestUtils.md5Hex(password), Role.valueOf(roleAsString));
         save(user);

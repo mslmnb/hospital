@@ -8,11 +8,10 @@ import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.*;
+import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 
 public class PatientPrescriptionServiceImpl implements PatientPrescriptionService {
     private final PatientPrescriptionDAO dao;
@@ -34,13 +33,12 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
                 APPLICATION_DATE_PARAMETER, checkResult, false);
         Integer typeId = checkAndReturnInt(typeIdAsString, TYPE_ID_PARAMETER, checkResult, false);
         PrescriptionType type = new PrescriptionType(typeId);
+
         LocalDate executionDate = (executionDateAsString.isEmpty())
                                   ? null
                                   : checkAndReturnDate(executionDateAsString,
                                                        EXECUTON_DATE_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(DESCRIPTION_PARAMETER, description);
-        checkNotEmpty(parameters, checkResult, true);
+        checkNotEmpty(description, DESCRIPTION_PARAMETER, checkResult);
         PatientPrescription prescription = new PatientPrescription(id, new Patient(patientId), applicationDate,
                                                                    type, description, executionDate, resultParameter);
         save(prescription);

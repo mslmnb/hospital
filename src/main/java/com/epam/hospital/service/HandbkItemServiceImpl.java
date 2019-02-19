@@ -6,9 +6,7 @@ import com.epam.hospital.model.handbk.HandbkType;
 import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
@@ -25,9 +23,7 @@ public class HandbkItemServiceImpl implements HandbkItemService {
     public void save(String idAsString, String name, String typeAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(NAME_PARAMETER, name);
-        checkNotEmpty(parameters, checkResult, true);
+        checkNotEmpty(name, NAME_PARAMETER, checkResult);
         HandbkType type = HandbkType.valueOf(typeAsString.toUpperCase());
         HandbkItem handbkItem = new HandbkItem(id, name, type);
         save(handbkItem);

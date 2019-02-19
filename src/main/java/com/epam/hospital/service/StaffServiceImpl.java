@@ -6,9 +6,7 @@ import com.epam.hospital.model.handbk.Position;
 import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
@@ -26,10 +24,8 @@ public class StaffServiceImpl implements StaffService {
                      String surname, String positionIdAsString) throws AppException {
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(NAME_PARAMETER, name);
-        parameters.put(SURNAME_PARAMETER, surname);
-        checkNotEmpty(parameters, checkResult, false);
+        checkNotEmpty(name, NAME_PARAMETER, checkResult, false);
+        checkNotEmpty(surname, SURNAME_PARAMETER, checkResult, false);
         Integer positionId = checkAndReturnInt(positionIdAsString, POSITION_ID_PARAMETER, checkResult, true);
         Staff staff = new Staff(id, name, additionalName, surname, new Position(positionId));
         save(staff);

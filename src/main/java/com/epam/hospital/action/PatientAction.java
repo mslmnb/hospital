@@ -2,7 +2,6 @@ package com.epam.hospital.action;
 
 import com.epam.hospital.service.PatientService;
 import com.epam.hospital.util.ActionUtil;
-import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -14,7 +13,6 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_SERVICE;
-import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
 public class PatientAction extends AbstractActionWithService {
     private static final Logger LOG = Logger.getLogger(PatientAction.class);
@@ -43,6 +41,30 @@ public class PatientAction extends AbstractActionWithService {
                 break;
             case GET_ALL:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
+                break;
+            case SAVE:
+                String idAsString = request.getParameter(ID_PARAMETER);
+                String primaryInspection = request.getParameter(PRIMARY_INSPECTION_PARAMETER);
+                String primaryComplaints = request.getParameter(PRIMARY_COMPLAINTS_PARAMETER);
+                String primaryDiagnssIdAsString = request.getParameter(PRIMARY_DIAGNOSIS_ID_PARAMETER);
+                String finalDiagnssIdAsString = request.getParameter(FINAL_DIAGNOSIS_ID_PARAMETER);
+                String dischargeDateAsString = request.getParameter(DISCHARGE_DATE_PARAMETER);
+
+                try {
+                    service.updatePrimaryExamAndDischarge(idAsString, primaryInspection, primaryComplaints,
+                                                          primaryDiagnssIdAsString, finalDiagnssIdAsString,
+                                                          dischargeDateAsString);
+                    result = "";
+                } catch (AppException e) {
+                    response.setStatus(422);
+                    result = e.getCheckResult().getJsonString();
+                }
+                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                break;
+
+            case GET:
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                        getJsonViewForGetDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);

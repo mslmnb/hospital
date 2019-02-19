@@ -7,9 +7,7 @@ import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.*;
 
@@ -29,10 +27,8 @@ public class PatientInspectionServiceImpl implements PatientInspectionService{
                 : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer patientId = checkAndReturnInt(patientIdAsString, PATIENT_ID_PARAMETER, checkResult, false);
         LocalDate date = checkAndReturnDate(dateAsString, DATE_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(INSPECTION_PARAMETER, inspection);
-        parameters.put(COMPLAINTS_PARAMETER, complaints);
-        checkNotEmpty(parameters, checkResult, true);
+        checkNotEmpty(inspection, INSPECTION_PARAMETER, checkResult, false);
+        checkNotEmpty(complaints, COMPLAINTS_PARAMETER, checkResult);
         PatientInspection patientInspection = new PatientInspection(id, new Patient(patientId),
                                                                     date, inspection, complaints);
         save(patientInspection);

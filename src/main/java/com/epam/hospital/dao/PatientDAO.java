@@ -10,6 +10,8 @@ public interface PatientDAO {
 
     Patient update(Patient patient);
 
+    Patient updatePrimaryExamAndDischarge(Patient patient);
+
     // false if not found
     boolean delete(int id);
 

@@ -6,9 +6,7 @@ import com.epam.hospital.model.handbk.Translation;
 import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
@@ -27,10 +25,8 @@ public class TranslationServiceImpl implements TranslationService{
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         Integer handbkItemId = checkAndReturnInt(handbkItemIdAsString, HANDBK_ITEM_ID_PARAMETER, checkResult, false);
-        Map<String, String> parameters = new LinkedHashMap<>();
-        parameters.put(LOCALE_PARAMETER, locale);
-        parameters.put(TRANSLATION_PARAMETER, translation);
-        checkNotEmpty(parameters, checkResult, true);
+        checkNotEmpty(locale, LOCALE_PARAMETER, checkResult, false);
+        checkNotEmpty(translation, TRANSLATION_PARAMETER, checkResult);
         Translation translation1 = new Translation(id, new HandbkItem(handbkItemId), locale, translation);
         save(translation1);
     }

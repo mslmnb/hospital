@@ -16,6 +16,11 @@ $(function () {
             {
                 "orderable": false,
                 "defaultContent": "",
+                "render": renderPrimaryExamBtn
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
                 "render": renderDiagnosisBtn
             },
             {
@@ -27,7 +32,13 @@ $(function () {
                 "orderable": false,
                 "defaultContent": "",
                 "render": renderInspectionBtn
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDischargeBtn
             }
+
         ],
         "order": [
             [
@@ -37,14 +48,61 @@ $(function () {
     }));
     $.datetimepicker.setLocale(localeCode);
 
-    var birthday = $('#birthday');
-    birthday.datetimepicker({
+    $('#dischargeDate').datetimepicker({
         timepicker: false,
         format: 'd-m-Y',
         formatDate: 'd-m-Y'
     })
 });
 
+function updatePrimaryExam(id) {
+    $('#modalTitle').html(i18n["editPrimaryExamTitle"]);
+    form.find(":input").val("");
+    form.find('.disabled').removeClass('disabled');
+    $('#primaryComplaints').attr("disabled", false);
+    $('#primaryInspection').attr("disabled", false);
+    $('#primaryDiagnosisId').attr("disabled", false);
+    $('#dischargeDate').attr("disabled", true);
+    $('#finalDiagnosisId').attr("disabled", true);
+    $.get(ajaxUrl + "get?id=" + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        $('#primaryComplaints').val(data.primaryComplaints);
+        $('#primaryInspection').val(data.primaryInspection);
+        drawOptions("#primaryDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.primaryDiagnosisId);
+        drawOptions("#finalDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.finalDiagnosisId);
+    });
+    $('#editRow').modal();
+}
+
+function updateDischarge(id) {
+    $('#modalTitle').html(i18n["editDischargeTitle"]);
+    form.find(":input").val("");
+    form.find('.disabled').removeClass('disabled');
+    $('#primaryComplaints').attr("disabled", true);
+    $('#primaryInspection').attr("disabled", true);
+    $('#primaryDiagnosisId').attr("disabled", true);
+    $('#dischargeDate').attr("disabled", false);
+    $('#finalDiagnosisId').attr("disabled", false);
+    $.get(ajaxUrl + "get?id=" + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        $('#primaryComplaints').val(data.primaryComplaints);
+        $('#primaryInspection').val(data.primaryInspection);
+        drawOptions("#primaryDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.primaryDiagnosisId);
+        drawOptions("#finalDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.finalDiagnosisId);
+    });
+    $('#editRow').modal();
+}
+
+
+function renderPrimaryExamBtn(data, type, row) {
+    if (type === 'display') {
+        return '<a onclick="updatePrimaryExam(' + row.id + ');">' + i18n["primaryExamBtn"] + '</a>';
+    }
+}
 
 function renderDiagnosisBtn(data, type, row) {
     if (type === 'display') {
@@ -70,6 +128,12 @@ function renderInspectionBtn(data, type, row) {
                                                                         + "&name=" + getFullName(row) + "'>"
                                                                         + i18n["inspectionBtn"]
                                                                         + "</a>";
+    }
+}
+
+function renderDischargeBtn(data, type, row) {
+    if (type === 'display') {
+        return "<a onclick='updateDischarge(" + row.id + ");'>" + i18n["dischargeBtn"] + "</a>";
     }
 }
 

@@ -15,9 +15,11 @@ public class Patient extends NamedEntity implements HavingJsonView{
     private String phone;
     private String email;
     private LocalDate admissionDate;
-    private LocalDate dischargeDate;
+    private String primaryInspection;
+    private String primaryComplaints;
     private Diagnosis primaryDiagnosis;
     private Diagnosis finalDiagnosis;
+    private LocalDate dischargeDate;
 
     public Patient() {
     }
@@ -47,6 +49,16 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.phone = phone;
         this.email = email;
         this.admissionDate = admissionDate;
+    }
+
+    public Patient(Integer id, String primaryInspection, String primaryComplaints,
+                   Diagnosis primaryDiagnosis, Diagnosis finalDiagnosis, LocalDate dischargeDate) {
+        super(id, null);
+        this.primaryInspection = primaryInspection;
+        this.primaryComplaints = primaryComplaints;
+        this.primaryDiagnosis = primaryDiagnosis;
+        this.finalDiagnosis = finalDiagnosis;
+        this.dischargeDate = dischargeDate;
     }
 
     public String getAdditionalName() {
@@ -81,6 +93,14 @@ public class Patient extends NamedEntity implements HavingJsonView{
         return finalDiagnosis;
     }
 
+    public String getPrimaryInspection() {
+        return primaryInspection;
+    }
+
+    public String getPrimaryComplaints() {
+        return primaryComplaints;
+    }
+
     public void setFinalDiagnosis(Diagnosis finalDiagnosis) {
         this.finalDiagnosis = finalDiagnosis;
     }
@@ -91,6 +111,18 @@ public class Patient extends NamedEntity implements HavingJsonView{
 
     public void setPrimaryDiagnosis(Diagnosis primaryDiagnosis) {
         this.primaryDiagnosis = primaryDiagnosis;
+    }
+
+    public void setPrimaryInspection(String primaryInspection) {
+        this.primaryInspection = primaryInspection;
+    }
+
+    public void setPrimaryComplaints(String primaryComplaints) {
+        this.primaryComplaints = primaryComplaints;
+    }
+
+    public void setDischargeDate(LocalDate dischargeDate) {
+        this.dischargeDate = dischargeDate;
     }
 
     @Override
@@ -105,9 +137,11 @@ public class Patient extends NamedEntity implements HavingJsonView{
         userJsonObj.put(EMAIL_PARAMETER, email);
         userJsonObj.put(BITHDAY_PARAMETER, birthday.format(formatter));
         userJsonObj.put(ADMISSION_DATE_PARAMETER, admissionDate.format(formatter));
-        userJsonObj.put(DISCHARGE_DATE_PARAMETER, dischargeDate == null ? "" : dischargeDate.format(formatter));
-        userJsonObj.put(PRIMARY_DIAGNOSIS_ID_PARAMETER, primaryDiagnosis.getId());
-        userJsonObj.put(FINAL_DIAGNOSIS_ID_PARAMETER, finalDiagnosis.getId());
+        userJsonObj.put(DISCHARGE_DATE_PARAMETER, (dischargeDate) == null ? "" : dischargeDate.format(formatter));
+        userJsonObj.put(PRIMARY_DIAGNOSIS_ID_PARAMETER, (primaryDiagnosis == null) ? null : primaryDiagnosis.getId());
+        userJsonObj.put(PRIMARY_COMPLAINTS_PARAMETER, primaryComplaints);
+        userJsonObj.put(PRIMARY_INSPECTION_PARAMETER, primaryInspection);
+        userJsonObj.put(FINAL_DIAGNOSIS_ID_PARAMETER, (finalDiagnosis == null) ? null : finalDiagnosis.getId());
 
         return userJsonObj.toString();
     }

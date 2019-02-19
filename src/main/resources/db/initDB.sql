@@ -74,10 +74,12 @@ CREATE TABLE patient_register
   email                         VARCHAR,
   admission_date                DATE NOT NULL DEFAULT now(),
   discharge_date                DATE,
-  final_diagnosis_id            INTEGER,
-  primary_diagnosis_id          INTEGER,
-  FOREIGN KEY (final_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
-  FOREIGN KEY (primary_diagnosis_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
+  primary_inspection            TEXT,
+  primary_complaints            TEXT,   -- жалобы
+  primary_diagnosis_item_id     INTEGER,
+  final_diagnosis_item_id       INTEGER,
+  FOREIGN KEY (final_diagnosis_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT,
+  FOREIGN KEY (primary_diagnosis_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
 
 CREATE SEQUENCE diagnosis_register_seq;

@@ -19,12 +19,21 @@ public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
     String DISCHARGE_DATE_PARAMETER = "dischargeDate";
     String PRIMARY_DIAGNOSIS_ID_PARAMETER = "primaryDiagnosisId";
     String FINAL_DIAGNOSIS_ID_PARAMETER = "finalDiagnosisId";
+    String PRIMARY_INSPECTION_PARAMETER = "primaryInspection";
+    String PRIMARY_COMPLAINTS_PARAMETER = "primaryComplaints";
+
 
     void save(String idAsString, String name, String additionalName, String surname,
               String birthdayAsString, String phone, String email,
               String admissionDateAsString) throws AppException;
 
     void save(Patient patient) throws AppException;
+
+    void updatePrimaryExamAndDischarge(String idAsString, String primaryInspection, String primaryComplaints,
+                                       String primaryDiagnssIdAsString, String finalDiagnssIdAsString,
+                                       String dischargeDateAsString) throws AppException;
+
+    void updatePrimaryExamAndDischarge(Patient patient) throws AppException;
 
     void delete(String idAsString) throws AppException;
 
@@ -33,14 +42,6 @@ public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
     Patient get(String idAsString) throws AppException;
 
     Patient get(int id) throws AppException;
-
-    Patient savePrimaryDiagnosis(String idAsString, String diagnosisIdAsString) throws AppException;
-
-    Patient savePrimaryDiagnosis(Patient patient) throws AppException;
-
-    Patient saveFinalDiagnosis(String idAsString, String diagnosisIdAsString) throws AppException;
-
-    Patient saveFinalDiagnosis(Patient patient) throws AppException;
 
     List<Patient> getAll();
 

@@ -142,7 +142,6 @@ function drawOptions(selectElementName, url, defaultOption, selectedOptionId) {
         type: "GET",
         url: url,
         success: function (data) {
-            debugger;
             var selectElement = $(selectElementName);
             selectElement.empty();
             var optionElement = $("<option>");

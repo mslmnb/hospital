@@ -34,36 +34,51 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkNotEmpty(Map<String, String> parameters,
+    public static void checkNotEmpty(String fieldValue, String fieldName,
                                      CheckResult checkResult, boolean throwException) throws AppException {
-        try {
-            checkNotEmpty(parameters);
-        } catch (AppException e) {
-            checkResult.addErrorMessage(e.getCheckResult());
+        if (fieldValue == null || fieldValue.isEmpty()) {
+            checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
         }
         if (throwException && checkResult.foundErrors()) {
             throw new AppException(checkResult);
         }
     }
 
-    public static void checkNotEmpty(Map<String, String> parameters) throws AppException {
-        CheckResult checkResult = new CheckResult();
-        for (Map.Entry<String, String> pair : parameters.entrySet()) {
-            String fieldName = pair.getKey();
-            String fieldValue = pair.getValue();
-            if (fieldValue == null || fieldValue.isEmpty()) {
-                checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
-            }
-        }
-        if (checkResult.foundErrors()) {
-            throw new AppException(checkResult);
-        }
+    public static void checkNotEmpty(String fieldValue, String fieldName,
+                                     CheckResult checkResult) throws AppException {
+        checkNotEmpty(fieldValue, fieldName, checkResult, true);
     }
 
-    public static void checkNotEmpty(String fieldValue, String fieldName) throws AppException {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put(fieldName, fieldValue);
-        checkNotEmpty(parameters);
+//    public static void checkNotEmpty(Map<String, String> parameters,
+//                                     CheckResult checkResult, boolean throwException) throws AppException {
+//        try {
+//            checkNotEmpty(parameters);
+//        } catch (AppException e) {
+//            checkResult.addErrorMessage(e.getCheckResult());
+//        }
+//        if (throwException && checkResult.foundErrors()) {
+//            throw new AppException(checkResult);
+//        }
+//    }
+//
+//    public static void checkNotEmpty(Map<String, String> parameters) throws AppException {
+//        CheckResult checkResult = new CheckResult();
+//        for (Map.Entry<String, String> pair : parameters.entrySet()) {
+//            String fieldName = pair.getKey();
+//            String fieldValue = pair.getValue();
+//            if (fieldValue == null || fieldValue.isEmpty()) {
+//                checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
+//            }
+//        }
+//        if (checkResult.foundErrors()) {
+//            throw new AppException(checkResult);
+//        }
+//    }
+
+    private static void checkNotEmpty(String fieldValue, String fieldName) throws AppException {
+        if (fieldValue == null || fieldValue.isEmpty()) {
+            throw new AppException(new CheckResult(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName)));
+        }
     }
 
     private static String getWithCapitalFirstLetter(String fieldName) {

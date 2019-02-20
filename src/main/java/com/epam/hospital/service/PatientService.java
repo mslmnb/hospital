@@ -7,7 +7,7 @@ import com.epam.hospital.util.exception.AppException;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface PatientService extends HavingDeleteMethod, HavingGetMethod {
+public interface PatientService extends HavingDeleteMethod, HavingGetMethod, HavingSaveMethod {
     String ID_PARAMETER = "id";
     String NAME_PARAMETER = "name";
     String ADDITIONAL_NAME_PARAMETER = "additionalName";

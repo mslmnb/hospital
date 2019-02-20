@@ -1,18 +1,16 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.service.PatientInspectionService;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.service.PatientInspectionService.*;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_INSPECTION_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 
-public class PatientInspectionAction extends AbstractActionWithService {
+public class PatientInspectionAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientInspectionAction.class);
 
     private static final String URI = "inspection";
@@ -20,12 +18,9 @@ public class PatientInspectionAction extends AbstractActionWithService {
 
     private PatientInspectionService service;
 
-    public PatientInspectionAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_PATIENT_INSPECTION_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (PatientInspectionService) service;
+    public PatientInspectionAction(PatientInspectionService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override
@@ -47,14 +42,9 @@ public class PatientInspectionAction extends AbstractActionWithService {
                 String dateAsString = request.getParameter(DATE_PARAMETER);
                 String inspection = request.getParameter(INSPECTION_PARAMETER);
                 String complaints = request.getParameter(COMPLAINTS_PARAMETER);
-                try {
-                    service.save(idAsString, patientIdAsString, dateAsString, inspection, complaints);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                         getJsonViewForSaveDirection(response, service, idAsString,
+                                                     patientIdAsString, dateAsString, inspection, complaints);
                 break;
             case GET:
                 result = JSON_VIEW_PREFIX.getPrefix() +

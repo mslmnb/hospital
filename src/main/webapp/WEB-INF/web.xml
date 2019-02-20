@@ -53,36 +53,10 @@
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
-    <!-- Listners -->
-    <listener>
-        <listener-class>com.epam.hospital.servlet.AppServletContextListner</listener-class>
-    </listener>
-
-     <!--Context parameters-->
+    <!--Context parameters-->
     <context-param>
         <param-name>dbPropertiesFile</param-name>
         <param-value>db/db.properties</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>actionClasses</param-name>
-        <param-value>
-            com.epam.hospital.action.LoginAction
-            com.epam.hospital.action.LogoutAction
-            com.epam.hospital.action.AdminAction
-            com.epam.hospital.action.NoAdminAction
-            com.epam.hospital.action.UserAction
-            com.epam.hospital.action.StaffAction
-            com.epam.hospital.action.RoleAction
-            com.epam.hospital.action.HandbkAction
-            com.epam.hospital.action.TranslationAction
-            com.epam.hospital.action.LangAction
-            com.epam.hospital.action.PatientAction
-            com.epam.hospital.action.ReceptionAction
-            com.epam.hospital.action.PatientDiagnosisAction
-            com.epam.hospital.action.PatientPrescriptionAction
-            com.epam.hospital.action.PatientInspectionAction
-        </param-value>
     </context-param>
 
 </web-app>

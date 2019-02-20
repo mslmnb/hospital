@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.REDIRECT_VIEW_PREFIX;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_USER_SERVICE;
-import static com.epam.hospital.servlet.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
-public class LoginAction extends AbstractActionWithService {
+public class LoginAction extends AbstractAction {
     private static final String URI = "login";
 
     private static final String VIEW_NAME_FOR_NOADMIN = "noAdmin";
@@ -20,15 +18,13 @@ public class LoginAction extends AbstractActionWithService {
     private static final String JSP_FILE_NAME_WITH_ERROR_PARAMETER = "/jsp/login.jsp?error=true";
     private static final String LOGIN_POST_PARAMETER = "login";
     private static final String PASSWORD_POST_PARAMETER = "password";
+    public static final String SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER = "authorizedUser";
 
-    private UserService service;
+    private final UserService service;
 
-    public LoginAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_USER_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (UserService) service;
+    public LoginAction(UserService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override

@@ -21,8 +21,8 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
     }
 
     @Override
-    public void save(String idAsString, String patientIdAsString, String applicationDateAsString,
-                     String typeIdAsString, String description,
+    public void save(String idAsString, String patientIdAsString,
+                     String applicationDateAsString, String typeIdAsString, String description,
                      String executionDateAsString, String resultParameter) throws AppException {
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty())
@@ -51,6 +51,11 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
         } else {
             checkNotFound(dao.update(patientPrescription));
         }
+    }
+
+    @Override
+    public void save(String... args) throws AppException {
+        save(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
     }
 
     @Override

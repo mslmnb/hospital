@@ -5,7 +5,7 @@ import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
-public interface PatientDiagnosisService extends HavingGetMethod, HavingDeleteMethod {
+public interface PatientDiagnosisService extends HavingGetMethod, HavingDeleteMethod, HavingSaveMethod {
     String ID_PARAMETER = "id";
     String PATIENT_ID_PARAMETER = "patientId";
     String DATE_PARAMETER = "date";

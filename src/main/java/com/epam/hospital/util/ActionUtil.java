@@ -3,6 +3,7 @@ package com.epam.hospital.util;
 import com.epam.hospital.model.HavingJsonView;
 import com.epam.hospital.service.HavingDeleteMethod;
 import com.epam.hospital.service.HavingGetMethod;
+import com.epam.hospital.service.HavingSaveMethod;
 import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.hospital.service.TranslationService.ID_PARAMETER;
 import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
 public class ActionUtil {
@@ -21,8 +21,7 @@ public class ActionUtil {
     public static final String SAVE = "/save";
     public static final String GET = "/get";
     public static final String DELETE = "/delete";
-    public static final String GET_PRIMARY_DIAGNOSIS = "primary_diagnosis";
-    public static final String GET_FINAL_DIAGNOSIS = "final_diagnosis";
+    public static final Integer RESPONSE_STATUS_422 = 422;
 
     public static String getJsonString(List<? extends HavingJsonView> elements) {
         return "[ "
@@ -31,7 +30,7 @@ public class ActionUtil {
     }
 
     public static String getDirection(String pathInfo, String actionURI) {
-        return pathInfo.substring(actionURI.length()+1);
+        return pathInfo.substring(actionURI.length() + 1);
     }
 
     public static String getJsonViewForDeleteDirection(HttpServletRequest request, HttpServletResponse response,
@@ -42,7 +41,7 @@ public class ActionUtil {
             service.delete(idAsString);
             result = "";
         } catch (AppException e) {
-            response.setStatus(422);
+            response.setStatus(RESPONSE_STATUS_422);
             result = e.getCheckResult().getJsonString();
         }
         return result;
@@ -55,7 +54,7 @@ public class ActionUtil {
             String idAsString = request.getParameter(idParameter);
             result = service.get(idAsString).getJsonString();
         } catch (AppException e) {
-            response.setStatus(422);
+            response.setStatus(RESPONSE_STATUS_422);
             result = e.getCheckResult().getJsonString();
         }
         return result;
@@ -63,8 +62,21 @@ public class ActionUtil {
 
     public static String getJsonViewForDefaultDirection(HttpServletResponse response, Logger logger, String direction) {
         logger.error("Actions are not defined for direction: " + direction);
-        response.setStatus(422);
+        response.setStatus(RESPONSE_STATUS_422);
         return new CheckResult(UNKNOWN_ERROR).getJsonString();
     }
 
+    public static String getJsonViewForSaveDirection(HttpServletResponse response,
+                                                     HavingSaveMethod service, String ... args) {
+        String result;
+        try {
+            service.save(args);
+            result = "";
+        } catch(AppException e) {
+            response.setStatus(RESPONSE_STATUS_422);
+            result = e.getCheckResult().getJsonString();
+        }
+        return result;
     }
+
+}

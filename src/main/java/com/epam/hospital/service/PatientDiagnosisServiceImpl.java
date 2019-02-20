@@ -49,6 +49,11 @@ public class PatientDiagnosisServiceImpl implements PatientDiagnosisService {
     }
 
     @Override
+    public void save(String... args) throws AppException {
+        save(args[0], args[1], args[2], args[3], args[4]);
+    }
+
+    @Override
     public void delete(String idAsString) throws AppException {
         delete(checkAndReturnInt(idAsString, ID_PARAMETER));
     }

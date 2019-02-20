@@ -6,7 +6,7 @@ import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
-public interface StaffService extends HavingDeleteMethod, HavingGetMethod {
+public interface StaffService extends HavingDeleteMethod, HavingGetMethod, HavingSaveMethod {
     String ID_PARAMETER = "id";
     String NAME_PARAMETER = "name";
     String ADDITIONAL_NAME_PARAMETER = "additionalName";

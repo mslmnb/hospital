@@ -2,19 +2,17 @@ package com.epam.hospital.action;
 
 import com.epam.hospital.service.UserService;
 import com.epam.hospital.util.ActionUtil;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.service.UserService.*;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_USER_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
-public class UserAction extends AbstractActionWithService {
+public class UserAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(UserAction.class);
 
     private static final String URI = "users";
@@ -22,12 +20,9 @@ public class UserAction extends AbstractActionWithService {
 
     private UserService service;
 
-    public UserAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_USER_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (UserService) service;
+    public UserAction(UserService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override
@@ -48,14 +43,9 @@ public class UserAction extends AbstractActionWithService {
                 String login = request.getParameter(LOGIN_PARAMETER);
                 String roleAsString = request.getParameter(ROLE_PARAMETER);
                 String password = request.getParameter(PASSWORD_PARAMETER);
-                try {
-                    service.save(idAsString, staffIdAsString, login, password, roleAsString);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                         getJsonViewForSaveDirection(response, service, idAsString,
+                                                     staffIdAsString, login, password, roleAsString);
                 break;
             case GET:
                 result = JSON_VIEW_PREFIX.getPrefix() +

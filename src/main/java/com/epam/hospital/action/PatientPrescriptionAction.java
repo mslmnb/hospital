@@ -1,7 +1,6 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.service.PatientPrescriptionService;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
 import static com.epam.hospital.service.PatientPrescriptionService.*;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_PRESCRIPTION_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 
-public class PatientPrescriptionAction extends AbstractActionWithService {
+public class PatientPrescriptionAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientPrescriptionAction.class);
 
     private static final String URI = "prescription";
@@ -21,12 +19,9 @@ public class PatientPrescriptionAction extends AbstractActionWithService {
 
     private PatientPrescriptionService service;
 
-    public PatientPrescriptionAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_PATIENT_PRESCRIPTION_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (PatientPrescriptionService) service;
+    public PatientPrescriptionAction(PatientPrescriptionService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override
@@ -51,15 +46,10 @@ public class PatientPrescriptionAction extends AbstractActionWithService {
                 String description = request.getParameter(DESCRIPTION_PARAMETER);
                 String executionDateAsString = request.getParameter(EXECUTON_DATE_PARAMETER);
                 String resultParameter = request.getParameter(RESULT_PARAMETER);
-                try {
-                    service.save(idAsString, patientIdAsString, applicationDateAsString,
-                                 typeIdAsString, description, executionDateAsString, resultParameter);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                         getJsonViewForSaveDirection(response, service, idAsString,
+                                                     patientIdAsString, applicationDateAsString, typeIdAsString,
+                                                     description, executionDateAsString, resultParameter);
                 break;
             case GET:
                 result = JSON_VIEW_PREFIX.getPrefix() +

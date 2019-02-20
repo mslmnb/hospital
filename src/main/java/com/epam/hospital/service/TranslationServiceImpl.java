@@ -38,7 +38,11 @@ public class TranslationServiceImpl implements TranslationService{
         } else {
             checkNotFound(dao.update(translation));
         }
+    }
 
+    @Override
+    public void save(String... args) throws AppException {
+        save(args[0], args[1], args[2], args[3]);
     }
 
     @Override

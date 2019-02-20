@@ -3,8 +3,6 @@ package com.epam.hospital.action;
 import com.epam.hospital.model.handbk.HandbkType;
 import com.epam.hospital.service.HandbkItemService;
 import com.epam.hospital.util.ActionUtil;
-import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +12,11 @@ import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
 import static com.epam.hospital.service.HandbkItemService.ID_PARAMETER;
 import static com.epam.hospital.service.HandbkItemService.NAME_PARAMETER;
 import static com.epam.hospital.service.HandbkItemService.TYPE_PARAMETER;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_HANDBK_SERVICE;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
-import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
-public class HandbkAction extends AbstractActionWithService{
+public class HandbkAction extends AbstractAction {
 
     private static final Logger LOG = Logger.getLogger(HandbkAction.class);
 
@@ -29,12 +25,9 @@ public class HandbkAction extends AbstractActionWithService{
 
     private HandbkItemService service;
 
-    public HandbkAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_HANDBK_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (HandbkItemService) service;
+    public HandbkAction(HandbkItemService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override
@@ -61,14 +54,8 @@ public class HandbkAction extends AbstractActionWithService{
                 String idAsString = request.getParameter(ID_PARAMETER);
                 String name = request.getParameter(NAME_PARAMETER);
                 String typeAsString = request.getParameter(TYPE_PARAMETER);
-                try {
-                    service.save(idAsString, name, typeAsString);
-                    result = "";
-                } catch (AppException e) {
-                    response.setStatus(422);
-                    result = e.getCheckResult().getJsonString();
-                }
-                result = JSON_VIEW_PREFIX.getPrefix() + result;
+                result = JSON_VIEW_PREFIX.getPrefix() +
+                         getJsonViewForSaveDirection(response, service, idAsString, name, typeAsString);
                 break;
             case GET:
                 result = JSON_VIEW_PREFIX.getPrefix() +

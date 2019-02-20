@@ -48,6 +48,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public void save(String... args) throws AppException {
+        save(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+    }
+
+    @Override
     public void updatePrimaryExamAndDischarge(String idAsString, String primaryInspection, String primaryComplaints,
                                               String primaryDiagnssIdAsString, String finalDiagnssIdAsString,
                                               String dischargeDateAsString) throws AppException {

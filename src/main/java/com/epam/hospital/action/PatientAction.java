@@ -12,9 +12,8 @@ import static com.epam.hospital.service.PatientService.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
-import static com.epam.hospital.servlet.AppServletContextListner.CONTEXT_PARAMETER_FOR_PATIENT_SERVICE;
 
-public class PatientAction extends AbstractActionWithService {
+public class PatientAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientAction.class);
 
     private static final String URI = "patients";
@@ -22,12 +21,9 @@ public class PatientAction extends AbstractActionWithService {
 
     private PatientService service;
 
-    public PatientAction() {
-        super(URI, CONTEXT_PARAMETER_FOR_PATIENT_SERVICE);
-    }
-
-    private void setService(Object service) {
-        this.service = (PatientService) service;
+    public PatientAction(PatientService service) {
+        super(URI);
+        this.service = service;
     }
 
     @Override
@@ -56,7 +52,7 @@ public class PatientAction extends AbstractActionWithService {
                                                           dischargeDateAsString);
                     result = "";
                 } catch (AppException e) {
-                    response.setStatus(422);
+                    response.setStatus(RESPONSE_STATUS_422);
                     result = e.getCheckResult().getJsonString();
                 }
                 result = JSON_VIEW_PREFIX.getPrefix() + result;

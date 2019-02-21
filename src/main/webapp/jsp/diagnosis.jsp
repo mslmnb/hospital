@@ -59,14 +59,14 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input class="entry-field" type="hidden" id="id" name="id">
+                    <input class="input" type="hidden" id="id" name="id">
                     <input type="hidden" id="patientId" name="patientId" value="${param.id}">
 
                     <div class="form-group">
                         <label for="date" class="control-label col-xs-3"><fmt:message key="diagnosis.data"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="date" name="date"
+                            <input type="text" class="form-control input" id="date" name="date"
                                    placeholder="<fmt:message key="diagnosis.data"/>">
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control  entry-field" id="diagnosisTypeId" name="diagnosisTypeId">
+                            <select class="form-control input" id="diagnosisTypeId" name="diagnosisTypeId">
                             </select>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control entry-field" id="diagnosisId" name="diagnosisId">
+                            <select class="form-control input" id="diagnosisId" name="diagnosisId">
                             </select>
                         </div>
                     </div>

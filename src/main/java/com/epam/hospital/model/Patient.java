@@ -4,9 +4,9 @@ import com.epam.hospital.model.handbk.Diagnosis;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.epam.hospital.service.PatientService.*;
+import static com.epam.hospital.util.ValidationUtil.FORMATTER;
 
 public class Patient extends NamedEntity implements HavingJsonView{
     private String additionalName;
@@ -127,7 +127,6 @@ public class Patient extends NamedEntity implements HavingJsonView{
 
     @Override
     public String getJsonString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         JSONObject userJsonObj = new JSONObject();
         userJsonObj.put(ID_PARAMETER, getId());
         userJsonObj.put(NAME_PARAMETER, getName());
@@ -135,9 +134,9 @@ public class Patient extends NamedEntity implements HavingJsonView{
         userJsonObj.put(SURNAME_PARAMETER, surname);
         userJsonObj.put(PHONE_PARAMETER, phone);
         userJsonObj.put(EMAIL_PARAMETER, email);
-        userJsonObj.put(BITHDAY_PARAMETER, birthday.format(formatter));
-        userJsonObj.put(ADMISSION_DATE_PARAMETER, admissionDate.format(formatter));
-        userJsonObj.put(DISCHARGE_DATE_PARAMETER, (dischargeDate) == null ? "" : dischargeDate.format(formatter));
+        userJsonObj.put(BITHDAY_PARAMETER, birthday.format(FORMATTER));
+        userJsonObj.put(ADMISSION_DATE_PARAMETER, admissionDate.format(FORMATTER));
+        userJsonObj.put(DISCHARGE_DATE_PARAMETER, (dischargeDate) == null ? "" : dischargeDate.format(FORMATTER));
         userJsonObj.put(PRIMARY_DIAGNOSIS_ID_PARAMETER, (primaryDiagnosis == null) ? null : primaryDiagnosis.getId());
         userJsonObj.put(PRIMARY_COMPLAINTS_PARAMETER, primaryComplaints);
         userJsonObj.put(PRIMARY_INSPECTION_PARAMETER, primaryInspection);

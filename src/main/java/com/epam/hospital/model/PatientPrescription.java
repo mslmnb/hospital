@@ -1,10 +1,10 @@
 package com.epam.hospital.model;
 
 import com.epam.hospital.model.handbk.PrescriptionType;
+import com.epam.hospital.util.ValidationUtil;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.epam.hospital.service.PatientPrescriptionService.*;
 
@@ -53,15 +53,14 @@ public class PatientPrescription extends BaseEntity implements HavingJsonView {
 
     @Override
     public String getJsonString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         JSONObject userJsonObj = new JSONObject();
         userJsonObj.put(ID_PARAMETER, getId());
         userJsonObj.put(PATIENT_ID_PARAMETER, patient.getId());
-        userJsonObj.put(APPLICATION_DATE_PARAMETER, applicationDate.format(formatter));
+        userJsonObj.put(APPLICATION_DATE_PARAMETER, applicationDate.format(ValidationUtil.FORMATTER));
         userJsonObj.put(TYPE_ID_PARAMETER, type.getId());
         userJsonObj.put(TYPE_PARAMETER, type.getName());
         userJsonObj.put(DESCRIPTION_PARAMETER, description);
-        String executionDateAsString = (executionDate==null) ? "" : executionDate.format(formatter);
+        String executionDateAsString = (executionDate==null) ? "" : executionDate.format(ValidationUtil.FORMATTER);
         userJsonObj.put(EXECUTON_DATE_PARAMETER, executionDateAsString);
         userJsonObj.put(RESULT_PARAMETER, result);
         return userJsonObj.toString();

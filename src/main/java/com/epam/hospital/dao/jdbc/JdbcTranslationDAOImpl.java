@@ -3,7 +3,7 @@ package com.epam.hospital.dao.jdbc;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.TranslationDAO;
 import com.epam.hospital.model.handbk.HandbkItem;
-import com.epam.hospital.model.handbk.Translation;
+import com.epam.hospital.model.Translation;
 import org.apache.log4j.Logger;
 
 import java.sql.*;

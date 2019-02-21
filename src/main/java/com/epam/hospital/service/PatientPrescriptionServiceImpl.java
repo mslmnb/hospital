@@ -23,7 +23,7 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
     @Override
     public void save(String idAsString, String patientIdAsString,
                      String applicationDateAsString, String typeIdAsString, String description,
-                     String executionDateAsString, String resultParameter) throws AppException {
+                     String executionDateAsString, String resultNotes) throws AppException {
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty())
                      ? null
@@ -33,14 +33,19 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
                 APPLICATION_DATE_PARAMETER, checkResult, false);
         Integer typeId = checkAndReturnInt(typeIdAsString, TYPE_ID_PARAMETER, checkResult, false);
         PrescriptionType type = new PrescriptionType(typeId);
-
-        LocalDate executionDate = (executionDateAsString.isEmpty())
-                                  ? null
-                                  : checkAndReturnDate(executionDateAsString,
-                                                       EXECUTON_DATE_PARAMETER, checkResult, false);
+        LocalDate executionDate;
+        if (resultNotes.isEmpty()) {
+            executionDate = (executionDateAsString.isEmpty())
+                            ? null
+                            : checkAndReturnDate(executionDateAsString,
+                                                 EXECUTON_DATE_PARAMETER, checkResult, false);
+        } else {
+            executionDate = checkAndReturnDate(executionDateAsString,
+                                               EXECUTON_DATE_PARAMETER, checkResult, false);
+        }
         checkNotEmpty(description, DESCRIPTION_PARAMETER, checkResult);
         PatientPrescription prescription = new PatientPrescription(id, new Patient(patientId), applicationDate,
-                                                                   type, description, executionDate, resultParameter);
+                                                                   type, description, executionDate, resultNotes);
         save(prescription);
     }
 

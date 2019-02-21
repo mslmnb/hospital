@@ -58,14 +58,14 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" class="entry-field" id="id" name="id">
+                    <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-3"><fmt:message key="patients.name"/></label>
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="name" name="name"
                                    placeholder="<fmt:message key="patients.name"/>">
                         </div>
@@ -78,7 +78,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="additionalName"
                                    name="additionalName"
                                    placeholder="<fmt:message key="patients.additionalName"/>"/>
@@ -92,7 +92,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="surname"
                                    name="surname"
                                    placeholder="<fmt:message key="patients.surname"/>"/>
@@ -105,7 +105,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input class="form-control entry-field"
+                            <input class="form-control input"
                                    id="birthday"
                                    name="birthday"
                                    placeholder="<fmt:message key="reception.birthday"/>">
@@ -117,7 +117,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="phone" name="phone"
                                    placeholder="<fmt:message key="reception.phone"/>"/>
                         </div>
@@ -129,7 +129,7 @@
 
                         <div class="col-xs-9">
                             <input type="email"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="email" name="email"
                                    placeholder="<fmt:message key="reception.email"/>"/>
                         </div>
@@ -141,7 +141,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input class="form-control entry-field"
+                            <input class="form-control input"
                                    id="admissionDate"
                                    name="admissionDate"
                                    placeholder="<fmt:message key="reception.admissionDate"/>">
@@ -175,6 +175,7 @@
     i18n["invalidBirthday"] = "<fmt:message key="error.reception.invalidBirthday"/>";
     i18n["emptyAdmissionDate"] = "<fmt:message key="error.reception.emptyAdmissionDate"/>";
     i18n["invalidAdmissionDate"] = "<fmt:message key="error.reception.invalidAdmissionDate"/>";
+    i18n["notFound"] = "<fmt:message key="error.reception.notFound"/>";
     i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnosises"/>"
     i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.reception.impossibleRemovingForInspections"/>"
     i18n["impossibleRemovingForPrescriptions"] = "<fmt:message key="error.reception.impossibleRemovingForPrescriptions"/>"

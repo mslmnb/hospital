@@ -1,9 +1,9 @@
 package com.epam.hospital.model;
 
+import com.epam.hospital.util.ValidationUtil;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.epam.hospital.service.PatientInspectionService.*;
 
@@ -40,11 +40,10 @@ public class PatientInspection extends BaseEntity implements HavingJsonView {
 
     @Override
     public String getJsonString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         JSONObject userJsonObj = new JSONObject();
         userJsonObj.put(ID_PARAMETER, getId());
         userJsonObj.put(PATIENT_ID_PARAMETER, patient.getId());
-        userJsonObj.put(DATE_PARAMETER, date.format(formatter));
+        userJsonObj.put(DATE_PARAMETER, date.format(ValidationUtil.FORMATTER));
         userJsonObj.put(INSPECTION_PARAMETER, inspection);
         userJsonObj.put(COMPLAINTS_PARAMETER, complaints);
         return userJsonObj.toString();

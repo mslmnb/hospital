@@ -1,7 +1,9 @@
-package com.epam.hospital.model.handbk;
+package com.epam.hospital.model;
 
 import com.epam.hospital.model.BaseEntity;
 import com.epam.hospital.model.HavingJsonView;
+import com.epam.hospital.model.Lang;
+import com.epam.hospital.model.handbk.HandbkItem;
 import org.json.JSONObject;
 
 import static com.epam.hospital.service.TranslationService.*;

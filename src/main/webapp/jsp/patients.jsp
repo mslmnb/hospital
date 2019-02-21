@@ -52,14 +52,14 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" class="entry-field" id="id" name="id">
+                    <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
                         <label for="primaryComplaints" class="control-label col-xs-3"><fmt:message key="patients.complaints"/></label>
 
                         <div class="col-xs-9">
                             <textarea rows="3"
-                                      class="form-control entry-field"
+                                      class="form-control input"
                                       id="primaryComplaints"
                                       name="primaryComplaints"
                                       placeholder="<fmt:message key="patients.complaints"/>">
@@ -72,7 +72,7 @@
 
                         <div class="col-xs-9">
                             <textarea rows="3"
-                                   class="form-control entry-field"
+                                   class="form-control input"
                                    id="primaryInspection"
                                    name="primaryInspection"
                                    placeholder="<fmt:message key="patients.inspection"/>">
@@ -93,7 +93,7 @@
                         <label for="dischargeDate" class="control-label col-xs-3"><fmt:message key="diagnosis.data"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="dischargeDate" name="dischargeDate"
+                            <input type="text" class="form-control input" id="dischargeDate" name="dischargeDate"
                                    placeholder="<fmt:message key="patients.dischargeDate"/>">
                         </div>
                     </div>
@@ -140,6 +140,7 @@
     i18n["emptyPrimaryComplaints"] = "<fmt:message key="error.patients.emptyPrimaryComplaints"/>";
     i18n["emptyPrimaryInspection"] = "<fmt:message key="error.patients.emptyPrimaryInspection"/>";
     i18n["emptyPrimaryDiagnosisId"] = "<fmt:message key="error.patients.emptyPrimaryDiagnosisId"/>";
+    i18n["notFound"] = "<fmt:message key="error.patients.notFound"/>";
     i18n["editDischargeTitle"] ="<fmt:message key="patients.editDischargeTitle"/>";
 </script>
 

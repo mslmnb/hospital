@@ -55,13 +55,13 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
                         <label for="staffId" class="control-label col-xs-3"><fmt:message key="users.staff"/></label>
 
                         <div class="col-xs-9">
-                            <select class="form-control" id="staffId" name="staffId">
+                            <select class="form-control input" id="staffId" name="staffId">
                             </select>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control input"
                                    id="login"
                                    name="login"
                                    placeholder="<fmt:message key="users.login"/>"/>
@@ -82,7 +82,7 @@
                         <label for="role" class="control-label col-xs-3"><fmt:message key="users.role"/></label>
 
                         <div class="col-xs-9">
-                            <select class="form-control" id="role" name="role">
+                            <select class="form-control input" id="role" name="role">
                             </select>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
 
                         <div class="col-xs-9">
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control input"
                                    id="password"
                                    name="password"
                                    placeholder="<fmt:message key="users.password"/>"/>

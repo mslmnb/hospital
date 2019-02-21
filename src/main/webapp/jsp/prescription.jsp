@@ -61,7 +61,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input class="entry-field" type="hidden" id="id" name="id">
+                    <input class="input" type="hidden" id="id" name="id">
                     <input type="hidden" id="patientId" name="patientId" value="${param.id}">
 
                     <div class="form-group">
@@ -70,7 +70,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field"
+                            <input type="text" class="form-control input"
                                    id="applicationDate" name="applicationDate"
                                    placeholder="<fmt:message key="prescrptn.applicationDate"/>">
                         </div>
@@ -82,7 +82,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control  entry-field" id="typeId" name="typeId">
+                            <select class="form-control input" id="typeId" name="typeId">
                             </select>
                         </div>
                     </div>
@@ -93,8 +93,12 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="description" name="description"
-                                   placeholder="<fmt:message key="prescrptn.description"/>">
+                            <textarea rows="3"
+                                    class="form-control input"
+                                    id="description"
+                                    name="description"
+                                    placeholder="<fmt:message key="prescrptn.description"/>">
+                            </textarea>
                         </div>
                     </div>
 
@@ -104,7 +108,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="executionDate" name="executionDate"
+                            <input type="text" class="form-control input" id="executionDate" name="executionDate"
                                    placeholder="<fmt:message key="prescrptn.executionDate"/>">
                         </div>
                     </div>
@@ -115,8 +119,12 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="result" name="result"
-                                   placeholder="<fmt:message key="prescrptn.result"/>">
+                            <textarea rows="3"
+                                      class="form-control input"
+                                      id="result"
+                                      name="result"
+                                      placeholder="<fmt:message key="prescrptn.result"/>">
+                            </textarea>
                         </div>
                     </div>
 

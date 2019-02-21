@@ -3,7 +3,7 @@ var datatableApi;
 
 function add() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     drawOptions("#diagnosisTypeId", "handbk/translation?type=diagnosis_type", "selectDiagnosisType");
     drawOptions("#diagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis");
     $('#editRow').modal();
@@ -11,10 +11,10 @@ function add() {
 
 function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find(".input[name='" + key + "']").val(value);
         });
         drawOptions("#diagnosisTypeId", "handbk/translation?type=diagnosis_type",
             "selectDiagnosisType", data.diagnosisTypeId);
@@ -54,8 +54,7 @@ $(function () {
     }));
     $.datetimepicker.setLocale(localeCode);
 
-    var date = $('#date');
-    date.datetimepicker({
+    $('#date').datetimepicker({
         timepicker: false,
         format: 'd-m-Y',
         formatDate: 'd-m-Y'

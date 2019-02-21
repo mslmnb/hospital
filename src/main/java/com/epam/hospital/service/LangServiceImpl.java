@@ -1,7 +1,7 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.dao.LangDAO;
-import com.epam.hospital.model.handbk.Lang;
+import com.epam.hospital.model.Lang;
 
 import java.util.List;
 

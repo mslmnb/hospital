@@ -56,47 +56,31 @@ $(function () {
 });
 
 function updatePrimaryExam(id) {
-    $('#modalTitle').html(i18n["editPrimaryExamTitle"]);
-    form.find(":input").val("");
-    form.find('.disabled').removeClass('disabled');
-    $('#primaryComplaints').attr("disabled", false);
-    $('#primaryInspection').attr("disabled", false);
-    $('#primaryDiagnosisId').attr("disabled", false);
-    $('#dischargeDate').attr("disabled", true);
-    $('#finalDiagnosisId').attr("disabled", true);
-    $.get(ajaxUrl + "get?id=" + id, function (data) {
-        $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
-        });
-        $('#primaryComplaints').val(data.primaryComplaints);
-        $('#primaryInspection').val(data.primaryInspection);
-        drawOptions("#primaryDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.primaryDiagnosisId);
-        drawOptions("#finalDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.finalDiagnosisId);
-    });
-    $('#editRow').modal();
+    update(id, "editPrimaryExamTitle", false);
 }
 
 function updateDischarge(id) {
-    $('#modalTitle').html(i18n["editDischargeTitle"]);
+    update(id, "editDischargeTitle", true);
+}
+
+function update(id, title, disabled) {
+    $('#modalTitle').html(i18n[title]);
     form.find(":input").val("");
     form.find('.disabled').removeClass('disabled');
-    $('#primaryComplaints').attr("disabled", true);
-    $('#primaryInspection').attr("disabled", true);
-    $('#primaryDiagnosisId').attr("disabled", true);
-    $('#dischargeDate').attr("disabled", false);
-    $('#finalDiagnosisId').attr("disabled", false);
+    $('#primaryComplaints').attr("disabled", disabled);
+    $('#primaryInspection').attr("disabled", disabled);
+    $('#primaryDiagnosisId').attr("disabled", disabled);
+    $('#dischargeDate').attr("disabled", !disabled);
+    $('#finalDiagnosisId').attr("disabled", !disabled);
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find(".input[name='" + key + "']").val(value);
         });
-        $('#primaryComplaints').val(data.primaryComplaints);
-        $('#primaryInspection').val(data.primaryInspection);
         drawOptions("#primaryDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.primaryDiagnosisId);
         drawOptions("#finalDiagnosisId", "handbk/translation?type=diagnosis", "selectDiagnosis", data.finalDiagnosisId);
     });
     $('#editRow').modal();
 }
-
 
 function renderPrimaryExamBtn(data, type, row) {
     if (type === 'display') {

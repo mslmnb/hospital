@@ -3,7 +3,7 @@ var datatableApi;
 
 function add() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     form.find('.disabled').removeClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     $('#executionDate').attr("disabled", true);
@@ -14,14 +14,14 @@ function add() {
 
 function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     form.find('.disabled').removeClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     $('#executionDate').attr("disabled", true);
     $('#result').attr("disabled", true);
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find(".input[name='" + key + "']").val(value);
         });
         drawOptions("#typeId", "handbk/translation?type=prescrptn_type", "selectPrescrptnType", data.typeId);
         $('#editRow').modal();
@@ -30,7 +30,7 @@ function updateRow(id) {
 
 function updateExecutionRow(id) {
     $('#modalTitle').html(i18n["executionEditTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     form.find('.disabled').removeClass('disabled');
     form.find(':input:disabled').removeAttr('disabled');
     $('#applicationDate').attr("disabled", true);
@@ -38,7 +38,7 @@ function updateExecutionRow(id) {
     $('#description').attr("disabled", true);
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find(".input[name='" + key + "']").val(value);
         });
         drawOptions("#typeId", "handbk/translation?type=prescrptn_type", "selectPrescrptnType", data.typeId);
         $('#editRow').modal();

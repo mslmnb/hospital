@@ -11,7 +11,7 @@ function makeEditable() {
 
 function add() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     $('#editRow').modal();
 }
 
@@ -106,7 +106,7 @@ function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
     $.get(ajaxUrl + "get?id=" + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            form.find(".input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
     });

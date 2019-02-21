@@ -1,6 +1,6 @@
 package com.epam.hospital.service;
 
-import com.epam.hospital.model.handbk.Translation;
+import com.epam.hospital.model.Translation;
 import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;

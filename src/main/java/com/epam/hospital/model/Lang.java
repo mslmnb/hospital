@@ -1,4 +1,4 @@
-package com.epam.hospital.model.handbk;
+package com.epam.hospital.model;
 
 import com.epam.hospital.model.HavingJsonView;
 import org.json.JSONObject;

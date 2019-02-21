@@ -63,13 +63,13 @@
                            name="type"
                            value="${param.type}">
 
-                    <input type="hidden" class="entry-field" id="id" name="id">
+                    <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-3"><fmt:message key="handbk.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="name" name="name"
+                            <input type="text" class="form-control input" id="name" name="name"
                                    placeholder="<fmt:message key="handbk.name"/>">
                         </div>
                     </div>
@@ -97,6 +97,7 @@
     i18n["emptyName"] = "<fmt:message key="error.handbk.emptyName"/>"
     i18n["impossibleRemovingForStaff"] = "<fmt:message key="error.handbk.impossibleRemovingForStaff"/>"
     i18n["impossibleRemovingForDiagnosis"] = "<fmt:message key="error.handbk.impossibleRemovingForDiagnosis"/>"
+    i18n["notFound"] = "<fmt:message key="error.handbk.notFound"/>"
 </script>
 
 </html>

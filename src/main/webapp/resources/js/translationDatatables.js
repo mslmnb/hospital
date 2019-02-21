@@ -31,14 +31,11 @@ $(function () {
 
 function updateRow(id) {
     $('#modalTitle').html(i18n["editTitle"]);
-    // form.find(":input").val("");
-    form.find("#id").val("");
-    form.find("#locale").val("");
-    form.find("#translation").val("");
+    form.find(".input").val("");
     $.get(ajaxUrl + "get?id=" + id, function (data) {
-        $("#id").val(data.id);
-        $("#locale").val(data.locale);
-        $("#translation").val(data.translation);
+        $.each(data, function (key, value) {
+            form.find(".input[name='" + key + "']").val(value);
+        });
         drawOptions("#locale", "lang/all", "selectLocale", data.locale);
     });
     $('#editRow').modal();
@@ -46,7 +43,7 @@ function updateRow(id) {
 
 function addTranslation() {
     $('#modalTitle').html(i18n["addTitle"]);
-    form.find(".entry-field").val("");
+    form.find(".input").val("");
     drawOptions("#locale", "lang/all", "selectLocale");
     $('#editRow').modal();
 }

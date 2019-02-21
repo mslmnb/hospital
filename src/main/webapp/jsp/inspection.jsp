@@ -59,7 +59,7 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input class="entry-field" type="hidden" id="id" name="id">
+                    <input class="input" type="hidden" id="id" name="id">
                     <input type="hidden" id="patientId" name="patientId" value="${param.id}">
 
                     <div class="form-group">
@@ -68,7 +68,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field"
+                            <input type="text" class="form-control input"
                                    id="date" name="date"
                                    placeholder="<fmt:message key="inspection.date"/>">
                         </div>
@@ -80,8 +80,12 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="complaints" name="complaints"
-                                   placeholder="<fmt:message key="inspection.complaints"/>">
+                            <textarea rows="3"
+                                      class="form-control input"
+                                      id="complaints"
+                                      name="complaints"
+                                      placeholder="<fmt:message key="inspection.complaints"/>">
+                            </textarea>
                         </div>
                     </div>
 
@@ -91,8 +95,12 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="inspection" name="inspection"
-                                   placeholder="<fmt:message key="inspection.inspection"/>">
+                            <textarea rows="3"
+                                      class="form-control input"
+                                      id="inspection"
+                                      name="inspection"
+                                      placeholder="<fmt:message key="inspection.inspection"/>">
+                            </textarea>
                         </div>
                     </div>
 

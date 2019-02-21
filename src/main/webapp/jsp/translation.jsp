@@ -62,7 +62,7 @@
                            name="handbkItemId"
                            value="${param.id}">
 
-                    <input class="entry-field" type="hidden" id="id" name="id">
+                    <input class="input" type="hidden" id="id" name="id">
 
                     <div class="form-group">
                         <label for="locale" class="control-label col-xs-3">
@@ -70,7 +70,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control entry-field" id="locale" name="locale">
+                            <select class="form-control input" id="locale" name="locale">
                             </select>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control entry-field" id="translation" name="translation"
+                            <input type="text" class="form-control input" id="translation" name="translation"
                                    placeholder="<fmt:message key="translation.translation"/>">
                         </div>
                     </div>
@@ -108,6 +108,7 @@
     i18n["selectLocale"] = "<fmt:message key="translation.selectLocale"/>"
     i18n["emptyTranslation"] = "<fmt:message key="error.translation.emptyTranslation"/>"
     i18n["emptyLocale"] = "<fmt:message key="error.translation.emptyLocale"/>"
+    i18n["notFound"] = "<fmt:message key="error.translation.notFound"/>"
     i18n["notUniqueItemAndLocale"] = "<fmt:message key="error.translation.notUniqueItemAndLocale"/>"
 </script>
 

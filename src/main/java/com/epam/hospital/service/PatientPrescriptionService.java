@@ -17,7 +17,7 @@ public interface PatientPrescriptionService extends HavingGetMethod, HavingDelet
 
     void save(String idAsString, String patientIdAsString, String applicationDateAsString,
               String typeIdAsString, String description,
-              String executionDateAsString, String resultParameter) throws AppException;
+              String executionDateAsString, String resultNotes) throws AppException;
 
     void save(PatientPrescription prescription) throws AppException;
 

@@ -56,13 +56,13 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="detailsForm">
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
                         <label for="name" class="control-label col-xs-3"><fmt:message key="staff.name"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="name" name="name"
+                            <input type="text" class="form-control input" id="name" name="name"
                                    placeholder="<fmt:message key="staff.name"/>">
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="additionalName" name="additionalName"
+                            <input type="text" class="form-control input" id="additionalName" name="additionalName"
                                    placeholder="<fmt:message key="staff.additionalName"/>">
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         <label for="surname" class="control-label col-xs-3"><fmt:message key="staff.surname"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="surname" name="surname"
+                            <input type="text" class="form-control input" id="surname" name="surname"
                                    placeholder="<fmt:message key="staff.surname"/>">
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                         </label>
 
                         <div class="col-xs-9">
-                            <select class="form-control" id="positionId" name="positionId">
+                            <select class="form-control input" id="positionId" name="positionId">
                             </select>
                         </div>
                     </div>
@@ -122,6 +122,7 @@
     i18n["emptySurname"] = "<fmt:message key="error.staff.emptySurname"/>"
     i18n["emptyPositionId"] = "<fmt:message key="error.staff.emptyPositionId"/>"
     i18n["impossibleRemovingForUsers"] = "<fmt:message key="error.staff.impossibleRemovingForUsers"/>"
+    i18n["notFound"] = "<fmt:message key="error.staff.notFound"/>"
 </script>
 
 </html>

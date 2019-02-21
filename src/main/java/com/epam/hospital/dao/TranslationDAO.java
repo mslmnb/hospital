@@ -1,6 +1,6 @@
 package com.epam.hospital.dao;
 
-import com.epam.hospital.model.handbk.Translation;
+import com.epam.hospital.model.Translation;
 
 import java.util.List;
 

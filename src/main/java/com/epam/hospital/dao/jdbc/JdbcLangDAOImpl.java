@@ -2,7 +2,7 @@ package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.LangDAO;
-import com.epam.hospital.model.handbk.Lang;
+import com.epam.hospital.model.Lang;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;

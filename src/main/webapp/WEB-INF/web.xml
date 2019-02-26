@@ -30,6 +30,7 @@
     <filter-mapping>
         <filter-name>langFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <filter>

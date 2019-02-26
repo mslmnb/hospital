@@ -95,12 +95,45 @@ $(function () {
         format: 'd-m-Y',
         formatDate: 'd-m-Y'
     })
+
+    if ($('#authorizedUserRole').val() == "ROLE_NURSE") {
+        $("#addButton").addClass("disabled");
+        $("#addButton").attr("href", "");
+    }
 });
 
 function renderExecuteBtn(data, type, row) {
     if (type == 'display') {
         return '<a onclick="updateExecutionRow(' + row.id + ');">'
-                                                          + i18n['execution'] + '</a>';
+            + i18n['execution'] + '</a>';
     }
 }
+
+function renderEditBtn(data, type, row) {
+    if (type === 'display') {
+        var disabledClass = "class='disabled'";
+        var onClick = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            onClick = "'updateRow(" + row.id + ");'";
+        }
+        return "<a " + disabledClass + " onclick=" + onClick + ">"
+                                     + "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>";
+    }
+}
+
+function renderDeleteBtn(data, type, row) {
+    if (type === 'display') {
+        var disabledClass = "class='disabled'";
+        var onClick = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            onClick = "'deleteRow(" + row.id + ");'";
+        }
+        return "<a " + disabledClass + " onclick=" + onClick + ">"
+                                     + "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+    }
+}
+
+
 

@@ -15,6 +15,7 @@
                             ${sessionScope.authorizedUser}
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                         </button>
+                        <input type="hidden" id="authorizedUserRole" value="${sessionScope.authorizedUser.role}" />
                     </form>
                 </li>
                 <jsp:include page="lang.jsp"/>

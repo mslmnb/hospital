@@ -84,16 +84,26 @@ function update(id, title, disabled) {
 
 function renderPrimaryExamBtn(data, type, row) {
     if (type === 'display') {
-        return '<a onclick="updatePrimaryExam(' + row.id + ');">' + i18n["primaryExamBtn"] + '</a>';
+        var disabledClass = "class='disabled'";
+        var onClick = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            onClick = "'updatePrimaryExam(" + row.id + ");'";
+        }
+        return "<a " + disabledClass + "' onclick=" + onClick + ">" + i18n["primaryExamBtn"] + "</a>";
     }
 }
 
 function renderDiagnosisBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='diagnosis?id=" + row.id
-                                                                       + "&name=" + getFullName(row) + "'>"
-                                                                       + i18n["diagnosisBtn"]
-                                                                       + "</a>";
+        var disabledClass = " disabled";
+        var href = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            href = "'diagnosis?id=" + row.id + "&name=" + getFullName(row) + "'";
+        }
+        return "<a class='btn btn-xs btn-primary" + disabledClass + "' href=" + href + ">"
+                                                                  + i18n["diagnosisBtn"] + "</a>";
     }
 }
 
@@ -108,20 +118,29 @@ function renderPrescriptionBtn(data, type, row) {
 
 function renderInspectionBtn(data, type, row) {
     if (type === 'display') {
-        return "<a class='btn btn-xs btn-primary' href='inspection?id=" + row.id
-                                                                        + "&name=" + getFullName(row) + "'>"
-                                                                        + i18n["inspectionBtn"]
-                                                                        + "</a>";
+        var disabledClass = " disabled";
+        var href = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            href = "'inspection?id=" + row.id + "&name=" + getFullName(row) + "'";
+        }
+        return "<a class='btn btn-xs btn-primary"+ disabledClass + "' href=" + href +  ">"
+                                                                 + i18n["inspectionBtn"] + "</a>";
     }
 }
 
 function renderDischargeBtn(data, type, row) {
     if (type === 'display') {
-        return "<a onclick='updateDischarge(" + row.id + ");'>" + i18n["dischargeBtn"] + "</a>";
+        var disabledClass = "class='disabled'";
+        var onClick = "";
+        if ($('#authorizedUserRole').val() == "ROLE_DOCTOR") {
+            disabledClass = "";
+            onClick = "'updateDischarge(" + row.id + ");'";
+        }
+        return "<a " + disabledClass + "' onclick=" + onClick + ">" + i18n["dischargeBtn"] + "</a>";
     }
 }
 
 function getFullName(row) {
     return row.surname + " " + row.name + " " + row.additionalName;
-
 }

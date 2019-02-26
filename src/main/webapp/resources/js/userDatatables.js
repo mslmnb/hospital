@@ -60,7 +60,7 @@ function updatePassword(id) {
         $("#id").val(data.id);
         $("#login").val(data.login);
         drawStaffOptions(data.staffId);
-        drawOptions("#role", "role/all", "selectRole", data.staffId);
+        drawOptions("#role", "role/all", "selectRole", data.role);
     });
     $('#editRow').modal();
 }

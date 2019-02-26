@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.epam.hospital.servlet.AppServletContextListner.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
+import static com.epam.hospital.action.LoginAction.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
 public class SecurityFilter implements Filter {
     private static final String ROOT_PATH = "/";
@@ -41,9 +41,6 @@ public class SecurityFilter implements Filter {
         accessMap.put("/patients", doctorAndNurseRoles);
         accessMap.put("/prescription", doctorAndNurseRoles);
         accessMap.put("/noAdmin", doctorAndNurseRoles);
-
-
-
     }
 
     public void destroy() {

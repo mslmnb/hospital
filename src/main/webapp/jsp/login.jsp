@@ -67,9 +67,9 @@
 </div>
 <jsp:include page="fragments/footer.jsp"/>
 <script type="text/javascript">
-    <c:if test="${not empty param.login}">
-    setCredentials("${param.login}", "");
-    </c:if>
+    <%--<c:if test="${not empty param.login}">--%>
+    <%--setCredentials("${param.login}", "");--%>
+    <%--</c:if>--%>
     function setCredentials(login, password) {
         $('input[name="login"]').val(login);
         $('input[name="password"]').val(password);

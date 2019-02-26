@@ -28,7 +28,7 @@
 
 
             <div class="view-box">
-                <a class="btn btn-info" onclick="add()">
+                <a class="btn btn-info" id="addButton" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <fmt:message key="common.add"/>
                 </a>

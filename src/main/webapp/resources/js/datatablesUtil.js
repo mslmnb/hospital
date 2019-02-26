@@ -164,4 +164,3 @@ function drawOptions(selectElementName, url, defaultOption, selectedOptionId) {
     });
 }
 
-

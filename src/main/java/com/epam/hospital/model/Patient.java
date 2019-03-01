@@ -125,6 +125,11 @@ public class Patient extends NamedEntity implements HavingJsonView{
         this.dischargeDate = dischargeDate;
     }
 
+    public String getFullName() {
+        return surname==null ? "" : surname + " " + getName().charAt(0) + "." +
+                (additionalName.isEmpty() ? "" : additionalName.charAt(0) + ".");
+    }
+
     @Override
     public String getJsonString() {
         JSONObject userJsonObj = new JSONObject();
@@ -132,6 +137,7 @@ public class Patient extends NamedEntity implements HavingJsonView{
         userJsonObj.put(NAME_PARAMETER, getName());
         userJsonObj.put(ADDITIONAL_NAME_PARAMETER, additionalName);
         userJsonObj.put(SURNAME_PARAMETER, surname);
+        userJsonObj.put(FULLNAME_PARAMETER, getFullName());
         userJsonObj.put(PHONE_PARAMETER, phone);
         userJsonObj.put(EMAIL_PARAMETER, email);
         userJsonObj.put(BITHDAY_PARAMETER, birthday.format(FORMATTER));

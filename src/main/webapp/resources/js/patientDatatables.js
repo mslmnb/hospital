@@ -5,13 +5,13 @@ $(function () {
     datatableApi = $('#datatable').DataTable(extendsOpts({
         "columns": [
             {
-                "data": "surname"
+                "data": "fullname"
             },
             {
-                "data": "name"
+                "data": "admissionDate"
             },
             {
-                "data": "additionalName"
+                "data": "dischargeDate"
             },
             {
                 "orderable": false,

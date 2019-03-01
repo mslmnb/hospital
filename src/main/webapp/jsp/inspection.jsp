@@ -20,12 +20,20 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="prescrptn.title"/>: ${param.name}</h3>
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3><fmt:message key="prescrptn.title"/>: ${param.name}</h3>
+                </div>
+                <br>
+                <div class="col-sm-1">
+                    <a href="patients"><fmt:message key="common.back"/></a>
+                </div>
+            </div>
+
             <input type="hidden"
                    id="requestParameter"
                    name="requestParameter"
                    value="?id=${param.id}&name=${param.name}">
-
 
             <div class="view-box">
                 <a class="btn btn-info" onclick="add()">

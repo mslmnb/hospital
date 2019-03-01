@@ -18,8 +18,9 @@ public class LangFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        setLangAttribute(request);
         response.setCharacterEncoding(UTF8_CODE);
+        request.setCharacterEncoding(UTF8_CODE);
+        setLangAttribute(request);
 
         filterChain.doFilter(request, response);
     }

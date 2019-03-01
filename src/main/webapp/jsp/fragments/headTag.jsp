@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages/app"/>
 
 <head>
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="resources/webjars/datatables/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="resources/webjars/datatables/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="resources/webjars/datetimepicker/jquery.datetimepicker.css">
-    <%--<link rel="shortcut icon" href="resources/images/icon-meal.png">--%>
+    <link rel="shortcut icon" href="resources/hospital.png">
 
     <script type="text/javascript" src="resources/webjars/jquery/jquery.min.js" defer></script>
     <script type="text/javascript" src="resources/webjars/bootstrap/js/bootstrap.min.js" defer></script>

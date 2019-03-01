@@ -5,7 +5,7 @@
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <a href="" class="navbar-brand"><fmt:message key="app.title"/></a>
+        <a class="navbar-brand"><fmt:message key="app.title"/></a>
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">

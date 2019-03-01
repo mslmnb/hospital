@@ -20,16 +20,25 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="patients.title"/></h3>
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3><fmt:message key="patients.title"/></h3>
+                </div>
+                <br>
+                <div class="col-sm-1">
+                    <a href="noAdmin"><fmt:message key="common.back"/></a>
+                </div>
+            </div>
+
             <hr>
             <hr>
             <div class="view-box">
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="patients.surname"/></th>
-                        <th><fmt:message key="patients.name"/></th>
-                        <th><fmt:message key="patients.additionalName"/></th>
+                        <th><fmt:message key="patients.fullname"/></th>
+                        <th><fmt:message key="patients.admissionDate"/></th>
+                        <th><fmt:message key="patients.dischargeDate"/></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -55,7 +64,8 @@
                     <input type="hidden" class="input" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="primaryComplaints" class="control-label col-xs-3"><fmt:message key="patients.complaints"/></label>
+                        <label for="primaryComplaints" class="control-label col-xs-3"><fmt:message
+                                key="patients.complaints"/></label>
 
                         <div class="col-xs-9">
                             <textarea rows="3"
@@ -68,20 +78,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="primaryInspection" class="control-label col-xs-3"><fmt:message key="patients.inspection"/></label>
+                        <label for="primaryInspection" class="control-label col-xs-3"><fmt:message
+                                key="patients.inspection"/></label>
 
                         <div class="col-xs-9">
                             <textarea rows="3"
-                                   class="form-control input"
-                                   id="primaryInspection"
-                                   name="primaryInspection"
-                                   placeholder="<fmt:message key="patients.inspection"/>">
+                                      class="form-control input"
+                                      id="primaryInspection"
+                                      name="primaryInspection"
+                                      placeholder="<fmt:message key="patients.inspection"/>">
                             </textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="primaryDiagnosisId" class="control-label col-xs-3"><fmt:message key="patients.primaryDiagnosis"/></label>
+                        <label for="primaryDiagnosisId" class="control-label col-xs-3"><fmt:message
+                                key="patients.primaryDiagnosis"/></label>
 
                         <div class="col-xs-9">
                             <select class="form-control" id="primaryDiagnosisId" name="primaryDiagnosisId">
@@ -90,7 +102,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="dischargeDate" class="control-label col-xs-3"><fmt:message key="diagnosis.data"/></label>
+                        <label for="dischargeDate" class="control-label col-xs-3"><fmt:message
+                                key="patients.dischargeDate"/></label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control input" id="dischargeDate" name="dischargeDate"
@@ -100,7 +113,8 @@
 
 
                     <div class="form-group">
-                        <label for="finalDiagnosisId" class="control-label col-xs-3"><fmt:message key="patients.finalDiagnosis"/></label>
+                        <label for="finalDiagnosisId" class="control-label col-xs-3"><fmt:message
+                                key="patients.finalDiagnosis"/></label>
 
                         <div class="col-xs-9">
                             <select class="form-control" id="finalDiagnosisId" name="finalDiagnosisId">
@@ -141,7 +155,7 @@
     i18n["emptyPrimaryInspection"] = "<fmt:message key="error.patients.emptyPrimaryInspection"/>";
     i18n["emptyPrimaryDiagnosisId"] = "<fmt:message key="error.patients.emptyPrimaryDiagnosisId"/>";
     i18n["notFound"] = "<fmt:message key="error.patients.notFound"/>";
-    i18n["editDischargeTitle"] ="<fmt:message key="patients.editDischargeTitle"/>";
+    i18n["editDischargeTitle"] = "<fmt:message key="patients.editDischargeTitle"/>";
 </script>
 
 </html>

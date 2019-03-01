@@ -20,7 +20,15 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="users.title"/></h3>
+            <div class="row">
+                <div class="col-sm-11">
+                    <h3><fmt:message key="users.title"/></h3>
+                </div>
+                <br>
+                <div class="col-sm-1">
+                    <a href="admin"><fmt:message key="common.back"/></a>
+                </div>
+            </div>
 
             <div class="view-box">
 

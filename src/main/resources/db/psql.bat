@@ -1,9 +1,4 @@
-rem @echo off
-
-rem "C:\Program Files\PostgreSQL\9.5\bin\psql.exe" -h %server% -U %username% -d %database% -p %port%
-
-cd C:\Program Files\PostgreSQL\9.5\bin
-rem "C:\Program Files\PostgreSQL\9.5\bin\psql.exe" -h localhost -U postgres -d postgres -p 5432 -a -f "C:\java\repository.git\hospital\src\main\resources\db\initdb.sql"
-psql.exe -h localhost -U postgres -d postgres -p 5432 -a -f C:\java\repository.git\hospital\src\main\resources\db\initdb.sql
-
-pause
+cd C:\Program Files\PostgreSQL\10\bin
+psql.exe -h localhost -U postgres -d postgres -p 5432 -a -f C:\java_project\hospital-master\src\main\resources\db\initdb.sql
+SET PGCLIENTENCODING=utf-8
+psql.exe -h localhost -U user -d hospital -p 5432 -a -f C:\java_project\hospital-master\src\main\resources\db\\populateDB.sql

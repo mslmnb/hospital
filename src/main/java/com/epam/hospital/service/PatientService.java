@@ -12,6 +12,7 @@ public interface PatientService extends HavingDeleteMethod, HavingGetMethod, Hav
     String NAME_PARAMETER = "name";
     String ADDITIONAL_NAME_PARAMETER = "additionalName";
     String SURNAME_PARAMETER = "surname";
+    String FULLNAME_PARAMETER = "fullname";
     String PHONE_PARAMETER = "phone";
     String EMAIL_PARAMETER = "email";
     String BITHDAY_PARAMETER = "birthday";

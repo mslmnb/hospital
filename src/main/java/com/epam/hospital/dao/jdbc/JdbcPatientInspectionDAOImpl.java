@@ -24,7 +24,7 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO {
     private static final String INSPECTION_FIELDNAME = "inspection";
     private static final String COMPLAINTS_FIELDNAME = "complaints";
 
-    private static final String SELECT_ALL = "SELECT * FROM inspection_register WHERE patient_id = ?";
+    private static final String SELECT_ALL = "SELECT * FROM inspection_register WHERE patient_id = ? ORDER BY id";
     private static final String SELECT_BY_ID = "SELECT * FROM inspection_register WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO inspection_register " +
                                                   "(patient_id,  date, inspection, complaints) " +

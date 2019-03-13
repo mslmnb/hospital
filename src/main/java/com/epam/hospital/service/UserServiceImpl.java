@@ -8,6 +8,7 @@ import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
@@ -15,7 +16,20 @@ import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class UserServiceImpl implements UserService {
+    public final static String ID_PARAMETER = "id";
+    public final static String NAME_PARAMETER = "name";
+    public final static String STAFF_ID_PARAMETER = "staffId";
+    public final static String STAFF_NAME_PARAMETER = "staffName";
+    public final static String LOGIN_PARAMETER = "login";
+    public final static String ROLE_PARAMETER = "role";
+    public final static String PASSWORD_PARAMETER = "password";
+    private final static Integer ADMIN_ID = 100000;
+    private final static Integer DOCTOR_ID = 100001;
+    private final static Integer NURSE_ID = 100004;
+
     private final UserDAO dao;
+    private static final String MODIFICATION_RESTRICTION = "modificationRestriction";
+    private static final List<Integer> modificationRestriction = Arrays.asList(ADMIN_ID, DOCTOR_ID, NURSE_ID);
 
     public UserServiceImpl(UserDAO dao) {
         this.dao = dao;
@@ -40,6 +54,7 @@ public class UserServiceImpl implements UserService {
         if (user.isNew()) {
             dao.create(user);
         } else {
+            checkModificationRestriction(user.getId());
             checkNotFound(dao.updatePassword(user));
         }
     }
@@ -56,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(int id) throws AppException {
+        checkModificationRestriction(id);
         checkNotFound(dao.delete(id));
     }
 
@@ -79,4 +95,12 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return dao.getAll();
     }
+
+    private void checkModificationRestriction(int id) throws AppException {
+        if (modificationRestriction.contains(id)) {
+            throw new AppException(new CheckResult(MODIFICATION_RESTRICTION));
+        }
+    }
+
 }
+

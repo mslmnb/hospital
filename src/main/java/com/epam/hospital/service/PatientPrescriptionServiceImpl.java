@@ -14,6 +14,15 @@ import static com.epam.hospital.util.ValidationUtil.*;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 
 public class PatientPrescriptionServiceImpl implements PatientPrescriptionService {
+    public final static String ID_PARAMETER = "id";
+    public final static String PATIENT_ID_PARAMETER = "patientId";
+    public final static String APPLICATION_DATE_PARAMETER = "applicationDate";
+    public final static String TYPE_ID_PARAMETER = "typeId";
+    public final static String TYPE_PARAMETER = "type";
+    public final static String DESCRIPTION_PARAMETER = "description";
+    public final static String EXECUTON_DATE_PARAMETER = "executionDate";
+    public final static String RESULT_PARAMETER = "result";
+
     private final PatientPrescriptionDAO dao;
 
     public PatientPrescriptionServiceImpl(PatientPrescriptionDAO dao) {

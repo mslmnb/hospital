@@ -5,8 +5,5 @@ import com.epam.hospital.model.Lang;
 import java.util.List;
 
 public interface LangService {
-    String ID_PARAMETER = "id";
-    String NAME_PARAMETER = "name";
-
     List<Lang> getAll();
 }

@@ -14,36 +14,26 @@ $(function () {
                 "data": "dischargeDate"
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderPrimaryExamBtn
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderDiagnosisBtn
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderPrescriptionBtn
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderInspectionBtn
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderDischargeBtn
             }
 
-        ],
-        "order": [
-            [
-                0, "asc"
-            ]
         ]
     }));
     $.datetimepicker.setLocale(localeCode);

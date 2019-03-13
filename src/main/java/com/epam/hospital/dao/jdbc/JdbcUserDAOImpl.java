@@ -5,13 +5,12 @@ import com.epam.hospital.model.Staff;
 import com.epam.hospital.model.User;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.UserDAO;
+import com.epam.hospital.util.CheckResult;
+import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.epam.hospital.util.DaoUtil.*;
 

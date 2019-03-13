@@ -42,7 +42,8 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
                                                  "dr.diagnosis_type_item_id =  hi_type.id  AND " +
                                                  "hi.id = hit.handbk_item_id AND " +
                                                  "hi_type.id = hit_type.handbk_item_id AND " +
-                                                 "hit.locale = ? AND  hit_type.locale = ? AND patient_id = ?";
+                                                 "hit.locale = ? AND  hit_type.locale = ? AND patient_id = ? " +
+                                             "ORDER BY dr.id";
     private static final String SELECT_BY_ID = "SELECT * FROM diagnosis_register WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO diagnosis_register" +
                                                   "(patient_id,  date, diagnosis_item_id, diagnosis_type_item_id) " +

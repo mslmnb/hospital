@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.hospital.service.PatientInspectionService.*;
+import static com.epam.hospital.service.PatientInspectionServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 

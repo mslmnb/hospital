@@ -2,8 +2,8 @@ package com.epam.hospital.model;
 
 import org.json.JSONObject;
 
-import static com.epam.hospital.service.UserService.ID_PARAMETER;
-import static com.epam.hospital.service.UserService.NAME_PARAMETER;
+import static com.epam.hospital.service.UserServiceImpl.ID_PARAMETER;
+import static com.epam.hospital.service.UserServiceImpl.NAME_PARAMETER;
 
 public enum Role implements HavingJsonView {
     ROLE_ADMIN,

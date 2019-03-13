@@ -137,6 +137,7 @@
     i18n["addTitle"] = "<fmt:message key="users.addTitle"/>"
     i18n["editPassword"] = "<fmt:message key="users.editPassword"/>"
     i18n["invalidId"] = "<fmt:message key="error.users.invalidId"/>"
+    i18n["modificationRestriction"] = "<fmt:message key="error.users.modificationRestriction"/>"
 </script>
 
 </html>

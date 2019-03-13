@@ -3,7 +3,7 @@ package com.epam.hospital.model;
 import com.epam.hospital.model.handbk.Position;
 import org.json.JSONObject;
 
-import static com.epam.hospital.service.StaffService.*;
+import static com.epam.hospital.service.StaffServiceImpl.*;
 
 public class Staff extends NamedEntity implements HavingJsonView{
     private String additionalName;

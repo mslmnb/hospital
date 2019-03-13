@@ -12,6 +12,20 @@ import java.util.List;
 import static com.epam.hospital.util.ValidationUtil.*;
 
 public class PatientServiceImpl implements PatientService {
+    public final static String ID_PARAMETER = "id";
+    public final static String NAME_PARAMETER = "name";
+    public final static String ADDITIONAL_NAME_PARAMETER = "additionalName";
+    public final static String SURNAME_PARAMETER = "surname";
+    public final static String FULLNAME_PARAMETER = "fullname";
+    public final static String PHONE_PARAMETER = "phone";
+    public final static String EMAIL_PARAMETER = "email";
+    public final static String BITHDAY_PARAMETER = "birthday";
+    public final static String ADMISSION_DATE_PARAMETER = "admissionDate";
+    public final static String DISCHARGE_DATE_PARAMETER = "dischargeDate";
+    public final static String PRIMARY_DIAGNOSIS_ID_PARAMETER = "primaryDiagnosisId";
+    public final static String FINAL_DIAGNOSIS_ID_PARAMETER = "finalDiagnosisId";
+    public final static String PRIMARY_INSPECTION_PARAMETER = "primaryInspection";
+    public final static String PRIMARY_COMPLAINTS_PARAMETER = "primaryComplaints";
 
     private final PatientDAO dao;
 

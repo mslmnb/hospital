@@ -1,6 +1,7 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.service.HandbkItemService;
+import com.epam.hospital.service.HandbkItemServiceImpl;
 import com.epam.hospital.service.TranslationService;
 import com.epam.hospital.util.ActionUtil;
 import org.apache.log4j.Logger;
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.epam.hospital.service.TranslationService.*;
+import static com.epam.hospital.service.TranslationServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
@@ -36,7 +37,7 @@ public class TranslationAction extends AbstractAction {
                 result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
                 break;
             case GET_ALL:
-                String handbkItemIdAsString = request.getParameter(HandbkItemService.ID_PARAMETER);
+                String handbkItemIdAsString = request.getParameter(HandbkItemServiceImpl.ID_PARAMETER);
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll(handbkItemIdAsString));
                 break;
             case SAVE:

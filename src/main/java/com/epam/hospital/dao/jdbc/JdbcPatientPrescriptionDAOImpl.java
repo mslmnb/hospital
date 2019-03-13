@@ -36,7 +36,8 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
                                                  "handbk_items as hi_type, handbk_item_translations as hit_type " +
                                              "WHERE pr.prescrptn_type_item_id =  hi_type.id  AND " +
                                                  "hi_type.id = hit_type.handbk_item_id AND " +
-                                                 "hit_type.locale = ? AND patient_id = ?";
+                                                 "hit_type.locale = ? AND patient_id = ? " +
+                                             "ORDER BY pr.id";
     private static final String SELECT_BY_ID = "SELECT id, patient_id, prescrptn_type_item_id AS prescrptn_type_id, " +
                                                    "application_date, description, execution_date, result " +
                                                 "FROM prescription_register WHERE id = ? ";

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
-import static com.epam.hospital.service.PatientPrescriptionService.*;
+import static com.epam.hospital.service.PatientPrescriptionServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 

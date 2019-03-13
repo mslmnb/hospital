@@ -1,10 +1,9 @@
 package com.epam.hospital.model;
 
-import com.epam.hospital.model.HavingJsonView;
 import org.json.JSONObject;
 
-import static com.epam.hospital.service.LangService.ID_PARAMETER;
-import static com.epam.hospital.service.LangService.NAME_PARAMETER;
+import static com.epam.hospital.service.LangServiceImpl.ID_PARAMETER;
+import static com.epam.hospital.service.LangServiceImpl.NAME_PARAMETER;
 
 public class Lang implements HavingJsonView{
     private String locale;

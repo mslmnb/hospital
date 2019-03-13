@@ -16,6 +16,14 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class PatientDiagnosisServiceImpl implements PatientDiagnosisService {
+    public final static String ID_PARAMETER = "id";
+    public final static String PATIENT_ID_PARAMETER = "patientId";
+    public final static String DATE_PARAMETER = "date";
+    public final static String DIAGNOSIS_ID_PARAMETER = "diagnosisId";
+    public final static String DIAGNOSIS_TYPE_ITEM_ID_PARAMETER = "diagnosisTypeId";
+    public final static String DIAGNOSIS_PARAMETER = "diagnosis";
+    public final static String DIAGNOSIS_TYPE_PARAMETER = "diagnosisType";
+
     private final PatientDiagnosisDAO dao;
 
     public PatientDiagnosisServiceImpl(PatientDiagnosisDAO dao) {

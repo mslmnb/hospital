@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 
-import static com.epam.hospital.service.PatientPrescriptionService.*;
+import static com.epam.hospital.service.PatientPrescriptionServiceImpl.*;
 
 public class PatientPrescription extends BaseEntity implements HavingJsonView {
     private Patient patient;

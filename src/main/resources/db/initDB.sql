@@ -20,10 +20,9 @@ CREATE TABLE lang
 CREATE SEQUENCE handbk_items_seq ;
 CREATE TABLE handbk_items
 (
-  id              INTEGER PRIMARY KEY DEFAULT nextval('handbk_items_seq'),
-  name            VARCHAR NOT NULL,
+  id       INTEGER PRIMARY KEY DEFAULT nextval('handbk_items_seq'),
+  name     VARCHAR NOT NULL,
   type     VARCHAR NOT NULL
-
 );
 
 CREATE SEQUENCE handbk_item_translations_seq ;

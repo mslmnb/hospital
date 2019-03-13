@@ -43,7 +43,7 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     private static final Map<String, String> errorResolver;
 
-    private static final String SELECT_ALL = "SELECT * FROM patient_register";
+    private static final String SELECT_ALL = "SELECT * FROM patient_register ORDER BY id";
     private static final String SELECT_BY_ID = "SELECT * FROM patient_register " +
                                                "WHERE id = ? ";
     private static final String INSERT_INTO = "INSERT INTO patient_register " +

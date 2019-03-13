@@ -65,7 +65,8 @@ function extendsOpts(opts) {
                     "previous":   i18n["common.previous"]
                 },
             },
-            "initComplete": makeEditable
+            "initComplete": makeEditable,
+            "ordering": false
         });
     return opts;
 }

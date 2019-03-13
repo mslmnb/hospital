@@ -4,8 +4,7 @@ import com.epam.hospital.model.HavingJsonView;
 import com.epam.hospital.model.NamedEntity;
 import org.json.JSONObject;
 
-import static com.epam.hospital.service.HandbkItemService.ID_PARAMETER;
-import static com.epam.hospital.service.HandbkItemService.NAME_PARAMETER;
+import static com.epam.hospital.service.HandbkItemServiceImpl.*;
 
 public class HandbkItem extends NamedEntity implements HavingJsonView{
     HandbkType type;

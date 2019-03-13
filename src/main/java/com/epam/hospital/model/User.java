@@ -3,7 +3,7 @@ package com.epam.hospital.model;
 import org.json.JSONObject;
 
 import static com.epam.hospital.model.Role.ROLE_ADMIN;
-import static com.epam.hospital.service.UserService.*;
+import static com.epam.hospital.service.UserServiceImpl.*;
 
 public class User extends BaseEntity implements HavingJsonView {
 

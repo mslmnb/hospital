@@ -6,11 +6,6 @@ import com.epam.hospital.util.exception.AppException;
 import java.util.List;
 
 public interface PatientInspectionService extends HavingGetMethod, HavingDeleteMethod, HavingSaveMethod {
-    String ID_PARAMETER = "id";
-    String PATIENT_ID_PARAMETER = "patientId";
-    String DATE_PARAMETER = "date";
-    String INSPECTION_PARAMETER = "inspection";
-    String COMPLAINTS_PARAMETER = "complaints";
 
     void save(String idAsString, String patientIdAsString, String dateAsString,
               String inspection, String complaints) throws AppException;

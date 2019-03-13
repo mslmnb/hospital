@@ -6,10 +6,6 @@ import com.epam.hospital.util.exception.AppException;
 import java.util.List;
 
 public interface TranslationService extends HavingDeleteMethod, HavingGetMethod, HavingSaveMethod {
-    String ID_PARAMETER = "id";
-    String HANDBK_ITEM_ID_PARAMETER = "handbkItemId";
-    String LOCALE_PARAMETER = "locale";
-    String TRANSLATION_PARAMETER = "translation";
 
     void save(String idAsString, String handbkItemIdAsString, String locale, String translation) throws AppException;
 

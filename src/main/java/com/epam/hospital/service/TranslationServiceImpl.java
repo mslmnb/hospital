@@ -13,6 +13,11 @@ import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class TranslationServiceImpl implements TranslationService{
+    public final static String ID_PARAMETER = "id";
+    public final static String HANDBK_ITEM_ID_PARAMETER = "handbkItemId";
+    public final static String LOCALE_PARAMETER = "locale";
+    public final static String TRANSLATION_PARAMETER = "translation";
+
     private final TranslationDAO dao;
 
     public TranslationServiceImpl(TranslationDAO dao) {

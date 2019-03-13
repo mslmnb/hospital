@@ -13,6 +13,13 @@ import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class StaffServiceImpl implements StaffService {
+    public final static String ID_PARAMETER = "id";
+    public final static String NAME_PARAMETER = "name";
+    public final static String ADDITIONAL_NAME_PARAMETER = "additionalName";
+    public final static String SURNAME_PARAMETER = "surname";
+    public final static String POSITION_ID_PARAMETER = "positionId";
+    public final static String POSITION_PARAMETER = "position";
+
     private final StaffDAO dao;
 
     public StaffServiceImpl(StaffDAO dao) {

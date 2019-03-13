@@ -18,7 +18,7 @@ import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
 public class JdbcLangDAOImpl implements LangDAO {
     private static final Logger LOG = Logger.getLogger(JdbcLangDAOImpl.class);
 
-    private static final String LOACLE_FIELDNAME = "locale";
+    private static final String LOCALE_FIELDNAME = "locale";
     private static final String SELECT_ALL = "SELECT locale FROM lang";
 
     private final ConnectionPool pool;
@@ -48,7 +48,7 @@ public class JdbcLangDAOImpl implements LangDAO {
     }
 
     private Lang getLang(ResultSet resultSet) throws SQLException {
-        String name = resultSet.getString(LOACLE_FIELDNAME);
+        String name = resultSet.getString(LOCALE_FIELDNAME);
         return new Lang(name);
     }
 }

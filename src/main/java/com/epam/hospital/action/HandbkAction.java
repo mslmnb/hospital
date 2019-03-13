@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.filter.LangFilter.LANG_ATTRIBUTE_NAME;
-import static com.epam.hospital.service.HandbkItemService.ID_PARAMETER;
-import static com.epam.hospital.service.HandbkItemService.NAME_PARAMETER;
-import static com.epam.hospital.service.HandbkItemService.TYPE_PARAMETER;
+import static com.epam.hospital.service.HandbkItemServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;

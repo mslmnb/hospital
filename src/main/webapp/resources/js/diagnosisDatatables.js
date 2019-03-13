@@ -36,20 +36,13 @@ $(function () {
                 "data": "diagnosis"
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderEditBtn
             },
             {
-                "orderable": false,
                 "defaultContent": "",
                 "render": renderDeleteBtn
             }
-        ],
-        "order": [
-            [
-                0, "asc"
-            ]
         ]
     }));
     $.datetimepicker.setLocale(localeCode);

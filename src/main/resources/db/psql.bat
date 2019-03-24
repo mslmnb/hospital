@@ -1,4 +1,6 @@
-cd C:\Program Files (x86)\PostgreSQL\10\bin
+rem cd C:\Program Files (x86)\PostgreSQL\10\bin
+
+cd C:\Program Files\PostgreSQL\10\bin
 
 SET PGCLIENTENCODING=utf-8
 

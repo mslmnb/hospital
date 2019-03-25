@@ -1,20 +1,4 @@
-/*.normal {*/
-    /*color: green;*/
-/*}*/
-
-/*.exceeded {*/
-    /*color: red;*/
-/*}*/
-
-.footer {
-    padding-bottom: 15px;
-}
-
-.disabled {
-    opacity: 0.3;
-}
-
-.error, .message {
+.error {
     padding: 10px;
     border-radius: 4px;
     font-size: 16px;
@@ -26,12 +10,3 @@
     border: 1px solid #ebccd1;
 }
 
-.message {
-    color: #2f9635;
-    background-color: #c6fbc2;
-    border: 1px solid #9feba6;
-}
-
-.glyphicon {
-    cursor: pointer;
-}

@@ -13,8 +13,8 @@ import static com.epam.hospital.util.exception.AppException.NO_DB_CONNECTION_ERR
 import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
 
 public class DaoUtil {
-    private static String DELETE_FROM_START = "DELETE FROM ";
-    private static String DELETE_FROM_END = " WHERE id = ?";
+    private final static String DELETE_FROM_START = "DELETE FROM ";
+    private final static String DELETE_FROM_END = " WHERE id = ?";
 
     public static void logAndThrowForSQLException(SQLException e, Logger logger) {
         logAndThrowForSQLException(null, e, logger);

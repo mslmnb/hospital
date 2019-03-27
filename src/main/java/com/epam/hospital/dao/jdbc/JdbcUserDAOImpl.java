@@ -5,8 +5,6 @@ import com.epam.hospital.model.Staff;
 import com.epam.hospital.model.User;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.UserDAO;
-import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -95,7 +93,6 @@ public class JdbcUserDAOImpl implements UserDAO {
                 if (statement.executeUpdate() == 0) {
                     user = null;
                 }
-                ;
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

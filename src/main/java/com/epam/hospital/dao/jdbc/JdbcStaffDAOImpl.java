@@ -92,7 +92,7 @@ public class JdbcStaffDAOImpl implements StaffDAO {
                 statement.setInt(5, staff.getId());
                 if (statement.executeUpdate()==0) {
                     staff = null;
-                };
+                }
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

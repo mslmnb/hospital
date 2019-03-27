@@ -77,7 +77,6 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO {
                 if (statement.executeUpdate() == 0) {
                     patientInspection = null;
                 }
-                ;
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

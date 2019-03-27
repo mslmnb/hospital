@@ -96,7 +96,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
                 statement.setInt(4, patientDiagnosis.getId());
                 if (statement.executeUpdate()==0) {
                     patientDiagnosis = null;
-                };
+                }
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

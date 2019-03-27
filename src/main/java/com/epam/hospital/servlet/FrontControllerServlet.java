@@ -16,8 +16,6 @@ import java.io.PrintWriter;
 import java.util.Properties;
 
 import static com.epam.hospital.util.PropertiesUtil.*;
-import static com.epam.hospital.util.PropertiesUtil.getMaxConn;
-import static com.epam.hospital.util.PropertiesUtil.getPassword;
 import static com.epam.hospital.util.ViewPrefixType.getValueByPrefix;
 
 public class FrontControllerServlet extends HttpServlet {

@@ -1,6 +1,5 @@
 package com.epam.hospital.action;
 
-import com.epam.hospital.service.HandbkItemService;
 import com.epam.hospital.service.HandbkItemServiceImpl;
 import com.epam.hospital.service.TranslationService;
 import com.epam.hospital.util.ActionUtil;

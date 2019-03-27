@@ -10,8 +10,7 @@ import java.util.Iterator;
 public class ConnectionPool {
     private static ConnectionPool instance;
     private final String DRIVER_NAME;
-    private ArrayList<Connection> freeConnections
-            = new ArrayList<Connection>();
+    private ArrayList<Connection> freeConnections = new ArrayList<>();
     private String url;
     private String user;
     private String password;
@@ -45,7 +44,7 @@ public class ConnectionPool {
     }
 
     public synchronized Connection getConnection() {
-        Connection con = null;
+        Connection con;
         if (!freeConnections.isEmpty()) {
             con = (Connection) freeConnections.get(freeConnections.size() - 1);
             freeConnections.remove(con);
@@ -53,8 +52,6 @@ public class ConnectionPool {
                 if (con.isClosed()) {
                     con = getConnection();
                 }
-            } catch (SQLException e) {
-                con = getConnection();
             } catch (Exception e) {
                 con = getConnection();
             }
@@ -65,7 +62,7 @@ public class ConnectionPool {
     }
 
     private Connection newConnection() {
-        Connection con = null;
+        Connection con;
         try {
             if (user == null) {
                 con = DriverManager.getConnection(url);
@@ -102,6 +99,7 @@ public class ConnectionPool {
 
     @Override
     protected void finalize() throws Throwable {
+        super.finalize();
         release();
    }
 }

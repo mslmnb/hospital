@@ -87,7 +87,6 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
                 if (statement.executeUpdate() == 0) {
                     handbkItem = null;
                 }
-                ;
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

@@ -1,10 +1,8 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.model.Patient;
-import com.epam.hospital.model.User;
 import com.epam.hospital.util.exception.AppException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface PatientService extends HavingDeleteMethod, HavingGetMethod, HavingSaveMethod {

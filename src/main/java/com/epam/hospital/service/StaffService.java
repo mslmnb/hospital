@@ -1,7 +1,6 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.model.Staff;
-import com.epam.hospital.model.User;
 import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;

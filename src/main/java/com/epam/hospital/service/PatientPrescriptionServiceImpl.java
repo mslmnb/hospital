@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.epam.hospital.util.ValidationUtil.*;
-import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 
 public class PatientPrescriptionServiceImpl implements PatientPrescriptionService {
     public final static String ID_PARAMETER = "id";

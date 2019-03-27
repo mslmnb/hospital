@@ -118,7 +118,6 @@ public class JdbcPatientDAOImpl implements PatientDAO {
                 if (statement.executeUpdate() == 0) {
                     patient = null;
                 }
-                ;
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

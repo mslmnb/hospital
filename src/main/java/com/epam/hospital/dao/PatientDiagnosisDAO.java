@@ -1,7 +1,6 @@
 package com.epam.hospital.dao;
 
 import com.epam.hospital.model.PatientDiagnosis;
-import com.epam.hospital.model.handbk.Diagnosis;
 
 import java.util.List;
 

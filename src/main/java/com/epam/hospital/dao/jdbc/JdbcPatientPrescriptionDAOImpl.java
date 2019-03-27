@@ -98,7 +98,6 @@ public class JdbcPatientPrescriptionDAOImpl implements PatientPrescriptionDAO {
                 if (statement.executeUpdate() == 0) {
                     patientPrescription = null;
                 }
-                ;
             } catch (SQLException e) {
                 logAndThrowForSQLException(e, LOG);
             }

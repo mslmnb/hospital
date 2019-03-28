@@ -154,15 +154,15 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="prescrptn.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="prescrptn.editTitle"/>"
-    i18n["selectPrescrptnType"] = "<fmt:message key="prescrptn.selectPrescrptnType"/>"
-    i18n["emptyApplicationDate"] = "<fmt:message key="error.prescrptn.emptyApplicationDate"/>"
-    i18n["emptyExecutionDate"] = "<fmt:message key="error.prescrptn.emptyExecutionDate"/>"
-    i18n["emptyDescription"] = "<fmt:message key="error.prescrptn.emptyDescription"/>"
-    i18n["emptyTypeId"] = "<fmt:message key="error.prescrptn.emptyTypeId"/>"
-    i18n["emptyResult"] = "<fmt:message key="error.prescrptn.emptyResult"/>"
-    i18n["notFound"] = "<fmt:message key="error.prescrptn.notFound"/>"
-    i18n["execution"] = "<fmt:message key="prescrptn.execution"/>"
+    i18n["addTitle"] = "<fmt:message key="prescrptn.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="prescrptn.editTitle"/>";
+    i18n["selectPrescrptnType"] = "<fmt:message key="prescrptn.selectPrescrptnType"/>";
+    i18n["emptyApplicationDate"] = "<fmt:message key="error.prescrptn.emptyApplicationDate"/>";
+    i18n["emptyExecutionDate"] = "<fmt:message key="error.prescrptn.emptyExecutionDate"/>";
+    i18n["emptyDescription"] = "<fmt:message key="error.prescrptn.emptyDescription"/>";
+    i18n["emptyTypeId"] = "<fmt:message key="error.prescrptn.emptyTypeId"/>";
+    i18n["emptyResult"] = "<fmt:message key="error.prescrptn.emptyResult"/>";
+    i18n["notFound"] = "<fmt:message key="error.prescrptn.notFound"/>";
+    i18n["execution"] = "<fmt:message key="prescrptn.execution"/>";
     i18n["executionEditTitle"] = "<fmt:message key="prescrptn.executionEditTitle"/>"
 </script>

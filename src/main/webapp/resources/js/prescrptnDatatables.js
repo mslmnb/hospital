@@ -80,13 +80,13 @@ $(function () {
         timepicker: false,
         format: 'd-m-Y',
         formatDate: 'd-m-Y'
-    })
+    });
 
     $('#executionDate').datetimepicker({
         timepicker: false,
         format: 'd-m-Y',
         formatDate: 'd-m-Y'
-    })
+    });
 
     if ($('#authorizedUserRole').val() == "ROLE_NURSE") {
         $("#addButton").addClass("disabled");

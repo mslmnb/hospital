@@ -119,13 +119,13 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="diagnosis.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="diagnosis.editTitle"/>"
-    i18n["selectDiagnosisType"] = "<fmt:message key="diagnosis.selectDiagnosisType"/>"
-    i18n["selectDiagnosis"] = "<fmt:message key="diagnosis.selectDiagnosis"/>"
-    i18n["emptyDate"] = "<fmt:message key="error.diagnosis.emptyDate"/>"
-    i18n["emptyDiagnosisTypeId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisTypeId"/>"
-    i18n["emptyDiagnosisId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisId"/>"
-    i18n["emptyPatientId"] = "<fmt:message key="error.diagnosis.emptyPatientId"/>"
+    i18n["addTitle"] = "<fmt:message key="diagnosis.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="diagnosis.editTitle"/>";
+    i18n["selectDiagnosisType"] = "<fmt:message key="diagnosis.selectDiagnosisType"/>";
+    i18n["selectDiagnosis"] = "<fmt:message key="diagnosis.selectDiagnosis"/>";
+    i18n["emptyDate"] = "<fmt:message key="error.diagnosis.emptyDate"/>";
+    i18n["emptyDiagnosisTypeId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisTypeId"/>";
+    i18n["emptyDiagnosisId"] = "<fmt:message key="error.diagnosis.emptyDiagnosisId"/>";
+    i18n["emptyPatientId"] = "<fmt:message key="error.diagnosis.emptyPatientId"/>";
     i18n["notFound"] = "<fmt:message key="error.diagnosis.notFound"/>"
 </script>

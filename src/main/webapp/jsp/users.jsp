@@ -124,19 +124,19 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["selectStaff"] = "<fmt:message key="users.selectStaff"/>"
-    i18n["selectRole"] = "<fmt:message key="users.selectRole"/>"
-    i18n["emptyId"] = "<fmt:message key="error.users.emptyId"/>"
-    i18n["emptyStaffId"] = "<fmt:message key="error.users.emptyStaffId"/>"
-    i18n["emptyLogin"] = "<fmt:message key="error.users.emptyLogin"/>"
-    i18n["emptyRole"] = "<fmt:message key="error.users.emptyRole"/>"
-    i18n["emptyPassword"] = "<fmt:message key="error.users.emptyPassword"/>"
-    i18n["notUniqueLogin"] = "<fmt:message key="error.users.notUniqueLogin"/>"
-    i18n["notUniqueStaffAndRole"] = "<fmt:message key="error.users.notUniqueStaffAndRole"/>"
-    i18n["notFound"] = "<fmt:message key="error.users.notFound"/>"
-    i18n["addTitle"] = "<fmt:message key="users.addTitle"/>"
-    i18n["editPassword"] = "<fmt:message key="users.editPassword"/>"
-    i18n["invalidId"] = "<fmt:message key="error.users.invalidId"/>"
+    i18n["selectStaff"] = "<fmt:message key="users.selectStaff"/>";
+    i18n["selectRole"] = "<fmt:message key="users.selectRole"/>";
+    i18n["emptyId"] = "<fmt:message key="error.users.emptyId"/>";
+    i18n["emptyStaffId"] = "<fmt:message key="error.users.emptyStaffId"/>";
+    i18n["emptyLogin"] = "<fmt:message key="error.users.emptyLogin"/>";
+    i18n["emptyRole"] = "<fmt:message key="error.users.emptyRole"/>";
+    i18n["emptyPassword"] = "<fmt:message key="error.users.emptyPassword"/>";
+    i18n["notUniqueLogin"] = "<fmt:message key="error.users.notUniqueLogin"/>";
+    i18n["notUniqueStaffAndRole"] = "<fmt:message key="error.users.notUniqueStaffAndRole"/>";
+    i18n["notFound"] = "<fmt:message key="error.users.notFound"/>";
+    i18n["addTitle"] = "<fmt:message key="users.addTitle"/>";
+    i18n["editPassword"] = "<fmt:message key="users.editPassword"/>";
+    i18n["invalidId"] = "<fmt:message key="error.users.invalidId"/>";
     i18n["modificationRestriction"] = "<fmt:message key="error.users.modificationRestriction"/>"
 </script>
 

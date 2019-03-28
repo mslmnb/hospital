@@ -6,7 +6,7 @@ import static com.epam.hospital.service.LangServiceImpl.ID_PARAMETER;
 import static com.epam.hospital.service.LangServiceImpl.NAME_PARAMETER;
 
 public class Lang implements HavingJsonView{
-    private String locale;
+    private final String locale;
 
     public Lang(String locale) {
         this.locale = locale;

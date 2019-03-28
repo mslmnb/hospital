@@ -6,7 +6,7 @@ public class AppException extends RuntimeException{
     public static final String NO_DB_CONNECTION_ERROR = "error.common.noDbConnection";
     public static final String UNKNOWN_ERROR = "error.common.unknownError";
 
-    private CheckResult checkResult;
+    private final CheckResult checkResult;
 
     public AppException(CheckResult checkResult) {
         this.checkResult = checkResult;

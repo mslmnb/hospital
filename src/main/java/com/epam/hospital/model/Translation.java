@@ -6,9 +6,9 @@ import org.json.JSONObject;
 import static com.epam.hospital.service.TranslationServiceImpl.*;
 
 public class Translation extends BaseEntity implements HavingJsonView {
-    HandbkItem handbkItem;
-    Lang lang;
-    String itemTranslation;
+    private HandbkItem handbkItem;
+    private Lang lang;
+    private String itemTranslation;
 
     public Translation(Integer id, HandbkItem handbkItem, String locale, String itemTranslation) {
         super(id);

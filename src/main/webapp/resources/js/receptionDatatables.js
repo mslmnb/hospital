@@ -35,7 +35,7 @@ $(function () {
         timepicker: false,
         format: 'd-m-Y',
         formatDate: 'd-m-Y'
-    })
+    });
 
     $('#birthday').datetimepicker({
         timepicker: false,

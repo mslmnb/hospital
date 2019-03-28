@@ -21,7 +21,7 @@ public class HandbkAction extends AbstractAction {
     private static final String URI = "handbk";
     private static final String JSP_FILE_NAME = "/jsp/handbk.jsp";
 
-    private HandbkItemService service;
+    private final HandbkItemService service;
 
     public HandbkAction(HandbkItemService service) {
         super(URI);

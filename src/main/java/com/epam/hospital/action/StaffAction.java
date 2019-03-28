@@ -18,7 +18,7 @@ public class StaffAction extends AbstractAction {
     private static final String URI = "staff";
     private static final String JSP_FILE_NAME = "/jsp/staff.jsp";
 
-    private StaffService service;
+    private final StaffService service;
 
     public StaffAction(StaffService service) {
         super(URI);

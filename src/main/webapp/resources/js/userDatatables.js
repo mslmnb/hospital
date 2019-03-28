@@ -76,7 +76,7 @@ function drawStaffOptions(staffId) {
                 var option = $("<option>");
                 option.val(data[choice].id)
                     .html(data[choice].surname + " " + data[choice].name + " " + data[choice].additionalName)
-                    .appendTo(staffSelect)
+                    .appendTo(staffSelect);
                 if(data[choice].id == staffId) {
                         option.attr("selected", true)
                 }

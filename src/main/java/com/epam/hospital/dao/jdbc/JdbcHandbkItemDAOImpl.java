@@ -110,9 +110,8 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         handbkItem = getHandbk(resultSet);
-                        break;
                     }
                 }
             } catch (SQLException e) {

@@ -16,7 +16,7 @@ public class ReceptionAction extends AbstractAction {
     private static final String URI = "reception";
     private static final String JSP_FILE_NAME = "/jsp/reception.jsp";
 
-    private PatientService service;
+    private final PatientService service;
 
     public ReceptionAction(PatientService service) {
         super(URI);

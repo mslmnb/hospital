@@ -18,7 +18,7 @@ public class UserAction extends AbstractAction {
     private static final String URI = "users";
     private static final String JSP_FILE_NAME = "/jsp/users.jsp";
 
-    private UserService service;
+    private final UserService service;
 
     public UserAction(UserService service) {
         super(URI);

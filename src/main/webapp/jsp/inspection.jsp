@@ -130,10 +130,10 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="inspection.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="inspection.editTitle"/>"
-    i18n["emptyDate"] = "<fmt:message key="error.inspection.emptyDate"/>"
-    i18n["emptyComplaints"] = "<fmt:message key="error.inspection.emptyComplaints"/>"
-    i18n["emptyInspection"] = "<fmt:message key="error.inspection.emptyInspection"/>"
+    i18n["addTitle"] = "<fmt:message key="inspection.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="inspection.editTitle"/>";
+    i18n["emptyDate"] = "<fmt:message key="error.inspection.emptyDate"/>";
+    i18n["emptyComplaints"] = "<fmt:message key="error.inspection.emptyComplaints"/>";
+    i18n["emptyInspection"] = "<fmt:message key="error.inspection.emptyInspection"/>";
     i18n["notFound"] = "<fmt:message key="error.inspection.notFound"/>"
 </script>

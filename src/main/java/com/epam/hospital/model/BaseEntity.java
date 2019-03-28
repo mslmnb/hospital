@@ -3,10 +3,10 @@ package com.epam.hospital.model;
 public class BaseEntity {
     private Integer id;
 
-    protected BaseEntity() {
+    BaseEntity() {
     }
 
-    protected BaseEntity(Integer id) {
+    BaseEntity(Integer id) {
         this.id = id;
     }
 

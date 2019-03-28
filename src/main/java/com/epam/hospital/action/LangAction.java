@@ -17,7 +17,7 @@ public class LangAction extends AbstractAction {
 
     private static final String URI = "lang";
 
-    private LangService service;
+    private final LangService service;
 
     public LangAction(LangService service) {
         super(URI);

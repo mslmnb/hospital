@@ -111,12 +111,12 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="translation.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="translation.editTitle"/>"
-    i18n["selectLocale"] = "<fmt:message key="translation.selectLocale"/>"
-    i18n["emptyTranslation"] = "<fmt:message key="error.translation.emptyTranslation"/>"
-    i18n["emptyLocale"] = "<fmt:message key="error.translation.emptyLocale"/>"
-    i18n["notFound"] = "<fmt:message key="error.translation.notFound"/>"
+    i18n["addTitle"] = "<fmt:message key="translation.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="translation.editTitle"/>";
+    i18n["selectLocale"] = "<fmt:message key="translation.selectLocale"/>";
+    i18n["emptyTranslation"] = "<fmt:message key="error.translation.emptyTranslation"/>";
+    i18n["emptyLocale"] = "<fmt:message key="error.translation.emptyLocale"/>";
+    i18n["notFound"] = "<fmt:message key="error.translation.notFound"/>";
     i18n["notUniqueItemAndLocale"] = "<fmt:message key="error.translation.notUniqueItemAndLocale"/>"
 </script>
 

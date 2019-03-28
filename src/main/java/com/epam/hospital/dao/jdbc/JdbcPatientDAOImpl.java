@@ -177,9 +177,8 @@ public class JdbcPatientDAOImpl implements PatientDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         patient = getPatient(resultSet);
-                        break;
                     }
                 }
             } catch (SQLException e) {

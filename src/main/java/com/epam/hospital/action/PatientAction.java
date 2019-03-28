@@ -19,7 +19,7 @@ public class PatientAction extends AbstractAction {
     private static final String URI = "patients";
     private static final String JSP_FILE_NAME = "/jsp/patients.jsp";
 
-    private PatientService service;
+    private final PatientService service;
 
     public PatientAction(PatientService service) {
         super(URI);

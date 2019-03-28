@@ -32,7 +32,8 @@ public class JdbcStaffDAOImpl implements StaffDAO {
                                                  "s.position_item_id, hit.translation As position " +
                                              "FROM staff AS s, handbk_items AS hi, handbk_item_translations AS hit " +
                                              "WHERE s.position_item_id = hi.id AND " +
-                                                 "hi.id = hit.handbk_item_id AND hit.locale = ?";
+                                                 "hi.id = hit.handbk_item_id AND hit.locale = ? " +
+                                             "ORDER BY s.id";
     private static final String SELECT_BY_ID = "SELECT id, name,  additional_name, surname, position_item_id " +
                                                "FROM staff " +
                                                "WHERE id = ? ";
@@ -115,9 +116,8 @@ public class JdbcStaffDAOImpl implements StaffDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         staff = getStaffWithLazyPosition(resultSet);
-                        break;
                     }
                 }
             } catch (SQLException e) {

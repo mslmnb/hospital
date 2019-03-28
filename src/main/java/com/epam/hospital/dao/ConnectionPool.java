@@ -1,5 +1,7 @@
 package com.epam.hospital.dao;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -8,13 +10,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ConnectionPool {
+    private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private final String DRIVER_NAME;
-    private ArrayList<Connection> freeConnections = new ArrayList<>();
-    private String url;
-    private String user;
-    private String password;
-    private int maxConn;
+    private final ArrayList<Connection> freeConnections = new ArrayList<>();
+    private final String url;
+    private final String user;
+    private final String password;
+    private final int maxConn;
 
     private ConnectionPool(String DRIVER_NAME, String url,
                            String user, String password, int maxConn) {
@@ -31,7 +34,7 @@ public class ConnectionPool {
                     .forName(DRIVER_NAME).newInstance();
             DriverManager.registerDriver(driver);
         } catch (Exception e) {
-            // logger "Can't register JDBC driver "
+            LOG.error("Can't register JDBC driver. " + e.getMessage());
         }
     }
 
@@ -46,7 +49,7 @@ public class ConnectionPool {
     public synchronized Connection getConnection() {
         Connection con;
         if (!freeConnections.isEmpty()) {
-            con = (Connection) freeConnections.get(freeConnections.size() - 1);
+            con = freeConnections.get(freeConnections.size() - 1);
             freeConnections.remove(con);
             try {
                 if (con.isClosed()) {
@@ -77,7 +80,6 @@ public class ConnectionPool {
     }
 
     public synchronized void freeConnection(Connection con) {
-        // Put the connection at the end of the List
         if ((con != null) && (freeConnections.size() <= maxConn)){
             freeConnections.add(con);
         }
@@ -89,9 +91,8 @@ public class ConnectionPool {
             Connection con=(Connection) allConnections.next();
             try {
                 con.close();
-                // "Closed connection for pool „
             } catch (SQLException e) {
-                // "Can't close connection for pool „
+                LOG.error("Can't close connection for pool.");
             }
         }
         freeConnections.clear();

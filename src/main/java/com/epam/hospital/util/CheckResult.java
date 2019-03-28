@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CheckResult {
-    private Set<String> details = new LinkedHashSet<>();
+    private final Set<String> details = new LinkedHashSet<>();
 
     public CheckResult() {
     }

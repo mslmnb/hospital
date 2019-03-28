@@ -19,7 +19,7 @@ public class TranslationAction extends AbstractAction {
     private static final String URI = "translation";
     private static final String JSP_FILE_NAME = "/jsp/translation.jsp";
 
-    private TranslationService service;
+    private final TranslationService service;
 
     public TranslationAction(TranslationService service) {
         super(URI);

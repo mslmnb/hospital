@@ -100,9 +100,8 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         patientInspection = getPatientInspection(resultSet);
-                        break;
                     }
                 }
             } catch (SQLException e) {

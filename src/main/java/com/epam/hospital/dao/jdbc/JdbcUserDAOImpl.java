@@ -116,9 +116,8 @@ public class JdbcUserDAOImpl implements UserDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
                 statement.setInt(1, id);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         user = getUserWithLazyStaff(resultSet);
-                        break;
                     }
                 }
             } catch (SQLException e) {
@@ -139,9 +138,8 @@ public class JdbcUserDAOImpl implements UserDAO {
             try (PreparedStatement statement = con.prepareStatement(SELECT_BY_LOGIN)) {
                 statement.setString(1, login);
                 try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
+                    if (resultSet.next()) {
                         user = getUser(resultSet, login);
-                        break;
                     }
                 }
             } catch (SQLException e) {

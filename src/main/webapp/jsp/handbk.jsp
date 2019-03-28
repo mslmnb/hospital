@@ -99,12 +99,12 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["translation"] = "<fmt:message key="handbk.translation"/>"
-    i18n["addTitle"] = "<fmt:message key="handbk.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="handbk.editTitle"/>"
-    i18n["emptyName"] = "<fmt:message key="error.handbk.emptyName"/>"
-    i18n["impossibleRemovingForStaff"] = "<fmt:message key="error.handbk.impossibleRemovingForStaff"/>"
-    i18n["impossibleRemovingForDiagnosis"] = "<fmt:message key="error.handbk.impossibleRemovingForDiagnosis"/>"
+    i18n["translation"] = "<fmt:message key="handbk.translation"/>";
+    i18n["addTitle"] = "<fmt:message key="handbk.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="handbk.editTitle"/>";
+    i18n["emptyName"] = "<fmt:message key="error.handbk.emptyName"/>";
+    i18n["impossibleRemovingForStaff"] = "<fmt:message key="error.handbk.impossibleRemovingForStaff"/>";
+    i18n["impossibleRemovingForDiagnosis"] = "<fmt:message key="error.handbk.impossibleRemovingForDiagnosis"/>";
     i18n["notFound"] = "<fmt:message key="error.handbk.notFound"/>"
 </script>
 

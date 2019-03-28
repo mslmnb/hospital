@@ -122,13 +122,13 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="staff.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="staff.editTitle"/>"
-    i18n["selectPosition"] = "<fmt:message key="staff.selectPosition"/>"
-    i18n["emptyName"] = "<fmt:message key="error.staff.emptyName"/>"
-    i18n["emptySurname"] = "<fmt:message key="error.staff.emptySurname"/>"
-    i18n["emptyPositionId"] = "<fmt:message key="error.staff.emptyPositionId"/>"
-    i18n["impossibleRemovingForUsers"] = "<fmt:message key="error.staff.impossibleRemovingForUsers"/>"
+    i18n["addTitle"] = "<fmt:message key="staff.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="staff.editTitle"/>";
+    i18n["selectPosition"] = "<fmt:message key="staff.selectPosition"/>";
+    i18n["emptyName"] = "<fmt:message key="error.staff.emptyName"/>";
+    i18n["emptySurname"] = "<fmt:message key="error.staff.emptySurname"/>";
+    i18n["emptyPositionId"] = "<fmt:message key="error.staff.emptyPositionId"/>";
+    i18n["impossibleRemovingForUsers"] = "<fmt:message key="error.staff.impossibleRemovingForUsers"/>";
     i18n["notFound"] = "<fmt:message key="error.staff.notFound"/>"
 </script>
 

@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public abstract class AbstractAction implements Action{
-    private String uri;
+    private final String uri;
 
-    public AbstractAction(String uri) {
+    AbstractAction(String uri) {
         this.uri = uri;
     }
 

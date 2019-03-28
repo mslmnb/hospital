@@ -8,7 +8,7 @@ public enum ViewPrefixType {
     REDIRECT_VIEW_PREFIX("redirect:"),
     FORWARD_VIEW_PREFIX("forward:");
 
-    String prefix;
+    private String prefix;
 
     ViewPrefixType(String prefix) {
         this.prefix = prefix;

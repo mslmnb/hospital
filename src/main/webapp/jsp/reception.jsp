@@ -174,8 +174,8 @@
 
 <jsp:include page="fragments/i18n.jsp"/>
 <script type="text/javascript">
-    i18n["addTitle"] = "<fmt:message key="reception.addTitle"/>"
-    i18n["editTitle"] = "<fmt:message key="reception.editTitle"/>"
+    i18n["addTitle"] = "<fmt:message key="reception.addTitle"/>";
+    i18n["editTitle"] = "<fmt:message key="reception.editTitle"/>";
     i18n["invalidEmail"] = "<fmt:message key="error.reception.invalidEmail"/>";
     i18n["invalidPhone"] = "<fmt:message key="error.reception.invalidPhone"/>";
     i18n["emptyName"] = "<fmt:message key="error.reception.emptyName"/>";
@@ -185,8 +185,8 @@
     i18n["emptyAdmissionDate"] = "<fmt:message key="error.reception.emptyAdmissionDate"/>";
     i18n["invalidAdmissionDate"] = "<fmt:message key="error.reception.invalidAdmissionDate"/>";
     i18n["notFound"] = "<fmt:message key="error.reception.notFound"/>";
-    i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnosises"/>"
-    i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.reception.impossibleRemovingForInspections"/>"
+    i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnosises"/>";
+    i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.reception.impossibleRemovingForInspections"/>";
     i18n["impossibleRemovingForPrescriptions"] = "<fmt:message key="error.reception.impossibleRemovingForPrescriptions"/>"
 
 </script>

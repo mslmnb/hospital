@@ -95,7 +95,7 @@ function failNoty(jqXHR) {
     var errorInfo = $.parseJSON(jqXHR.responseText);
     var keys = errorInfo.details.map(function (detail) {
         return i18n[detail]
-    })
+    });
     failedNote = noty({
         text: keys.join("<br>"),
         type: 'error',
@@ -156,7 +156,7 @@ function drawOptions(selectElementName, url, defaultOption, selectedOptionId) {
                 var optionElement = $("<option>");
                 optionElement.val(data[choice].id)
                     .html(data[choice].name)
-                    .appendTo(selectElement)
+                    .appendTo(selectElement);
                 if(data[choice].id == selectedOptionId) {
                     optionElement.attr("selected", true)
                 }

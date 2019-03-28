@@ -112,7 +112,7 @@ public class ValidationUtil {
     }
 
     public static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws AppException {
-        LocalDate result = null;
+        LocalDate result;
         checkNotEmpty(dateAsString, fieldName);
         try {
             result = LocalDate.parse(dateAsString, FORMATTER);
@@ -137,7 +137,7 @@ public class ValidationUtil {
     }
 
     public static Integer checkAndReturnInt(String intAsString, String fieldName) throws AppException {
-        Integer result = null;
+        Integer result;
         checkNotEmpty(intAsString, fieldName);
         try {
             result = Integer.parseInt(intAsString);

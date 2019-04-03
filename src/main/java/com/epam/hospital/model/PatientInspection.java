@@ -9,10 +9,10 @@ import static com.epam.hospital.service.PatientInspectionServiceImpl.*;
 
 public class PatientInspection extends BaseEntity implements HavingJsonView {
 
-    private Patient patient;
-    private LocalDate date;
-    private String inspection;
-    private String complaints;
+    private final Patient patient;
+    private final LocalDate date;
+    private final String inspection;
+    private final String complaints;
 
     public PatientInspection(Integer id, Patient patient, LocalDate date, String inspection, String complaints) {
         super(id);

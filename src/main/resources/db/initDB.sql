@@ -14,15 +14,15 @@ ALTER DATABASE hospital OWNER TO "user";
 
 CREATE TABLE lang
 (
-  locale           VARCHAR PRIMARY KEY
+  locale   VARCHAR(2) PRIMARY KEY
 );
 
 CREATE SEQUENCE handbk_items_seq ;
 CREATE TABLE handbk_items
 (
   id       INTEGER PRIMARY KEY DEFAULT nextval('handbk_items_seq'),
-  name     VARCHAR NOT NULL,
-  type     VARCHAR NOT NULL
+  name     VARCHAR(100) NOT NULL,
+  type     VARCHAR(14) NOT NULL
 );
 
 CREATE SEQUENCE handbk_item_translations_seq ;
@@ -30,8 +30,8 @@ CREATE TABLE handbk_item_translations
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('handbk_item_translations_seq'),
   handbk_item_id  INTEGER NOT NULL,
-  locale          VARCHAR NOT NULL,
-  translation     VARCHAR NOT NULL,
+  locale          VARCHAR(2) NOT NULL,
+  translation     VARCHAR(100) NOT NULL,
   CONSTRAINT translate_unique_item_locale_idx UNIQUE (handbk_item_id, locale),
   FOREIGN KEY (handbk_item_id) REFERENCES handbk_items (id) ON DELETE CASCADE,
   FOREIGN KEY (locale) REFERENCES lang (locale) ON DELETE RESTRICT
@@ -41,9 +41,9 @@ CREATE SEQUENCE staff_seq;
 CREATE TABLE staff
 (
   id INTEGER PRIMARY KEY DEFAULT nextval('staff_seq'),
-  name                 VARCHAR NOT NULL,
-  additional_name      VARCHAR,
-  surname              VARCHAR NOT NULL,
+  name                 VARCHAR(50) NOT NULL,
+  additional_name      VARCHAR(50),
+  surname              VARCHAR(50) NOT NULL,
   position_item_id     INTEGER NOT NULL,
   FOREIGN KEY (position_item_id) REFERENCES handbk_items (id) ON DELETE RESTRICT
 );
@@ -53,9 +53,9 @@ CREATE TABLE users
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('users_seq'),
   staff_id        INTEGER NOT NULL,
-  login           VARCHAR NOT NULL,
-  password        VARCHAR NOT NULL,
-  role            VARCHAR,
+  login           VARCHAR(30) NOT NULL,
+  password        VARCHAR(50) NOT NULL,
+  role            VARCHAR(20),
   CONSTRAINT users_unique_login_idx UNIQUE (login),
   CONSTRAINT users_unique_staff_role_idx UNIQUE (staff_id, role),
   FOREIGN KEY (staff_id) REFERENCES staff (id) ON DELETE RESTRICT
@@ -65,12 +65,12 @@ CREATE SEQUENCE patient_seq;
 CREATE TABLE patient_register
 (
   id                            INTEGER PRIMARY KEY DEFAULT nextval('patient_seq'),
-  name                          VARCHAR NOT NULL,
-  additional_name               VARCHAR,
-  surname                       VARCHAR NOT NULL,
+  name                          VARCHAR(50) NOT NULL,
+  additional_name               VARCHAR(50),
+  surname                       VARCHAR(50) NOT NULL,
   birthday                      DATE NOT NULL,
-  phone                         VARCHAR NOT NULL,
-  email                         VARCHAR,
+  phone                         VARCHAR(20) NOT NULL,
+  email                         VARCHAR(50),
   admission_date                DATE NOT NULL DEFAULT now(),
   discharge_date                DATE,
   primary_inspection            TEXT,

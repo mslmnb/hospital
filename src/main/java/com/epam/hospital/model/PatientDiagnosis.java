@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import static com.epam.hospital.service.PatientDiagnosisServiceImpl.*;
 
 public class PatientDiagnosis extends BaseEntity implements HavingJsonView{
-    private Patient patient;
-    private LocalDate date;
-    private DiagnosisType diagnosisType;
-    private Diagnosis diagnosis;
+    private final Patient patient;
+    private final LocalDate date;
+    private final DiagnosisType diagnosisType;
+    private final Diagnosis diagnosis;
 
     public PatientDiagnosis(Integer id, Patient patient, LocalDate date, DiagnosisType diagnosisType, Diagnosis diagnosis) {
         super(id);

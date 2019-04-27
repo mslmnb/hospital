@@ -13,14 +13,14 @@ import java.util.List;
 import static com.epam.hospital.util.ValidationUtil.*;
 
 public class PatientPrescriptionServiceImpl implements PatientPrescriptionService {
-    public final static String ID_PARAMETER = "id";
-    public final static String PATIENT_ID_PARAMETER = "patientId";
-    public final static String APPLICATION_DATE_PARAMETER = "applicationDate";
-    public final static String TYPE_ID_PARAMETER = "typeId";
-    public final static String TYPE_PARAMETER = "type";
-    public final static String DESCRIPTION_PARAMETER = "description";
-    public final static String EXECUTON_DATE_PARAMETER = "executionDate";
-    public final static String RESULT_PARAMETER = "result";
+    public static final String ID_PARAMETER = "id";
+    public static final String PATIENT_ID_PARAMETER = "patientId";
+    public static final String APPLICATION_DATE_PARAMETER = "applicationDate";
+    public static final String TYPE_ID_PARAMETER = "typeId";
+    public static final String TYPE_PARAMETER = "type";
+    public static final String DESCRIPTION_PARAMETER = "description";
+    public static final String EXECUTON_DATE_PARAMETER = "executionDate";
+    public static final String RESULT_PARAMETER = "result";
 
     private final PatientPrescriptionDAO dao;
 

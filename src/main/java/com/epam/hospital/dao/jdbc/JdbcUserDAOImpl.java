@@ -1,5 +1,6 @@
 package com.epam.hospital.dao.jdbc;
 
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.model.Role;
 import com.epam.hospital.model.Staff;
 import com.epam.hospital.model.User;
@@ -12,10 +13,9 @@ import java.util.*;
 
 import static com.epam.hospital.util.DaoUtil.*;
 
-public class JdbcUserDAOImpl implements UserDAO {
+public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntityWithLazyInitialization<User> {
     private static final Logger LOG = Logger.getLogger(JdbcUserDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String STAFF_ID_FIELDNAME = "staff_id";
     private static final String NAME_FIELDNAME = "name";
     private static final String ADDITIONAL_NAME_FIELDNAME = "additional_name";
@@ -31,7 +31,7 @@ public class JdbcUserDAOImpl implements UserDAO {
     private static final Map<String, String> errorResolver;
 
     private static final String SELECT_BY_LOGIN = "SELECT users.id, users.staff_id, users.password, users.role, " +
-                                                      "staff.name, staff.additional_name, staff.surname " +
+                                                      "users.login, staff.name, staff.additional_name, staff.surname " +
                                                   "FROM users " +
                                                   "LEFT JOIN staff ON users.staff_id = staff.id " +
                                                    "WHERE users.login = ? ";
@@ -61,46 +61,12 @@ public class JdbcUserDAOImpl implements UserDAO {
 
     @Override
     public User create(User user) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setInt(1, user.getStaffId());
-                statement.setString(2, user.getLogin());
-                statement.setString(3, user.getPassword());
-                statement.setString(4, user.getRole().toString());
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    user.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(errorResolver, e, LOG);                  }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return user;
+        return create(pool, LOG, INSERT_INTO, user, errorResolver);
     }
 
     @Override
     public User updatePassword(User user) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE_PASSWORD)) {
-                statement.setString(1, user.getPassword());
-                statement.setInt(2, user.getId());
-                if (statement.executeUpdate() == 0) {
-                    user = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return user;
+        return update(pool, LOG, UPDATE_PASSWORD, user);
     }
 
     @Override
@@ -110,24 +76,7 @@ public class JdbcUserDAOImpl implements UserDAO {
 
     @Override
     public User get(int id) {
-        Connection con = pool.getConnection();
-        User user = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        user = getUserWithLazyStaff(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return user;
+        return getWithLazyInitialization(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
@@ -139,7 +88,7 @@ public class JdbcUserDAOImpl implements UserDAO {
                 statement.setString(1, login);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        user = getUser(resultSet, login);
+                        user = getObject(resultSet);
                     }
                 }
             } catch (SQLException e) {
@@ -154,46 +103,44 @@ public class JdbcUserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAll() {
-        Connection con = pool.getConnection();
-        List<User> results = new ArrayList<>();
-        if (con != null) {
-            try (Statement statement = con.createStatement();
-                 ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
-                while (resultSet.next()) {
-                    results.add(getUser(resultSet, null));
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        return getAll(pool, SELECT_ALL, LOG);
     }
 
-    private User getUser(ResultSet resultSet, String login) throws SQLException {
+    @Override
+    public User getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
-        int staff_id = resultSet.getInt(STAFF_ID_FIELDNAME);
+        int staffId = resultSet.getInt(STAFF_ID_FIELDNAME);
         String password = resultSet.getString(PASSWORD_FIELDNAME);
         String name = resultSet.getString(NAME_FIELDNAME);
-        String additional_name = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
+        String additionalName = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
         String surname = resultSet.getString(SURNAME_FIELDNAME);
+        String login = resultSet.getString(LOGIN_FIELDNAME);
         Role role = Role.valueOf(resultSet.getString(ROLE_FIELDNAME));
-        Staff staff = new Staff(staff_id, name, additional_name, surname);
-        if (login == null) {
-            login = resultSet.getString(LOGIN_FIELDNAME);
-        }
+        Staff staff = new Staff(staffId, name, additionalName, surname);
         return new User(id, staff, login, password, role);
     }
 
-    private User getUserWithLazyStaff(ResultSet resultSet) throws SQLException {
+    @Override
+    public User getLazyObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
-        int staff_id = resultSet.getInt(STAFF_ID_FIELDNAME);
+        int staffId = resultSet.getInt(STAFF_ID_FIELDNAME);
         Role role = Role.valueOf(resultSet.getString(ROLE_FIELDNAME));
-        Staff staff = new Staff(staff_id, null, null, null);
+        Staff staff = new Staff(staffId, null, null, null);
         String login = resultSet.getString(LOGIN_FIELDNAME);
         return new User(id, staff, login, null, role);
     }
 
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement, User user) throws SQLException {
+        statement.setInt(1, user.getStaffId());
+        statement.setString(2, user.getLogin());
+        statement.setString(3, user.getPassword());
+        statement.setString(4, user.getRole().toString());
+    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement, User user) throws SQLException {
+        statement.setString(1, user.getPassword());
+        statement.setInt(2, user.getId());
+    }
 }

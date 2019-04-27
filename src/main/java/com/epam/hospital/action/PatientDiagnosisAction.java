@@ -12,6 +12,11 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the information about patient's diagnosises
+ * for medical office
+ */
+
 public class PatientDiagnosisAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientDiagnosisAction.class);
 
@@ -25,6 +30,10 @@ public class PatientDiagnosisAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about patient's diagnosises
+     * for medical office
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

@@ -11,6 +11,11 @@ import static com.epam.hospital.service.PatientPrescriptionServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 
+/**
+ * The class of actions for work with the information about patient's prescriptions
+ * for medical office
+ */
+
 public class PatientPrescriptionAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientPrescriptionAction.class);
 
@@ -24,6 +29,10 @@ public class PatientPrescriptionAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about patient's prescriptions
+     * for medical office
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

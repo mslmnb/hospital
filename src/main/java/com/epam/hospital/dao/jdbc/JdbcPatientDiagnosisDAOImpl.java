@@ -1,5 +1,6 @@
 package com.epam.hospital.dao.jdbc;
 
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDiagnosisDAO;
 import com.epam.hospital.model.Patient;
@@ -10,17 +11,12 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.hospital.util.DaoUtil.deleteFromTable;
-import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
-import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
-
-public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
+public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
+                                             CommonDaoOperationsForBaseEntityWithLazyInitialization<PatientDiagnosis> {
     private static final Logger LOG = Logger.getLogger(JdbcPatientDiagnosisDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String PATIENT_ID_FIELDNAME = "patient_id";
     private static final String DATE_FIELDNAME = "date";
     private static final String DIAGNOSIS_ITEM_ID_FIELDNAME = "diagnosis_item_id";
@@ -62,48 +58,12 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
 
     @Override
     public PatientDiagnosis create(PatientDiagnosis patientDiagnosis) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setInt(1, patientDiagnosis.getPatient().getId());
-                statement.setDate(2, Date.valueOf(patientDiagnosis.getDate()));
-                statement.setInt(3, patientDiagnosis.getDiagnosis().getId());
-                statement.setInt(4, patientDiagnosis.getDiagnosisType().getId());
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    patientDiagnosis.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return patientDiagnosis;
+        return create(pool, LOG, INSERT_INTO, patientDiagnosis);
     }
 
     @Override
     public PatientDiagnosis update(PatientDiagnosis patientDiagnosis) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setDate(1, Date.valueOf(patientDiagnosis.getDate()));
-                statement.setInt(2, patientDiagnosis.getDiagnosis().getId());
-                statement.setInt(3, patientDiagnosis.getDiagnosisType().getId());
-                statement.setInt(4, patientDiagnosis.getId());
-                if (statement.executeUpdate()==0) {
-                    patientDiagnosis = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);        }
-        return patientDiagnosis;
+        return update(pool, LOG, UPDATE, patientDiagnosis);
     }
 
     @Override
@@ -113,63 +73,18 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
 
     @Override
     public PatientDiagnosis get(int id) {
-        Connection con = pool.getConnection();
-        PatientDiagnosis patientDiagnosis = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        patientDiagnosis = getPatientDiagnssWithLazyDiagnssAndDiagnssType(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return patientDiagnosis;
+        return getWithLazyInitialization(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
     public List<PatientDiagnosis> getAll(int patientId, String locale) {
-        Connection con = pool.getConnection();
-        List<PatientDiagnosis> results = new ArrayList<>();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
-                statement.setString(1, locale);
-                statement.setString(2, locale);
-                statement.setInt(3, patientId);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        results.add(getPatientDiagnosis(resultSet));
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        String[] strArgs = {locale, locale};
+        Integer[] intArgs = {patientId};
+        return getAll(pool, SELECT_ALL, LOG, strArgs, intArgs);
     }
 
-    private PatientDiagnosis getPatientDiagnssWithLazyDiagnssAndDiagnssType(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt(ID_FIELDNAME);
-        int patientId = resultSet.getInt(PATIENT_ID_FIELDNAME);
-        LocalDate date = new Date(resultSet.getDate(DATE_FIELDNAME).getTime()).toLocalDate();
-        Integer diagnosisTypeId = resultSet.getInt(DIAGNOSIS_TYPE_ITEM_ID_FIELDNAME);
-        DiagnosisType diagnosisType = new DiagnosisType(diagnosisTypeId);
-        Integer diagnosisId = resultSet.getInt(DIAGNOSIS_ITEM_ID_FIELDNAME);
-        Diagnosis diagnosis = new Diagnosis(diagnosisId);
-
-        return new PatientDiagnosis(id, new Patient(patientId), date, diagnosisType, diagnosis);
-    }
-
-    private PatientDiagnosis getPatientDiagnosis(ResultSet resultSet) throws SQLException {
+    @Override
+    public PatientDiagnosis getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         int patientId = resultSet.getInt(PATIENT_ID_FIELDNAME);
         LocalDate date = new Date(resultSet.getDate(DATE_FIELDNAME).getTime()).toLocalDate();
@@ -183,4 +98,34 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO {
         return new PatientDiagnosis(id, new Patient(patientId), date, diagnosisType, diagnosis);
     }
 
+    @Override
+    public PatientDiagnosis getLazyObject(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt(ID_FIELDNAME);
+        int patientId = resultSet.getInt(PATIENT_ID_FIELDNAME);
+        LocalDate date = new Date(resultSet.getDate(DATE_FIELDNAME).getTime()).toLocalDate();
+        Integer diagnosisTypeId = resultSet.getInt(DIAGNOSIS_TYPE_ITEM_ID_FIELDNAME);
+        DiagnosisType diagnosisType = new DiagnosisType(diagnosisTypeId);
+        Integer diagnosisId = resultSet.getInt(DIAGNOSIS_ITEM_ID_FIELDNAME);
+        Diagnosis diagnosis = new Diagnosis(diagnosisId);
+
+        return new PatientDiagnosis(id, new Patient(patientId), date, diagnosisType, diagnosis);
+    }
+
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement,
+                                               PatientDiagnosis patientDiagnosis) throws SQLException {
+        statement.setInt(1, patientDiagnosis.getPatient().getId());
+        statement.setDate(2, Date.valueOf(patientDiagnosis.getDate()));
+        statement.setInt(3, patientDiagnosis.getDiagnosis().getId());
+        statement.setInt(4, patientDiagnosis.getDiagnosisType().getId());
+    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement,
+                                               PatientDiagnosis patientDiagnosis) throws SQLException {
+        statement.setDate(1, Date.valueOf(patientDiagnosis.getDate()));
+        statement.setInt(2, patientDiagnosis.getDiagnosis().getId());
+        statement.setInt(3, patientDiagnosis.getDiagnosisType().getId());
+        statement.setInt(4, patientDiagnosis.getId());
+    }
 }

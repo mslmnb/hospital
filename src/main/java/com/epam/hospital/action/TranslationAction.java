@@ -13,6 +13,10 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the translation of handbook information
+ */
+
 public class TranslationAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(HandbkAction.class);
 
@@ -26,6 +30,9 @@ public class TranslationAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the translation of handbook information
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

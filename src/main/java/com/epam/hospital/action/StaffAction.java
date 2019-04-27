@@ -12,6 +12,10 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the information about the staff
+ */
+
 public class StaffAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(StaffAction.class);
 
@@ -25,6 +29,9 @@ public class StaffAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about the staff
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;
@@ -41,12 +48,12 @@ public class StaffAction extends AbstractAction {
             case SAVE:
                 String idAsString = request.getParameter(ID_PARAMETER);
                 String name = request.getParameter(NAME_PARAMETER);
-                String additionalNAme = request.getParameter(ADDITIONAL_NAME_PARAMETER);
+                String additionalName = request.getParameter(ADDITIONAL_NAME_PARAMETER);
                 String surname = request.getParameter(SURNAME_PARAMETER);
                 String positionIdAsString = request.getParameter(POSITION_ID_PARAMETER);
                 result = JSON_VIEW_PREFIX.getPrefix() +
                          getJsonViewForSaveDirection(response, service, idAsString, name,
-                                                     additionalNAme, surname, positionIdAsString);
+                                                     additionalName, surname, positionIdAsString);
                 break;
             case GET:
                 result = JSON_VIEW_PREFIX.getPrefix() +

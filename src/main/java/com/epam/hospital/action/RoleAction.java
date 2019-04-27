@@ -14,6 +14,10 @@ import static com.epam.hospital.util.ActionUtil.getJsonString;
 import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the information about the roles of the system
+ */
+
 public class RoleAction extends AbstractAction{
     private static final Logger LOG = Logger.getLogger(RoleAction.class);
 
@@ -23,6 +27,9 @@ public class RoleAction extends AbstractAction{
         super(URI);
     }
 
+    /**
+     * Describes actions for work with the information about the roles of the system
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

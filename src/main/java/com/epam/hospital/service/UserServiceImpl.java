@@ -16,20 +16,21 @@ import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class UserServiceImpl implements UserService {
-    public final static String ID_PARAMETER = "id";
-    public final static String NAME_PARAMETER = "name";
-    public final static String STAFF_ID_PARAMETER = "staffId";
-    public final static String STAFF_NAME_PARAMETER = "staffName";
-    public final static String LOGIN_PARAMETER = "login";
-    public final static String ROLE_PARAMETER = "role";
-    public final static String PASSWORD_PARAMETER = "password";
-    private final static Integer ADMIN_ID = 100000;
-    private final static Integer DOCTOR_ID = 100001;
-    private final static Integer NURSE_ID = 100004;
+    public static final String ID_PARAMETER = "id";
+    public static final String NAME_PARAMETER = "name";
+    public static final String STAFF_ID_PARAMETER = "staffId";
+    public static final String STAFF_NAME_PARAMETER = "staffName";
+    public static final String LOGIN_PARAMETER = "login";
+    public static final String ROLE_PARAMETER = "role";
+    public static final String PASSWORD_PARAMETER = "password";
+
+    private static final Integer ADMIN_ID = 100000;
+    private static final Integer DOCTOR_ID = 100001;
+    private static final Integer NURSE_ID = 100004;
+    private static final String MODIFICATION_RESTRICTION = "modificationRestriction";
+    private static final List<Integer> MODIFICATION_RESTRICTIONS = Arrays.asList(ADMIN_ID, DOCTOR_ID, NURSE_ID);
 
     private final UserDAO dao;
-    private static final String MODIFICATION_RESTRICTION = "modificationRestriction";
-    private static final List<Integer> modificationRestriction = Arrays.asList(ADMIN_ID, DOCTOR_ID, NURSE_ID);
 
     public UserServiceImpl(UserDAO dao) {
         this.dao = dao;
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkModificationRestriction(int id) throws AppException {
-        if (modificationRestriction.contains(id)) {
+        if (MODIFICATION_RESTRICTIONS.contains(id)) {
             throw new AppException(new CheckResult(MODIFICATION_RESTRICTION));
         }
     }

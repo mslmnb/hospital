@@ -1,5 +1,6 @@
 package com.epam.hospital.dao.jdbc;
 
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.StaffDAO;
 import com.epam.hospital.model.Staff;
@@ -7,17 +8,13 @@ import com.epam.hospital.model.handbk.Position;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.hospital.util.DaoUtil.*;
-
-public class JdbcStaffDAOImpl implements StaffDAO {
+public class JdbcStaffDAOImpl implements StaffDAO, CommonDaoOperationsForBaseEntityWithLazyInitialization<Staff> {
     private static final Logger LOG = Logger.getLogger(JdbcStaffDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String NAME_FIELDNAME = "name";
     private static final String ADDITIONAL_NAME_FIELDNAME = "additional_name";
     private static final String SURNAME_FIELDNAME = "surname";
@@ -58,49 +55,12 @@ public class JdbcStaffDAOImpl implements StaffDAO {
 
     @Override
     public Staff create(Staff staff) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setString(1, staff.getName());
-                statement.setString(2, staff.getAdditionalName());
-                statement.setString(3, staff.getSurname());
-                statement.setInt(4, staff.getPosition().getId());
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    staff.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return staff;
+        return create(pool, LOG, INSERT_INTO, staff);
     }
 
     @Override
     public Staff update(Staff staff) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setString(1, staff.getName());
-                statement.setString(2, staff.getAdditionalName());
-                statement.setString(3, staff.getSurname());
-                statement.setInt(4, staff.getPosition().getId());
-                statement.setInt(5, staff.getId());
-                if (statement.executeUpdate()==0) {
-                    staff = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);        }
-        return staff;
+        return update(pool, LOG, UPDATE, staff);
     }
 
     @Override
@@ -110,69 +70,55 @@ public class JdbcStaffDAOImpl implements StaffDAO {
 
     @Override
     public Staff get(int id) {
-        Connection con = pool.getConnection();
-        Staff staff = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        staff = getStaffWithLazyPosition(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return staff;
+        return getWithLazyInitialization(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
     public List<Staff> getAll(String locale) {
-        Connection con = pool.getConnection();
-        List<Staff> results = new ArrayList<>();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
-                statement.setString(1, locale);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        results.add(getStaff(resultSet));
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        String[] strArgs = {locale};
+        return getAll(pool, SELECT_ALL, LOG, strArgs);
     }
 
-    private Staff getStaff(ResultSet resultSet) throws SQLException {
+    @Override
+    public Staff getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         String name = resultSet.getString(NAME_FIELDNAME);
-        String additional_name = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
+        String additionalName = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
         String surname = resultSet.getString(SURNAME_FIELDNAME);
         Integer positionId = resultSet.getInt(POSITION_ITEM_ID_FIELDNAME);
         String positionName = resultSet.getString(POSITION_FIELDNAME);
         Position position = new Position(positionId, positionName);
-        return new Staff(id, name, additional_name, surname, position);
+        return new Staff(id, name, additionalName, surname, position);
     }
 
-    private Staff getStaffWithLazyPosition(ResultSet resultSet) throws SQLException {
+    @Override
+    public Staff getLazyObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         String name = resultSet.getString(NAME_FIELDNAME);
-        String additional_name = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
+        String additionalName = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
         String surname = resultSet.getString(SURNAME_FIELDNAME);
         Integer positionId = resultSet.getInt(POSITION_ITEM_ID_FIELDNAME);
         Position position = new Position(positionId);
-        return new Staff(id, name, additional_name, surname, position);
+        return new Staff(id, name, additionalName, surname, position);
     }
 
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement, Staff staff) throws SQLException {
+        setCommonParameters(statement, staff);
+    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement, Staff staff) throws SQLException {
+        setCommonParameters(statement, staff);
+        statement.setInt(5, staff.getId());
+    }
+
+    private void setCommonParameters(PreparedStatement statement, Staff staff) throws SQLException {
+        statement.setString(1, staff.getName());
+        statement.setString(2, staff.getAdditionalName());
+        statement.setString(3, staff.getSurname());
+        statement.setInt(4, staff.getPosition().getId());
+    }
 
 }
 

@@ -10,6 +10,11 @@ import static com.epam.hospital.service.PatientInspectionServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 
+/**
+ * The class of actions for work with the information about patient's inspections
+ * for medical office
+ */
+
 public class PatientInspectionAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(PatientInspectionAction.class);
 
@@ -23,6 +28,10 @@ public class PatientInspectionAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about patient's inspections
+     * for medical office
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

@@ -1,5 +1,6 @@
 package com.epam.hospital.dao.jdbc;
 
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.model.Patient;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDAO;
@@ -8,19 +9,16 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.hospital.util.DaoUtil.deleteFromTable;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
 
-public class JdbcPatientDAOImpl implements PatientDAO {
+public class JdbcPatientDAOImpl implements PatientDAO, CommonDaoOperationsForBaseEntity<Patient> {
     private static final Logger LOG = Logger.getLogger(JdbcPatientDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String NAME_FIELDNAME = "name";
     private static final String ADDITIONAL_NAME_FIELDNAME = "additional_name";
     private static final String SURNAME_FIELDNAME = "surname";
@@ -76,56 +74,12 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     @Override
     public Patient create(Patient patient) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setString(1, patient.getName());
-                statement.setString(2, patient.getAdditionalName());
-                statement.setString(3, patient.getSurname());
-                statement.setDate(4, Date.valueOf(patient.getBirthday()));
-                statement.setString(5, patient.getPhone());
-                statement.setString(6, patient.getEmail());
-                statement.setDate(7, Date.valueOf(patient.getAdmissionDate()));
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    patient.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return patient;
+        return create(pool, LOG, INSERT_INTO, patient);
     }
 
     @Override
     public Patient update(Patient patient) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setString(1, patient.getName());
-                statement.setString(2, patient.getAdditionalName());
-                statement.setString(3, patient.getSurname());
-                statement.setDate(4, Date.valueOf(patient.getBirthday()));
-                statement.setString(5, patient.getPhone());
-                statement.setString(6, patient.getEmail());
-                statement.setDate(7, Date.valueOf(patient.getAdmissionDate()));
-                statement.setInt(8, patient.getId());
-                if (statement.executeUpdate() == 0) {
-                    patient = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return patient;
+        return update(pool, LOG, UPDATE, patient);
     }
 
     @Override
@@ -171,47 +125,16 @@ public class JdbcPatientDAOImpl implements PatientDAO {
 
     @Override
     public Patient get(int id) {
-        Connection con = pool.getConnection();
-        Patient patient = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        patient = getPatient(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return patient;
+        return get(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
     public List<Patient> getAll() {
-        Connection con = pool.getConnection();
-        List<Patient> results = new ArrayList<>();
-        if (con != null) {
-            try (Statement statement = con.createStatement();
-                 ResultSet resultSet = statement.executeQuery(SELECT_ALL)) {
-                while (resultSet.next()) {
-                    results.add(getPatient(resultSet));
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        return getAll(pool, SELECT_ALL, LOG);
     }
 
-    private Patient getPatientWithLazyFinalDiagnosis(ResultSet resultSet) throws SQLException {
+    @Override
+    public Patient getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         String name = resultSet.getString(NAME_FIELDNAME);
         String additionalName = resultSet.getString(ADDITIONAL_NAME_FIELDNAME);
@@ -222,27 +145,42 @@ public class JdbcPatientDAOImpl implements PatientDAO {
         LocalDate admissionDate = new Date(resultSet.getDate(ADMISSION_DATE_FIELDNAME).getTime()).toLocalDate();
         Date dischargeDateAsSqlDate = resultSet.getDate(DISCHARGE_DATE_FIELDNAME);
         LocalDate dischargeDate = (dischargeDateAsSqlDate == null)
-                                  ? null
-                                  : new Date(dischargeDateAsSqlDate.getTime()).toLocalDate();
-        return new Patient(id, name, additionalName, surname, birthDay, phone, email, admissionDate, dischargeDate);
-    }
-
-    private Patient getPatient(ResultSet resultSet) throws SQLException {
-        Patient patient = getPatientWithLazyFinalDiagnosis(resultSet);
+                ? null
+                : new Date(dischargeDateAsSqlDate.getTime()).toLocalDate();
+        Patient patient = new Patient(id, name, additionalName, surname, birthDay,
+                                      phone, email, admissionDate, dischargeDate);
         Integer finalDiagnosisId = resultSet.getInt(FINAL_DIAGNOSIS_ID_FIELDNAME);
         Diagnosis finalDiagnosis = (finalDiagnosisId == 0) ? null : new Diagnosis(finalDiagnosisId);
         Integer primaryDiagnosisId = resultSet.getInt(PRIMARY_DIAGNOSIS_ID_FIELDNAME);
         Diagnosis primaryDiagnosis = (primaryDiagnosisId == 0) ? null : new Diagnosis(primaryDiagnosisId);
         String primaryInspection = resultSet.getString(PRIMARY_INSPECTION_FIELDNAME);
         String primaryComplaints = resultSet.getString(PRIMARY_COMPLAINTS_FIELDNAME);
-        Date date = resultSet.getDate(DISCHARGE_DATE_FIELDNAME);
-        LocalDate dischargeDate = (date == null) ? null : new Date(date.getTime()).toLocalDate();
         patient.setFinalDiagnosis(finalDiagnosis);
         patient.setPrimaryDiagnosis(primaryDiagnosis);
         patient.setPrimaryComplaints(primaryComplaints);
         patient.setPrimaryInspection(primaryInspection);
-        patient.setDischargeDate(dischargeDate);
         return patient;
     }
 
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement, Patient patient) throws SQLException {
+        setCommonParameters(statement, patient);
+    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement, Patient patient) throws SQLException {
+        setCommonParameters(statement, patient);
+        statement.setInt(8, patient.getId());
+    }
+
+    private void setCommonParameters(PreparedStatement statement, Patient patient) throws SQLException {
+        statement.setString(1, patient.getName());
+        statement.setString(2, patient.getAdditionalName());
+        statement.setString(3, patient.getSurname());
+        statement.setDate(4, Date.valueOf(patient.getBirthday()));
+        statement.setString(5, patient.getPhone());
+        statement.setString(6, patient.getEmail());
+        statement.setDate(7, Date.valueOf(patient.getAdmissionDate()));
+    }
 }
+

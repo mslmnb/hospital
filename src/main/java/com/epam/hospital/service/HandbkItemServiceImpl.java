@@ -13,9 +13,9 @@ import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
 public class HandbkItemServiceImpl implements HandbkItemService {
-    public final static String ID_PARAMETER = "id";
-    public final static String NAME_PARAMETER = "name";
-    public final static String TYPE_PARAMETER = "type";
+    public static final String ID_PARAMETER = "id";
+    public static final String NAME_PARAMETER = "name";
+    public static final String TYPE_PARAMETER = "type";
 
     private final HandbkItemDAO dao;
 

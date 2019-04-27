@@ -2,24 +2,19 @@ package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.HandbkItemDAO;
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.model.handbk.HandbkItem;
 import com.epam.hospital.model.handbk.HandbkType;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.hospital.util.DaoUtil.deleteFromTable;
-import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
-import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
-
-public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
+public class JdbcHandbkItemDAOImpl implements HandbkItemDAO, CommonDaoOperationsForBaseEntity<HandbkItem> {
     private static final Logger LOG = Logger.getLogger(JdbcHandbkItemDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String NAME_FIELDNAME = "name";
     private static final String TYPE_FIELDNAME = "type";
 
@@ -55,46 +50,12 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
 
     @Override
     public HandbkItem create(HandbkItem handbkItem) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setString(1, handbkItem.getName());
-                statement.setString(2, handbkItem.getType().toString());
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    handbkItem.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return handbkItem;
+        return create(pool, LOG, INSERT_INTO, handbkItem);
     }
 
     @Override
     public HandbkItem update(HandbkItem handbkItem) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setString(1, handbkItem.getName());
-                statement.setString(2, handbkItem.getType().toString());
-                statement.setInt(3, handbkItem.getId());
-                if (statement.executeUpdate() == 0) {
-                    handbkItem = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return handbkItem;
+        return update(pool, LOG, UPDATE, handbkItem);
     }
 
     @Override
@@ -104,75 +65,43 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO {
 
     @Override
     public HandbkItem get(int id) {
-        Connection con = pool.getConnection();
-        HandbkItem handbkItem = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        handbkItem = getHandbk(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return handbkItem;
+        return get(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
     public List<HandbkItem> getAllTranslations(String locale, HandbkType type) {
-        Connection con = pool.getConnection();
-        List<HandbkItem> results = new ArrayList<>();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_ALL_TRANSLATIONS)) {
-                statement.setString(1, locale);
-                statement.setString(2, type.toString());
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        results.add(getHandbk(resultSet));
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        String[] strArgs = {locale, type.toString()};
+        return getAll(pool, SELECT_ALL_TRANSLATIONS, LOG, strArgs);
     }
 
     @Override
     public List<HandbkItem> getAll(HandbkType type) {
-        Connection con = pool.getConnection();
-        List<HandbkItem> results = new ArrayList<>();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
-                statement.setString(1, type.toString());
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        results.add(getHandbk(resultSet));
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        String[] strArgs = {type.toString()};
+        return getAll(pool, SELECT_ALL, LOG, strArgs);
     }
 
-    private HandbkItem getHandbk(ResultSet resultSet) throws SQLException {
+    @Override
+    public HandbkItem getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         String name = resultSet.getString(NAME_FIELDNAME);
         String handbkType = resultSet.getString(TYPE_FIELDNAME);
         return new HandbkItem(id, name, HandbkType.valueOf(handbkType));
     }
+
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
+        setCommonParameters(statement, handbkItem);    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
+        setCommonParameters(statement, handbkItem);
+        statement.setInt(3, handbkItem.getId());
+    }
+
+    private void setCommonParameters(PreparedStatement statement, HandbkItem handbkItem) throws SQLException{
+        statement.setString(1, handbkItem.getName());
+        statement.setString(2, handbkItem.getType().toString());
+
+    }
+
 }

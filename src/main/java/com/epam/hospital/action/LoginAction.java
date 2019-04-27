@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.REDIRECT_VIEW_PREFIX;
 
+/**
+ * The class of actions when the user logs in
+ */
+
 public class LoginAction extends AbstractAction {
     private static final String URI = "login";
 
@@ -27,6 +31,9 @@ public class LoginAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions when the user logs in
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

@@ -12,6 +12,10 @@ import static com.epam.hospital.util.ActionUtil.getJsonString;
 import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the information about the languages
+ */
+
 public class LangAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(LangAction.class);
 
@@ -24,6 +28,9 @@ public class LangAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about the languages
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

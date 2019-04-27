@@ -11,6 +11,10 @@ import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions when the user without the rights of the administrator logs in
+ */
+
 public class NoAdminAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(AdminAction.class);
 
@@ -21,6 +25,9 @@ public class NoAdminAction extends AbstractAction {
         super(URI);
     }
 
+    /**
+     * Describes actions when the user without the rights of the administrator logs in
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);

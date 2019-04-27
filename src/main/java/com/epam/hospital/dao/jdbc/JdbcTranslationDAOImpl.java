@@ -1,5 +1,6 @@
 package com.epam.hospital.dao.jdbc;
 
+import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.TranslationDAO;
 import com.epam.hospital.model.handbk.HandbkItem;
@@ -7,17 +8,13 @@ import com.epam.hospital.model.Translation;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.epam.hospital.util.DaoUtil.*;
-
-public class JdbcTranslationDAOImpl implements TranslationDAO {
+public class JdbcTranslationDAOImpl implements TranslationDAO, CommonDaoOperationsForBaseEntity<Translation> {
     private static final Logger LOG = Logger.getLogger(JdbcTranslationDAOImpl.class);
 
-    private static final String ID_FIELDNAME = "id";
     private static final String HANDBK_ITEM_ID_FIELDNAME = "handbk_item_id";
     private static final String LOCALE_FIELDNAME = "locale";
     private static final String TRANSLATION_FIELDNAME = "translation";
@@ -54,48 +51,12 @@ public class JdbcTranslationDAOImpl implements TranslationDAO {
 
     @Override
     public Translation create(Translation translation) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(INSERT_INTO, Statement.RETURN_GENERATED_KEYS)) {
-                statement.setInt(1, translation.getHandbkItem().getId());
-                statement.setString(2, translation.getLang().getLocale());
-                statement.setString(3, translation.getItemTranslation());
-                statement.executeUpdate();
-                try (ResultSet resultSet = statement.getGeneratedKeys()) {
-                    resultSet.next();
-                    int id = resultSet.getInt(ID_FIELDNAME);
-                    translation.setId(id);
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(errorResolver, e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return translation;
+        return create(pool, LOG, INSERT_INTO, translation, errorResolver);
     }
 
     @Override
     public Translation update(Translation translation) {
-        Connection con = pool.getConnection();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(UPDATE)) {
-                statement.setString(1, translation.getLang().getLocale());
-                statement.setString(2, translation.getItemTranslation());
-                statement.setInt(3, translation.getId());
-                if (statement.executeUpdate() == 0) {
-                    translation = null;
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(errorResolver, e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return translation;
-    }
+        return update(pool, LOG, UPDATE, translation, errorResolver);    }
 
     @Override
     public boolean delete(int id) {
@@ -104,55 +65,38 @@ public class JdbcTranslationDAOImpl implements TranslationDAO {
 
     @Override
     public Translation get(int id) {
-        Connection con = pool.getConnection();
-        Translation user = null;
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_BY_ID)) {
-                statement.setInt(1, id);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        user = getTranslationWithLazyHandbk(resultSet);
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return user;
-
+        return get(pool, SELECT_BY_ID, LOG, id);
     }
 
     @Override
     public List<Translation> getAll(Integer handbkItemId) {
-        Connection con = pool.getConnection();
-        List<Translation> results = new ArrayList<>();
-        if (con != null) {
-            try (PreparedStatement statement = con.prepareStatement(SELECT_ALL)) {
-                statement.setInt(1, handbkItemId);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        results.add(getTranslationWithLazyHandbk(resultSet));
-                    }
-                }
-            } catch (SQLException e) {
-                logAndThrowForSQLException(e, LOG);
-            }
-            pool.freeConnection(con);
-        } else {
-            logAndThrowForNoDbConnectionError(LOG);
-        }
-        return results;
+        Integer[] intArgs = {handbkItemId};
+        return getAll(pool, SELECT_ALL, LOG, intArgs);
     }
 
-    private Translation getTranslationWithLazyHandbk(ResultSet resultSet) throws SQLException {
+    @Override
+    public Translation getObject(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(ID_FIELDNAME);
         int handbkItemId = resultSet.getInt(HANDBK_ITEM_ID_FIELDNAME);
         HandbkItem handbkItem = new HandbkItem(handbkItemId);
         String locale = resultSet.getString(LOCALE_FIELDNAME);
         String tranlation = resultSet.getString(TRANSLATION_FIELDNAME);
         return new Translation(id, handbkItem, locale, tranlation);
+    }
+
+    @Override
+    public void setParametersForCreatingObject(PreparedStatement statement,
+                                               Translation translation) throws SQLException {
+        statement.setInt(1, translation.getHandbkItem().getId());
+        statement.setString(2, translation.getLang().getLocale());
+        statement.setString(3, translation.getItemTranslation());
+    }
+
+    @Override
+    public void setParametersForUpdatingObject(PreparedStatement statement,
+                                               Translation translation) throws SQLException {
+        statement.setString(1, translation.getLang().getLocale());
+        statement.setString(2, translation.getItemTranslation());
+        statement.setInt(3, translation.getId());
     }
 }

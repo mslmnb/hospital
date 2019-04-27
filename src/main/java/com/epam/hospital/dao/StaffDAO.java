@@ -10,10 +10,10 @@ public interface StaffDAO {
     Staff update(Staff staff);
 
     // false if not found
-    boolean delete(int staff_id);
+    boolean delete(int id);
 
     // null if not found
-    Staff get(int staff_id);
+    Staff get(int id);
 
     // empty if not found
     List<Staff> getAll(String locale);

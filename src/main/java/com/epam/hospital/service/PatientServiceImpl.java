@@ -12,20 +12,20 @@ import java.util.List;
 import static com.epam.hospital.util.ValidationUtil.*;
 
 public class PatientServiceImpl implements PatientService {
-    public final static String ID_PARAMETER = "id";
-    public final static String NAME_PARAMETER = "name";
-    public final static String ADDITIONAL_NAME_PARAMETER = "additionalName";
-    public final static String SURNAME_PARAMETER = "surname";
-    public final static String FULLNAME_PARAMETER = "fullname";
-    public final static String PHONE_PARAMETER = "phone";
-    public final static String EMAIL_PARAMETER = "email";
-    public final static String BITHDAY_PARAMETER = "birthday";
-    public final static String ADMISSION_DATE_PARAMETER = "admissionDate";
-    public final static String DISCHARGE_DATE_PARAMETER = "dischargeDate";
-    public final static String PRIMARY_DIAGNOSIS_ID_PARAMETER = "primaryDiagnosisId";
-    public final static String FINAL_DIAGNOSIS_ID_PARAMETER = "finalDiagnosisId";
-    public final static String PRIMARY_INSPECTION_PARAMETER = "primaryInspection";
-    public final static String PRIMARY_COMPLAINTS_PARAMETER = "primaryComplaints";
+    public static final String ID_PARAMETER = "id";
+    public static final String NAME_PARAMETER = "name";
+    public static final String ADDITIONAL_NAME_PARAMETER = "additionalName";
+    public static final String SURNAME_PARAMETER = "surname";
+    public static final String FULLNAME_PARAMETER = "fullname";
+    public static final String PHONE_PARAMETER = "phone";
+    public static final String EMAIL_PARAMETER = "email";
+    public static final String BITHDAY_PARAMETER = "birthday";
+    public static final String ADMISSION_DATE_PARAMETER = "admissionDate";
+    public static final String DISCHARGE_DATE_PARAMETER = "dischargeDate";
+    public static final String PRIMARY_DIAGNOSIS_ID_PARAMETER = "primaryDiagnosisId";
+    public static final String FINAL_DIAGNOSIS_ID_PARAMETER = "finalDiagnosisId";
+    public static final String PRIMARY_INSPECTION_PARAMETER = "primaryInspection";
+    public static final String PRIMARY_COMPLAINTS_PARAMETER = "primaryComplaints";
 
     private final PatientDAO dao;
 

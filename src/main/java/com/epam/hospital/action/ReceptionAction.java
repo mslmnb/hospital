@@ -10,6 +10,12 @@ import static com.epam.hospital.service.PatientServiceImpl.*;
 import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.*;
 
+/**
+ /**
+ * The class of actions for work with the information about the patients
+ * for reception
+ */
+
 public class ReceptionAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(ReceptionAction.class);
 
@@ -23,6 +29,10 @@ public class ReceptionAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about the patients
+     * for reception
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

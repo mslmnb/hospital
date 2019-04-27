@@ -12,6 +12,10 @@ import static com.epam.hospital.util.ActionUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
+/**
+ * The class of actions for work with the information about the users of the system
+ */
+
 public class UserAction extends AbstractAction {
     private static final Logger LOG = Logger.getLogger(UserAction.class);
 
@@ -25,6 +29,9 @@ public class UserAction extends AbstractAction {
         this.service = service;
     }
 
+    /**
+     * Describes actions for work with the information about the users of the system
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String result;

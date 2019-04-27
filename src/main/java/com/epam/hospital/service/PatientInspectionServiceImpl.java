@@ -12,11 +12,11 @@ import java.util.List;
 import static com.epam.hospital.util.ValidationUtil.*;
 
 public class PatientInspectionServiceImpl implements PatientInspectionService{
-    public final static String ID_PARAMETER = "id";
-    public final static String PATIENT_ID_PARAMETER = "patientId";
-    public final static String DATE_PARAMETER = "date";
-    public final static String INSPECTION_PARAMETER = "inspection";
-    public final static String COMPLAINTS_PARAMETER = "complaints";
+    public static final String ID_PARAMETER = "id";
+    public static final String PATIENT_ID_PARAMETER = "patientId";
+    public static final String DATE_PARAMETER = "date";
+    public static final String INSPECTION_PARAMETER = "inspection";
+    public static final String COMPLAINTS_PARAMETER = "complaints";
 
     private final PatientInspectionDAO dao;
 

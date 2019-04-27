@@ -13,8 +13,8 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">${lang}<b class="caret"></b></a>
     <ul class="dropdown-menu">
-        <li><a href="${requestScope['javax.servlet.forward.request_uri']}?lang=en<%=reqParameter%>" )%>English</a></li>
-        <li><a href="${requestScope['javax.servlet.forward.request_uri']}?lang=ru<%=reqParameter%>" )%>Русский</a></li>
+        <li><a href="${requestScope['javax.servlet.forward.request_uri']}?lang=en<%=reqParameter%>")>English</a></li>
+        <li><a href="${requestScope['javax.servlet.forward.request_uri']}?lang=ru<%=reqParameter%>")>Русский</a></li>
     </ul>
 </li>
 <script type="text/javascript">

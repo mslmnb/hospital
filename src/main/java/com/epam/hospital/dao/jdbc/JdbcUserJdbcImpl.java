@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.model.Role;
 import com.epam.hospital.model.Staff;
 import com.epam.hospital.model.User;
@@ -13,8 +12,12 @@ import java.util.*;
 
 import static com.epam.hospital.util.DaoUtil.*;
 
-public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntityWithLazyInitialization<User> {
-    private static final Logger LOG = Logger.getLogger(JdbcUserDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code User} entity
+ */
+
+public class JdbcUserJdbcImpl implements UserDAO, CommonJdbcOperationsForBaseEntityWithLazyInitialization<User> {
+    private static final Logger LOG = Logger.getLogger(JdbcUserJdbcImpl.class);
 
     private static final String STAFF_ID_FIELDNAME = "staff_id";
     private static final String NAME_FIELDNAME = "name";
@@ -55,7 +58,7 @@ public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntit
 
     private final ConnectionPool pool;
 
-    public JdbcUserDAOImpl(ConnectionPool pool) {
+    public JdbcUserJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -65,7 +68,7 @@ public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntit
     }
 
     @Override
-    public User updatePassword(User user) {
+    public User update(User user) {
         return update(pool, LOG, UPDATE_PASSWORD, user);
     }
 
@@ -131,7 +134,7 @@ public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntit
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement, User user) throws SQLException {
+    public void setParametersForCreatingRecord(PreparedStatement statement, User user) throws SQLException {
         statement.setInt(1, user.getStaffId());
         statement.setString(2, user.getLogin());
         statement.setString(3, user.getPassword());
@@ -139,7 +142,7 @@ public class JdbcUserDAOImpl implements UserDAO, CommonDaoOperationsForBaseEntit
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement, User user) throws SQLException {
+    public void setParametersForUpdatingRecord(PreparedStatement statement, User user) throws SQLException {
         statement.setString(1, user.getPassword());
         statement.setInt(2, user.getId());
     }

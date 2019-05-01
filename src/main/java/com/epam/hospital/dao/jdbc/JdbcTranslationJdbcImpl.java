@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.TranslationDAO;
 import com.epam.hospital.model.handbk.HandbkItem;
@@ -12,8 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JdbcTranslationDAOImpl implements TranslationDAO, CommonDaoOperationsForBaseEntity<Translation> {
-    private static final Logger LOG = Logger.getLogger(JdbcTranslationDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code Translation} entity
+ */
+
+public class JdbcTranslationJdbcImpl implements TranslationDAO, CommonJdbcOperationsForBaseEntity<Translation> {
+    private static final Logger LOG = Logger.getLogger(JdbcTranslationJdbcImpl.class);
 
     private static final String HANDBK_ITEM_ID_FIELDNAME = "handbk_item_id";
     private static final String LOCALE_FIELDNAME = "locale";
@@ -45,7 +48,7 @@ public class JdbcTranslationDAOImpl implements TranslationDAO, CommonDaoOperatio
 
     private final ConnectionPool pool;
 
-    public JdbcTranslationDAOImpl(ConnectionPool pool) {
+    public JdbcTranslationJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -85,7 +88,7 @@ public class JdbcTranslationDAOImpl implements TranslationDAO, CommonDaoOperatio
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement,
+    public void setParametersForCreatingRecord(PreparedStatement statement,
                                                Translation translation) throws SQLException {
         statement.setInt(1, translation.getHandbkItem().getId());
         statement.setString(2, translation.getLang().getLocale());
@@ -93,7 +96,7 @@ public class JdbcTranslationDAOImpl implements TranslationDAO, CommonDaoOperatio
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement,
+    public void setParametersForUpdatingRecord(PreparedStatement statement,
                                                Translation translation) throws SQLException {
         statement.setString(1, translation.getLang().getLocale());
         statement.setString(2, translation.getItemTranslation());

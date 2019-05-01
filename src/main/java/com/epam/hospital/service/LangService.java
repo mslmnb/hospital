@@ -2,8 +2,9 @@ package com.epam.hospital.service;
 
 import com.epam.hospital.model.Lang;
 
-import java.util.List;
+/**
+ * The interface of service operations for {@code Lang} entities.
+ */
 
-public interface LangService {
-    List<Lang> getAll();
+public interface LangService extends CommonServiceOperation<Lang>{
 }

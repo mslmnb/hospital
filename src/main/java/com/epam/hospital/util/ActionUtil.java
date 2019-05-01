@@ -1,9 +1,7 @@
 package com.epam.hospital.util;
 
 import com.epam.hospital.model.HavingJsonView;
-import com.epam.hospital.service.HavingDeleteMethod;
-import com.epam.hospital.service.HavingGetMethod;
-import com.epam.hospital.service.HavingSaveMethod;
+import com.epam.hospital.service.CommonServiceOperationForBaseEntity;
 import com.epam.hospital.util.exception.AppException;
 import org.apache.log4j.Logger;
 
@@ -34,7 +32,7 @@ public class ActionUtil {
     }
 
     public static String getJsonViewForDeleteDirection(HttpServletRequest request, HttpServletResponse response,
-                                                       HavingDeleteMethod service, String idParameter) {
+                                                       CommonServiceOperationForBaseEntity service, String idParameter) {
         String result;
         String idAsString = request.getParameter(idParameter);
         try {
@@ -48,7 +46,7 @@ public class ActionUtil {
     }
 
     public static String getJsonViewForGetDirection(HttpServletRequest request, HttpServletResponse response,
-                                                    HavingGetMethod service, String idParameter) {
+                                                    CommonServiceOperationForBaseEntity service, String idParameter) {
         String result;
         try {
             String idAsString = request.getParameter(idParameter);
@@ -67,7 +65,7 @@ public class ActionUtil {
     }
 
     public static String getJsonViewForSaveDirection(HttpServletResponse response,
-                                                     HavingSaveMethod service, String ... args) {
+                                                     CommonServiceOperationForBaseEntity service, String ... args) {
         String result;
         try {
             service.save(args);
@@ -78,5 +76,4 @@ public class ActionUtil {
         }
         return result;
     }
-
 }

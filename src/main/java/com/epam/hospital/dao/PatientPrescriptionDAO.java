@@ -4,17 +4,19 @@ import com.epam.hospital.model.PatientPrescription;
 
 import java.util.List;
 
-public interface PatientPrescriptionDAO {
-    PatientPrescription create(PatientPrescription patientPrescription);
+/**
+ * The interface of crud operation for {@code PatientPrescription} entity
+ */
 
-    PatientPrescription update(PatientPrescription patientPrescription);
+public interface PatientPrescriptionDAO extends CommonCrudOperationsForBaseEntity<PatientPrescription>{
 
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    PatientPrescription get(int id);
-
-    List<PatientPrescription> getAll(int patientId, String locale);
+    /**
+     * Gets all patient's prescriptions for specified language and specified patient's key
+     * @param locale the language
+     * @param patientId the patient's key
+     * @return the list of patient's prescriptions for specified language and specified patient's key
+     *   if records are not found that returns empty list
+     */
+    List<PatientPrescription> getAll(String locale, int patientId);
 }
 

@@ -1,6 +1,6 @@
 package com.epam.hospital.model;
 
-public class BaseEntity {
+public abstract class BaseEntity implements HavingJsonView{
     private Integer id;
 
     BaseEntity() {

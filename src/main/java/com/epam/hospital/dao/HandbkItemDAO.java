@@ -5,21 +5,27 @@ import com.epam.hospital.model.handbk.HandbkType;
 
 import java.util.List;
 
-public interface HandbkItemDAO {
-    HandbkItem create(HandbkItem handbkItem);
+/**
+ * The interface of crud operation for {@code HandbkItem} entity
+ */
 
-    // null if not found
-    HandbkItem update(HandbkItem handbkItem);
+public interface HandbkItemDAO extends CommonCrudOperationsForBaseEntity<HandbkItem> {
 
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    HandbkItem get(int id);
-
-    // empty if not found
+    /**
+     * Gets all entities for specified type of handbook
+     * @param type the type of handbook
+     * @return the list of entities for specified type of handbook
+     *   if records are not found that returns empty list
+     */
     List<HandbkItem> getAll(HandbkType type);
 
-    // empty if not found
-    List<HandbkItem> getAllTranslations(String lang, HandbkType type);
+    /**
+     * Gets all translations for specified language and specified type of handbook
+     * @param locale the language
+     * @param type the type of handbook
+     * @return the list of handbook's items for specified language and specified type of handbook
+     *   if records are not found that returns empty list
+     */
+    List<HandbkItem> getAllTranslations(String locale, HandbkType type);
+
 }

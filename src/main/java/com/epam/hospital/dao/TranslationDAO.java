@@ -4,19 +4,17 @@ import com.epam.hospital.model.Translation;
 
 import java.util.List;
 
-public interface TranslationDAO {
-    Translation create(Translation translation);
+/**
+ * The interface of crud operation for {@code Translation} entity
+ */
 
-    // null if not found
-    Translation update(Translation translation);
+public interface TranslationDAO extends CommonCrudOperationsForBaseEntity<Translation> {
 
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    Translation get(int id);
-
-    // empty if not found
+    /**
+     * Gets all translation for specified handbook's item
+     * @param handbkItemId the key of handbook's item
+     * @return the list of translation for specified handbook's item
+     *   if records are not found that returns empty list
+     */
     List<Translation> getAll(Integer handbkItemId);
-
 }

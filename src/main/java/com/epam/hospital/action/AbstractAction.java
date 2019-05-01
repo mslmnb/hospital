@@ -16,7 +16,7 @@ public abstract class AbstractAction implements Action{
     private final String uri;
 
     /**
-     * Constructs <tt>AbstractAction</tt> with the specified request string
+     * Constructs {@code AbstractAction} with the specified request string
      * @param uri the request string
      */
     AbstractAction(String uri) {

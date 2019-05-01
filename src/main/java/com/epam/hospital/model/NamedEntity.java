@@ -1,6 +1,6 @@
 package com.epam.hospital.model;
 
-public class NamedEntity extends BaseEntity {
+public abstract class NamedEntity extends BaseEntity {
 
     private String name;
 

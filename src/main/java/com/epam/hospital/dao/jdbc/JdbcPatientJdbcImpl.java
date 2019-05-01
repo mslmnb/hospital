@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.model.Patient;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDAO;
@@ -16,8 +15,12 @@ import java.util.Map;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForNoDbConnectionError;
 import static com.epam.hospital.util.DaoUtil.logAndThrowForSQLException;
 
-public class JdbcPatientDAOImpl implements PatientDAO, CommonDaoOperationsForBaseEntity<Patient> {
-    private static final Logger LOG = Logger.getLogger(JdbcPatientDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code Patient} entity
+ */
+
+public class JdbcPatientJdbcImpl implements PatientDAO, CommonJdbcOperationsForBaseEntity<Patient> {
+    private static final Logger LOG = Logger.getLogger(JdbcPatientJdbcImpl.class);
 
     private static final String NAME_FIELDNAME = "name";
     private static final String ADDITIONAL_NAME_FIELDNAME = "additional_name";
@@ -68,7 +71,7 @@ public class JdbcPatientDAOImpl implements PatientDAO, CommonDaoOperationsForBas
 
     private final ConnectionPool pool;
 
-    public JdbcPatientDAOImpl(ConnectionPool pool) {
+    public JdbcPatientJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -163,12 +166,12 @@ public class JdbcPatientDAOImpl implements PatientDAO, CommonDaoOperationsForBas
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement, Patient patient) throws SQLException {
+    public void setParametersForCreatingRecord(PreparedStatement statement, Patient patient) throws SQLException {
         setCommonParameters(statement, patient);
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement, Patient patient) throws SQLException {
+    public void setParametersForUpdatingRecord(PreparedStatement statement, Patient patient) throws SQLException {
         setCommonParameters(statement, patient);
         statement.setInt(8, patient.getId());
     }

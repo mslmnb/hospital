@@ -25,26 +25,26 @@ public class ActionFactory {
      * @param pool the connection pool
      */
     private ActionFactory(ConnectionPool pool) {
-        UserService userService = new UserServiceImpl(new JdbcUserDAOImpl(pool));
-        PatientService patientService = new PatientServiceImpl(new JdbcPatientDAOImpl(pool));
+        UserService userService = new UserServiceImpl(new JdbcUserJdbcImpl(pool));
+        PatientService patientService = new PatientServiceImpl(new JdbcPatientJdbcImpl(pool));
         addAction(new LoginAction(userService));
         addAction(new LogoutAction());
         addAction(new AdminAction());
         addAction(new NoAdminAction());
         addAction(new UserAction(userService));
-        addAction(new StaffAction(new StaffServiceImpl(new JdbcStaffDAOImpl(pool))));
+        addAction(new StaffAction(new StaffServiceImpl(new JdbcStaffJdbcImpl(pool))));
         addAction(new RoleAction());
-        addAction(new HandbkAction(new HandbkItemServiceImpl(new JdbcHandbkItemDAOImpl(pool))));
-        addAction(new TranslationAction(new TranslationServiceImpl(new JdbcTranslationDAOImpl(pool))));
-        addAction(new LangAction(new LangServiceImpl(new JdbcLangDAOImpl(pool))));
+        addAction(new HandbkAction(new HandbkItemServiceImpl(new JdbcHandbkItemJdbcImpl(pool))));
+        addAction(new TranslationAction(new TranslationServiceImpl(new JdbcTranslationJdbcImpl(pool))));
+        addAction(new LangAction(new LangServiceImpl(new JdbcLangJdbcImpl(pool))));
         addAction(new PatientAction(patientService));
         addAction(new ReceptionAction(patientService));
-        addAction(new PatientDiagnosisAction(new PatientDiagnosisServiceImpl(new JdbcPatientDiagnosisDAOImpl(pool))));
+        addAction(new PatientDiagnosisAction(new PatientDiagnosisServiceImpl(new JdbcPatientDiagnosisJdbcImpl(pool))));
         addAction(new PatientPrescriptionAction(new PatientPrescriptionServiceImpl(
-                                                    new JdbcPatientPrescriptionDAOImpl(pool)))
+                                                    new JdbcPatientPrescriptionJdbcImpl(pool)))
                                                 );
         addAction(new PatientInspectionAction(new PatientInspectionServiceImpl(
-                                                  new JdbcPatientInspectionDAOImpl(pool)))
+                                                  new JdbcPatientInspectionJdbcImpl(pool)))
                                               );
     }
 

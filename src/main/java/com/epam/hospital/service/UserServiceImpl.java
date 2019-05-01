@@ -6,6 +6,7 @@ import com.epam.hospital.model.User;
 import com.epam.hospital.dao.UserDAO;
 import com.epam.hospital.util.CheckResult;
 import com.epam.hospital.util.exception.AppException;
+import com.epam.hospital.util.exception.ModificationRestrictionAppException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Arrays;
@@ -15,8 +16,11 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
+/**
+ * The class of service operation for {@code User} entity
+ */
+
 public class UserServiceImpl implements UserService {
-    public static final String ID_PARAMETER = "id";
     public static final String NAME_PARAMETER = "name";
     public static final String STAFF_ID_PARAMETER = "staffId";
     public static final String STAFF_NAME_PARAMETER = "staffName";
@@ -56,7 +60,7 @@ public class UserServiceImpl implements UserService {
             dao.create(user);
         } else {
             checkModificationRestriction(user.getId());
-            checkNotFound(dao.updatePassword(user));
+            checkNotFound(dao.update(user));
         }
     }
 
@@ -97,9 +101,9 @@ public class UserServiceImpl implements UserService {
         return dao.getAll();
     }
 
-    private void checkModificationRestriction(int id) throws AppException {
+    private void checkModificationRestriction(int id) throws ModificationRestrictionAppException {
         if (MODIFICATION_RESTRICTIONS.contains(id)) {
-            throw new AppException(new CheckResult(MODIFICATION_RESTRICTION));
+            throw new ModificationRestrictionAppException(new CheckResult(MODIFICATION_RESTRICTION));
         }
     }
 

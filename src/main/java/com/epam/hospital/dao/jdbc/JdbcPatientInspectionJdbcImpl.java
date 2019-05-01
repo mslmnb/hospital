@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientInspectionDAO;
 import com.epam.hospital.model.Patient;
@@ -11,8 +10,12 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO, CommonDaoOperationsForBaseEntity<PatientInspection> {
-    private static final Logger LOG = Logger.getLogger(JdbcPatientInspectionDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code PatientInspection} entity
+ */
+
+public class JdbcPatientInspectionJdbcImpl implements PatientInspectionDAO, CommonJdbcOperationsForBaseEntity<PatientInspection> {
+    private static final Logger LOG = Logger.getLogger(JdbcPatientInspectionJdbcImpl.class);
 
     private static final String PATIENT_ID_FIELDNAME = "patient_id";
     private static final String DATE_FIELDNAME = "date";
@@ -31,7 +34,7 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO, Commo
 
     private final ConnectionPool pool;
 
-    public JdbcPatientInspectionDAOImpl(ConnectionPool pool) {
+    public JdbcPatientInspectionJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -72,7 +75,7 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO, Commo
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement,
+    public void setParametersForCreatingRecord(PreparedStatement statement,
                                                PatientInspection patientInspection) throws SQLException {
         statement.setInt(1, patientInspection.getPatient().getId());
         statement.setDate(2, Date.valueOf(patientInspection.getDate()));
@@ -81,7 +84,7 @@ public class JdbcPatientInspectionDAOImpl implements PatientInspectionDAO, Commo
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement, PatientInspection patientInspection) throws SQLException {
+    public void setParametersForUpdatingRecord(PreparedStatement statement, PatientInspection patientInspection) throws SQLException {
         statement.setDate(1, Date.valueOf(patientInspection.getDate()));
         statement.setString(2, patientInspection.getInspection());
         statement.setString(3, patientInspection.getComplaints());

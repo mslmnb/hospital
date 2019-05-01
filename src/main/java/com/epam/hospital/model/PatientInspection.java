@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import static com.epam.hospital.service.PatientInspectionServiceImpl.*;
 
-public class PatientInspection extends BaseEntity implements HavingJsonView {
+public class PatientInspection extends BaseEntity {
 
     private final Patient patient;
     private final LocalDate date;

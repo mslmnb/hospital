@@ -12,8 +12,11 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
+/**
+ * The class of service operation for {@code Staff} entity
+ */
+
 public class StaffServiceImpl implements StaffService {
-    public static final String ID_PARAMETER = "id";
     public static final String NAME_PARAMETER = "name";
     public static final String ADDITIONAL_NAME_PARAMETER = "additionalName";
     public static final String SURNAME_PARAMETER = "surname";

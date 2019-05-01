@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import static com.epam.hospital.service.PatientPrescriptionServiceImpl.*;
 
-public class PatientPrescription extends BaseEntity implements HavingJsonView {
+public class PatientPrescription extends BaseEntity {
     private final Patient patient;
     private final LocalDate applicationDate;
     private final PrescriptionType type;

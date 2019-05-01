@@ -104,7 +104,7 @@ public class ConnectionPool {
     }
 
     /**
-     * Puts a given connection into the connection's pool
+     * Puts a specified connection into the connection's pool
      * @param con a Connection to the database.
      */
     public synchronized void freeConnection(Connection con) {

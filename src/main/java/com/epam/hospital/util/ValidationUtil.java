@@ -1,6 +1,7 @@
 package com.epam.hospital.util;
 
-import com.epam.hospital.util.exception.AppException;
+import com.epam.hospital.util.exception.NotFoundAppException;
+import com.epam.hospital.util.exception.UnvalidDataAppException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,37 +20,38 @@ public class ValidationUtil {
     private static final String I18N_KEY_FOR_INVALID = "invalid";
     private static final String I18N_KEY_FOR_NOT_FOUND = "notFound";
 
-    public static <T> T checkNotFound(T object) throws AppException {
+    public static <T> T checkNotFound(T object) throws NotFoundAppException {
         if (object == null) {
-            throw new AppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
+            throw new NotFoundAppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
         }
         return object;
     }
 
-    public static void checkNotFound(boolean found) throws AppException {
+    public static void checkNotFound(boolean found) throws NotFoundAppException {
         if (!found) {
-            throw new AppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
+            throw new NotFoundAppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
         }
     }
 
     public static void checkNotEmpty(String fieldValue, String fieldName,
-                                     CheckResult checkResult, boolean throwException) throws AppException {
+                                     CheckResult checkResult, boolean throwException) throws UnvalidDataAppException {
         if (fieldValue == null || fieldValue.isEmpty()) {
             checkResult.addErrorMessage(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName));
         }
         if (throwException && checkResult.foundErrors()) {
-            throw new AppException(checkResult);
+            throw new UnvalidDataAppException(checkResult);
         }
     }
 
     public static void checkNotEmpty(String fieldValue, String fieldName,
-                                     CheckResult checkResult) throws AppException {
+                                     CheckResult checkResult) throws UnvalidDataAppException {
         checkNotEmpty(fieldValue, fieldName, checkResult, true);
     }
 
-    private static void checkNotEmpty(String fieldValue, String fieldName) throws AppException {
+    private static void checkNotEmpty(String fieldValue, String fieldName) throws UnvalidDataAppException {
         if (fieldValue == null || fieldValue.isEmpty()) {
-            throw new AppException(new CheckResult(I18N_KEY_FOR_EMPTY + getWithCapitalFirstLetter(fieldName)));
+            throw new UnvalidDataAppException(new CheckResult(I18N_KEY_FOR_EMPTY +
+                                                              getWithCapitalFirstLetter(fieldName)));
         }
     }
 
@@ -60,11 +62,11 @@ public class ValidationUtil {
     public static void checkEmail(String email, CheckResult checkResult, boolean throwException) {
         try {
             checkEmail(email);
-        } catch (AppException e) {
+        } catch (UnvalidDataAppException e) {
             checkResult.addErrorMessage(e.getCheckResult());
         }
         if (throwException && checkResult.foundErrors()) {
-            throw new AppException(checkResult);
+            throw new UnvalidDataAppException(checkResult);
         }
     }
 
@@ -75,11 +77,11 @@ public class ValidationUtil {
     public static void checkPhone(String phone, CheckResult checkResult, boolean throwException) {
         try {
             checkPhone(phone);
-        } catch (AppException e) {
+        } catch (UnvalidDataAppException e) {
             checkResult.addErrorMessage(e.getCheckResult());
         }
         if (throwException && checkResult.foundErrors()) {
-            throw new AppException(checkResult);
+            throw new UnvalidDataAppException(checkResult);
         }
     }
 
@@ -92,57 +94,59 @@ public class ValidationUtil {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(target);
             if (!matcher.matches()) {
-                throw new AppException(new CheckResult(errorMsg));
+                throw new UnvalidDataAppException(new CheckResult(errorMsg));
             }
         }
     }
 
-    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName,
-                                               CheckResult checkResult, boolean throwException) throws AppException {
+    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName, CheckResult checkResult,
+                                               boolean throwException) throws UnvalidDataAppException {
         LocalDate result = null;
         try {
             result = checkAndReturnDate(dateAsString, fieldName);
-        } catch (AppException e) {
+        } catch (UnvalidDataAppException e) {
             checkResult.addErrorMessage(e.getCheckResult());
         }
         if (throwException && checkResult.foundErrors()) {
-            throw new AppException(checkResult);
+            throw new UnvalidDataAppException(checkResult);
         }
         return result;
     }
 
-    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws AppException {
+    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws UnvalidDataAppException {
         LocalDate result;
         checkNotEmpty(dateAsString, fieldName);
         try {
             result = LocalDate.parse(dateAsString, FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new AppException(new CheckResult(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName)));
+            throw new UnvalidDataAppException(new CheckResult(I18N_KEY_FOR_INVALID +
+                                                              getWithCapitalFirstLetter(fieldName)));
         }
         return result;
     }
 
-    public static Integer checkAndReturnInt(String intAsString, String fieldName,
-                                            CheckResult checkResult, boolean throwException) throws AppException {
+    public static Integer checkAndReturnInt(String intAsString, String fieldName, CheckResult checkResult,
+                                            boolean throwException) throws UnvalidDataAppException {
         Integer result = null;
         try {
             result = checkAndReturnInt(intAsString, fieldName);
-        } catch (AppException e) {
+        } catch (UnvalidDataAppException e) {
             checkResult.addErrorMessage(e.getCheckResult());
         }
         if (throwException && checkResult.foundErrors()) {
-            throw new AppException(checkResult);
+            throw new UnvalidDataAppException(checkResult);
         }
         return result;
     }
 
-    public static Integer checkAndReturnInt(String intAsString, String fieldName) throws AppException {
+    public static Integer checkAndReturnInt(String intAsString, String fieldName) throws UnvalidDataAppException {
         Integer result;
         checkNotEmpty(intAsString, fieldName);
         try {
             result = Integer.parseInt(intAsString);
         } catch (NumberFormatException e) {
-            throw new AppException(new CheckResult(I18N_KEY_FOR_INVALID + getWithCapitalFirstLetter(fieldName)));
+            throw new UnvalidDataAppException(new CheckResult(I18N_KEY_FOR_INVALID +
+                                                              getWithCapitalFirstLetter(fieldName)));
         }
         return result;
     }

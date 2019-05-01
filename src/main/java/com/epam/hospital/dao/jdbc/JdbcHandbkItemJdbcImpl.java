@@ -2,7 +2,6 @@ package com.epam.hospital.dao.jdbc;
 
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.HandbkItemDAO;
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntity;
 import com.epam.hospital.model.handbk.HandbkItem;
 import com.epam.hospital.model.handbk.HandbkType;
 import org.apache.log4j.Logger;
@@ -12,8 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JdbcHandbkItemDAOImpl implements HandbkItemDAO, CommonDaoOperationsForBaseEntity<HandbkItem> {
-    private static final Logger LOG = Logger.getLogger(JdbcHandbkItemDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code HandbkItem} entity
+ */
+public class JdbcHandbkItemJdbcImpl implements HandbkItemDAO, CommonJdbcOperationsForBaseEntity<HandbkItem> {
+    private static final Logger LOG = Logger.getLogger(JdbcHandbkItemJdbcImpl.class);
 
     private static final String NAME_FIELDNAME = "name";
     private static final String TYPE_FIELDNAME = "type";
@@ -44,7 +46,7 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO, CommonDaoOperations
 
     private final ConnectionPool pool;
 
-    public JdbcHandbkItemDAOImpl(ConnectionPool pool) {
+    public JdbcHandbkItemJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -89,11 +91,11 @@ public class JdbcHandbkItemDAOImpl implements HandbkItemDAO, CommonDaoOperations
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
+    public void setParametersForCreatingRecord(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
         setCommonParameters(statement, handbkItem);    }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
+    public void setParametersForUpdatingRecord(PreparedStatement statement, HandbkItem handbkItem) throws SQLException {
         setCommonParameters(statement, handbkItem);
         statement.setInt(3, handbkItem.getId());
     }

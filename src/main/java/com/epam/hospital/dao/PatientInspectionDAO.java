@@ -4,16 +4,17 @@ import com.epam.hospital.model.PatientInspection;
 
 import java.util.List;
 
-public interface PatientInspectionDAO {
-    PatientInspection create(PatientInspection patientInspection);
+/**
+ * The interface of crud operation for {@code PatientInspection} entity
+ */
 
-    PatientInspection update(PatientInspection patientInspection);
+public interface PatientInspectionDAO extends CommonCrudOperationsForBaseEntity<PatientInspection> {
 
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    PatientInspection get(int id);
-
+    /**
+     * Gets all patient's inspection for specified patient's key
+     * @param patientId the patient's key
+     * @return the list of patient's inspection for specified patient's key
+     *     if records are not found that returns empty list
+     */
     List<PatientInspection> getAll(int patientId);
 }

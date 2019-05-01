@@ -12,8 +12,11 @@ import java.util.List;
 
 import static com.epam.hospital.util.ValidationUtil.*;
 
+/**
+ * The class of service operation for {@code PatientPrescription} entity
+ */
+
 public class PatientPrescriptionServiceImpl implements PatientPrescriptionService {
-    public static final String ID_PARAMETER = "id";
     public static final String PATIENT_ID_PARAMETER = "patientId";
     public static final String APPLICATION_DATE_PARAMETER = "applicationDate";
     public static final String TYPE_ID_PARAMETER = "typeId";
@@ -100,6 +103,6 @@ public class PatientPrescriptionServiceImpl implements PatientPrescriptionServic
 
     @Override
     public List<PatientPrescription> getAll(int patientId, String locale) {
-        return dao.getAll(patientId, locale);
+        return dao.getAll(locale, patientId);
     }
 }

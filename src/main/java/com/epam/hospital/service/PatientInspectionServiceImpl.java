@@ -11,8 +11,11 @@ import java.util.List;
 
 import static com.epam.hospital.util.ValidationUtil.*;
 
+/**
+ * The class of service operation for {@code PatientInspection} entity
+ */
+
 public class PatientInspectionServiceImpl implements PatientInspectionService{
-    public static final String ID_PARAMETER = "id";
     public static final String PATIENT_ID_PARAMETER = "patientId";
     public static final String DATE_PARAMETER = "date";
     public static final String INSPECTION_PARAMETER = "inspection";

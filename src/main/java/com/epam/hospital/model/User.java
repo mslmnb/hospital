@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import static com.epam.hospital.model.Role.ROLE_ADMIN;
 import static com.epam.hospital.service.UserServiceImpl.*;
 
-public class User extends BaseEntity implements HavingJsonView {
+public class User extends BaseEntity {
 
     private Staff staff;
 

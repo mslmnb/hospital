@@ -15,8 +15,11 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnDate;
 import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
+/**
+ * The class of service operation for {@code PatientDiagnosis} entity
+ */
+
 public class PatientDiagnosisServiceImpl implements PatientDiagnosisService {
-    public static final String ID_PARAMETER = "id";
     public static final String PATIENT_ID_PARAMETER = "patientId";
     public static final String DATE_PARAMETER = "date";
     public static final String DIAGNOSIS_ID_PARAMETER = "diagnosisId";
@@ -90,6 +93,6 @@ public class PatientDiagnosisServiceImpl implements PatientDiagnosisService {
 
     @Override
     public List<PatientDiagnosis> getAll(int patientId, String locale) {
-        return dao.getAll(patientId, locale);
+        return dao.getAll(locale, patientId);
     }
 }

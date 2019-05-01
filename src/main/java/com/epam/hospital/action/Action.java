@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * The root interface in the action hierarchy.
- * The action describes what needs to be made when receiving a given request.
+ * The action describes what needs to be made when receiving a specified request.
  */
 
 public interface Action {

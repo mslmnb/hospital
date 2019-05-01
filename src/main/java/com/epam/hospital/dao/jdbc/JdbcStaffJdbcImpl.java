@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.StaffDAO;
 import com.epam.hospital.model.Staff;
@@ -12,8 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JdbcStaffDAOImpl implements StaffDAO, CommonDaoOperationsForBaseEntityWithLazyInitialization<Staff> {
-    private static final Logger LOG = Logger.getLogger(JdbcStaffDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code Staff} entity
+ */
+
+public class JdbcStaffJdbcImpl implements StaffDAO, CommonJdbcOperationsForBaseEntityWithLazyInitialization<Staff> {
+    private static final Logger LOG = Logger.getLogger(JdbcStaffJdbcImpl.class);
 
     private static final String NAME_FIELDNAME = "name";
     private static final String ADDITIONAL_NAME_FIELDNAME = "additional_name";
@@ -49,7 +52,7 @@ public class JdbcStaffDAOImpl implements StaffDAO, CommonDaoOperationsForBaseEnt
 
     private final ConnectionPool pool;
 
-    public JdbcStaffDAOImpl(ConnectionPool pool) {
+    public JdbcStaffJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -103,12 +106,12 @@ public class JdbcStaffDAOImpl implements StaffDAO, CommonDaoOperationsForBaseEnt
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement, Staff staff) throws SQLException {
+    public void setParametersForCreatingRecord(PreparedStatement statement, Staff staff) throws SQLException {
         setCommonParameters(statement, staff);
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement, Staff staff) throws SQLException {
+    public void setParametersForUpdatingRecord(PreparedStatement statement, Staff staff) throws SQLException {
         setCommonParameters(statement, staff);
         statement.setInt(5, staff.getId());
     }

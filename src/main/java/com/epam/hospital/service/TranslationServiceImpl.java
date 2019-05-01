@@ -12,8 +12,11 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
+/**
+ * The class of service operation for {@code Translation} entity
+ */
+
 public class TranslationServiceImpl implements TranslationService{
-    public static final String ID_PARAMETER = "id";
     public static final String HANDBK_ITEM_ID_PARAMETER = "handbkItemId";
     public static final String LOCALE_PARAMETER = "locale";
     public static final String TRANSLATION_PARAMETER = "translation";

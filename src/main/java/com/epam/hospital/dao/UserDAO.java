@@ -3,21 +3,17 @@ package com.epam.hospital.dao;
 import com.epam.hospital.model.User;
 import java.util.List;
 
-public interface UserDAO {
-    User create(User user);
+/**
+ * The interface of crud operation for {@code User} entity
+ */
 
-    // null if not found
-    User updatePassword(User user);
+public interface UserDAO extends CommonCrudOperations<User>, CommonCrudOperationsForBaseEntity<User> {
 
-    // false if not found
-    boolean delete(int id);
-
-    // null if not found
-    User get(int id);
-
-    // null if not found
+    /**
+     * Gets the user with specified login
+     * @param login the login
+     * @return the user with specified login
+     *   if record are not found that returns null
+     */
     User getByLogin(String login);
-
-    // empty if not found
-    List<User> getAll();
 }

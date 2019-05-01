@@ -1,6 +1,5 @@
 package com.epam.hospital.dao.jdbc;
 
-import com.epam.hospital.dao.CommonDaoOperationsForBaseEntityWithLazyInitialization;
 import com.epam.hospital.dao.ConnectionPool;
 import com.epam.hospital.dao.PatientDiagnosisDAO;
 import com.epam.hospital.model.Patient;
@@ -13,9 +12,13 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
-public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
-                                             CommonDaoOperationsForBaseEntityWithLazyInitialization<PatientDiagnosis> {
-    private static final Logger LOG = Logger.getLogger(JdbcPatientDiagnosisDAOImpl.class);
+/**
+ * The class of jdbc operation for {@code PatientDiagnosis} entity
+ */
+
+public class JdbcPatientDiagnosisJdbcImpl implements PatientDiagnosisDAO,
+        CommonJdbcOperationsForBaseEntityWithLazyInitialization<PatientDiagnosis> {
+    private static final Logger LOG = Logger.getLogger(JdbcPatientDiagnosisJdbcImpl.class);
 
     private static final String PATIENT_ID_FIELDNAME = "patient_id";
     private static final String DATE_FIELDNAME = "date";
@@ -51,7 +54,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
 
     private final ConnectionPool pool;
 
-    public JdbcPatientDiagnosisDAOImpl(ConnectionPool pool) {
+    public JdbcPatientDiagnosisJdbcImpl(ConnectionPool pool) {
         this.pool = pool;
     }
 
@@ -77,7 +80,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
     }
 
     @Override
-    public List<PatientDiagnosis> getAll(int patientId, String locale) {
+    public List<PatientDiagnosis> getAll(String locale, int patientId) {
         String[] strArgs = {locale, locale};
         Integer[] intArgs = {patientId};
         return getAll(pool, SELECT_ALL, LOG, strArgs, intArgs);
@@ -112,7 +115,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
     }
 
     @Override
-    public void setParametersForCreatingObject(PreparedStatement statement,
+    public void setParametersForCreatingRecord(PreparedStatement statement,
                                                PatientDiagnosis patientDiagnosis) throws SQLException {
         statement.setInt(1, patientDiagnosis.getPatient().getId());
         statement.setDate(2, Date.valueOf(patientDiagnosis.getDate()));
@@ -121,7 +124,7 @@ public class JdbcPatientDiagnosisDAOImpl implements PatientDiagnosisDAO,
     }
 
     @Override
-    public void setParametersForUpdatingObject(PreparedStatement statement,
+    public void setParametersForUpdatingRecord(PreparedStatement statement,
                                                PatientDiagnosis patientDiagnosis) throws SQLException {
         statement.setDate(1, Date.valueOf(patientDiagnosis.getDate()));
         statement.setInt(2, patientDiagnosis.getDiagnosis().getId());

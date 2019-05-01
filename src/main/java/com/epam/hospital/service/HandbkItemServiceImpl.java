@@ -4,7 +4,6 @@ import com.epam.hospital.dao.HandbkItemDAO;
 import com.epam.hospital.model.handbk.HandbkItem;
 import com.epam.hospital.model.handbk.HandbkType;
 import com.epam.hospital.util.CheckResult;
-import com.epam.hospital.util.exception.AppException;
 
 import java.util.List;
 
@@ -12,8 +11,10 @@ import static com.epam.hospital.util.ValidationUtil.checkAndReturnInt;
 import static com.epam.hospital.util.ValidationUtil.checkNotEmpty;
 import static com.epam.hospital.util.ValidationUtil.checkNotFound;
 
+/**
+ * The class of service operation for {@code HandbkItem} entity
+ */
 public class HandbkItemServiceImpl implements HandbkItemService {
-    public static final String ID_PARAMETER = "id";
     public static final String NAME_PARAMETER = "name";
     public static final String TYPE_PARAMETER = "type";
 
@@ -24,7 +25,7 @@ public class HandbkItemServiceImpl implements HandbkItemService {
     }
 
     @Override
-    public void save(String idAsString, String name, String typeAsString) throws AppException {
+    public void save(String idAsString, String name, String typeAsString){
         CheckResult checkResult = new CheckResult();
         Integer id = (idAsString.isEmpty()) ? null : checkAndReturnInt(idAsString, ID_PARAMETER, checkResult, false);
         checkNotEmpty(name, NAME_PARAMETER, checkResult);
@@ -34,7 +35,7 @@ public class HandbkItemServiceImpl implements HandbkItemService {
     }
 
     @Override
-    public void save(HandbkItem handbkItem) throws AppException {
+    public void save(HandbkItem handbkItem){
         if (handbkItem.isNew()) {
             dao.create(handbkItem);
         } else {
@@ -43,39 +44,39 @@ public class HandbkItemServiceImpl implements HandbkItemService {
     }
 
     @Override
-    public void save(String... args) throws AppException {
+    public void save(String... args){
         save(args[0], args[1], args[2]);
     }
 
     @Override
-    public void delete(String idAsString) throws AppException {
+    public void delete(String idAsString){
         delete(checkAndReturnInt(idAsString, ID_PARAMETER));
     }
 
     @Override
-    public void delete(int id) throws AppException {
+    public void delete(int id){
         checkNotFound(dao.delete(id));
     }
 
     @Override
-    public HandbkItem get(String idAsString) throws AppException {
+    public HandbkItem get(String idAsString){
         Integer id = checkAndReturnInt(idAsString, ID_PARAMETER);
         return get(id);
     }
 
     @Override
-    public HandbkItem get(int id) throws AppException {
+    public HandbkItem get(int id){
         return checkNotFound(dao.get(id));
     }
 
     @Override
-    public List<HandbkItem> getAll(HandbkType handbkType) {
-        return dao.getAll(handbkType);
+    public List<HandbkItem> getAll(HandbkType type) {
+        return dao.getAll(type);
     }
 
     @Override
-    public List<HandbkItem> getAllTranslations(String lang, HandbkType handbkType) {
-        return dao.getAllTranslations(lang, handbkType);
+    public List<HandbkItem> getAllTranslations(String lang, HandbkType type) {
+        return dao.getAllTranslations(lang, type);
     }
 
 }

@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import static com.epam.hospital.service.HandbkItemServiceImpl.*;
 
-public class HandbkItem extends NamedEntity implements HavingJsonView{
+public class HandbkItem extends NamedEntity {
     private HandbkType type;
 
     public HandbkItem(Integer id, String name, HandbkType type) {

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import static com.epam.hospital.service.StaffServiceImpl.*;
 
-public class Staff extends NamedEntity implements HavingJsonView{
+public class Staff extends NamedEntity {
     private String additionalName;
     private String surname;
     private Position position;

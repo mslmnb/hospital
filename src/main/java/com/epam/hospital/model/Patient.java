@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import static com.epam.hospital.service.PatientServiceImpl.*;
 import static com.epam.hospital.util.ValidationUtil.FORMATTER;
 
-public class Patient extends NamedEntity implements HavingJsonView{
+public class Patient extends NamedEntity {
     private String additionalName;
     private String surname;
     private LocalDate birthday;

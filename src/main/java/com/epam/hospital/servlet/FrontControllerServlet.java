@@ -38,8 +38,8 @@ public class FrontControllerServlet extends HttpServlet {
     private ConnectionPool connectionPool;
 
     /**
-     * initializes the factory of {@code Action} classes and the connection pool
-     * @throws ServletException
+     * Initializes the factory of {@code Action} classes and the connection pool
+     * @throws ServletException if an exception occurs that interrupts the servlet's normal operation
      */
     @Override
     public void init() throws ServletException {
@@ -65,10 +65,10 @@ public class FrontControllerServlet extends HttpServlet {
      * Processes all requests. The request is analyzed and transferred in the {@code Action} processor.
      * The {@code Action} processor  return the view with prefix.
      * The prefix defines as view will be transferred to the client.
-     * @param request the http request
-     * @param response the http response
-     * @throws ServletException
-     * @throws IOException
+     * @param request the {@code HttpServletRequest} object contains the client's request
+     * @param response the {@code HttpServletResponse} object contains the filter's response
+     * @throws ServletException if the HTTP request cannot be handled
+     * @throws IOException if an input or output error occurs while the servlet is handling the HTTP request
      */
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

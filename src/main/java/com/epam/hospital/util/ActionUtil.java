@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.hospital.util.exception.AppException.UNKNOWN_ERROR;
-
 /**
  * The class of utilities for action's classes
  */

@@ -41,7 +41,7 @@ public class CheckResult implements HavingJsonView{
      * @param checkResult {@code CheckResult} object which error messages to be added
      */
     public void addErrorMessage(CheckResult checkResult) {
-        checkResult.getDetails().stream().forEach(d->addErrorMessage(d));
+        checkResult.getDetails().forEach(d -> addErrorMessage(d));
     }
 
     /**

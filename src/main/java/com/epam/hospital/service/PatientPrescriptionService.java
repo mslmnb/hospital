@@ -1,7 +1,6 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.model.PatientPrescription;
-import com.epam.hospital.util.exception.AppException;
 import com.epam.hospital.util.exception.NotFoundAppException;
 import com.epam.hospital.util.exception.SqlAppException;
 import com.epam.hospital.util.exception.UnvalidDataAppException;

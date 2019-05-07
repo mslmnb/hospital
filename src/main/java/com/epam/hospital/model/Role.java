@@ -5,6 +5,10 @@ import org.json.JSONObject;
 import static com.epam.hospital.service.UserServiceImpl.ID_PARAMETER;
 import static com.epam.hospital.service.UserServiceImpl.NAME_PARAMETER;
 
+/**
+ *  The class represents a role of system's user.
+ */
+
 public enum Role implements HavingJsonView {
     ROLE_ADMIN,
     ROLE_DOCTOR,

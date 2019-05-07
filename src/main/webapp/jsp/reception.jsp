@@ -185,7 +185,7 @@
     i18n["emptyAdmissionDate"] = "<fmt:message key="error.reception.emptyAdmissionDate"/>";
     i18n["invalidAdmissionDate"] = "<fmt:message key="error.reception.invalidAdmissionDate"/>";
     i18n["notFound"] = "<fmt:message key="error.reception.notFound"/>";
-    i18n["impossibleRemovingForDiagnosises"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnosises"/>";
+    i18n["impossibleRemovingForDiagnoses"] = "<fmt:message key="error.reception.impossibleRemovingForDiagnoses"/>";
     i18n["impossibleRemovingForInspections"] = "<fmt:message key="error.reception.impossibleRemovingForInspections"/>";
     i18n["impossibleRemovingForPrescriptions"] = "<fmt:message key="error.reception.impossibleRemovingForPrescriptions"/>"
 

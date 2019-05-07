@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ActionUtil.GET_ALL;
 import static com.epam.hospital.util.ActionUtil.getJsonString;
-import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 /**
@@ -33,7 +32,7 @@ public class LangAction extends AbstractAction {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
 
         switch (direction) {
@@ -41,7 +40,7 @@ public class LangAction extends AbstractAction {
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(service.getAll());
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

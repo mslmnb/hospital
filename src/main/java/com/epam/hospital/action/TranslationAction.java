@@ -35,7 +35,7 @@ public class TranslationAction extends AbstractAction {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
 
         switch (direction) {
@@ -64,7 +64,7 @@ public class TranslationAction extends AbstractAction {
                          getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

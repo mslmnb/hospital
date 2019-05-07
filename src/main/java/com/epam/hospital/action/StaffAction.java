@@ -1,6 +1,7 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.service.StaffService;
+import com.epam.hospital.util.ActionUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ public class StaffAction extends AbstractAction {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = getDirection(request.getPathInfo(), URI);
         String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
 
@@ -64,7 +65,7 @@ public class StaffAction extends AbstractAction {
                         getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

@@ -14,10 +14,18 @@ import java.util.Set;
 
 import static com.epam.hospital.action.LoginAction.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
+/**
+ * The filter checks access rights of the authorized user to a resource
+ */
+
 public class SecurityFilter implements Filter {
     private static final String ROOT_PATH = "/";
     private static final String LOGIN_PATH = "/login";
 
+    /**
+     * The map where a key - a resource,
+     *               a value - a user's role which has access to this resource
+     */
     private static final Map<String, Set<Role>> accessMap = new HashMap<>();
     static {
         Set<Role> doctorAndNurseRoles = new HashSet<>();
@@ -43,9 +51,15 @@ public class SecurityFilter implements Filter {
         accessMap.put("/noAdmin", doctorAndNurseRoles);
     }
 
-    public void destroy() {
-    }
-
+    /**
+     * Checks access rights of the authorized user to a resource
+     * @param servletRequest the {@code ServletRequest} object contains the client's request
+     * @param servletResponse the {@code ServletResponse} object contains the filter's response
+     * @param chain the {@code FilterChain} for invoking the next filter or the resource
+     * @throws IOException if an I/O related error has occurred during the processing
+     * @throws ServletException if an exception occurs that interferes with the
+     *                          filter's normal operation
+     */
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -64,7 +78,7 @@ public class SecurityFilter implements Filter {
                     if (hasAccess) {
                         chain.doFilter(request, response);
                     } else {
-                        throw new IllegalAccessError();
+                        throw new IllegalAccessError("Illegal access to the resource.");
                     }
                 }
             } else {
@@ -74,7 +88,6 @@ public class SecurityFilter implements Filter {
     }
 
     public void init(FilterConfig config) throws ServletException {
-
     }
 
 }

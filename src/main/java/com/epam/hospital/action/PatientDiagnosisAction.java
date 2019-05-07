@@ -1,6 +1,7 @@
 package com.epam.hospital.action;
 
 import com.epam.hospital.service.PatientDiagnosisService;
+import com.epam.hospital.util.ActionUtil;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 /**
- * The class of actions for work with the information about patient's diagnosises
+ * The class of actions for work with the information about patient's diagnoses
  * for medical office
  */
 
@@ -31,12 +32,12 @@ public class PatientDiagnosisAction extends AbstractAction {
     }
 
     /**
-     * Describes actions for work with the information about patient's diagnosises
+     * Describes actions for work with the information about patient's diagnoses
      * for medical office
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = getDirection(request.getPathInfo(), URI);
         String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
 
@@ -67,7 +68,7 @@ public class PatientDiagnosisAction extends AbstractAction {
                         getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

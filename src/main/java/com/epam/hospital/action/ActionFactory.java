@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The ActionFactory is used for returning action instances.
+ * The {@code ActionFactory} instance is used to get action instances.
  */
 
 public class ActionFactory {
@@ -49,9 +49,9 @@ public class ActionFactory {
     }
 
     /**
-     * Returns the instance of the ActionFactory class
+     * Returns the instance of the {@code ActionFactory} class
      * @param connectionPool the connection pool
-     * @return the instance of the ActionFactory class
+     * @return the instance of the {@code ActionFactory} class
      */
     public static synchronized ActionFactory getInstance(ConnectionPool connectionPool) {
         if (instance == null) {
@@ -61,17 +61,17 @@ public class ActionFactory {
     }
 
     /**
-     * Puts the specified action to action map
-     * @param action the action
+     * Puts the specified the {@code AbstractAction} object to {@code actions}
+     * @param action the {@code AbstractAction} object for for addition to {@code actions}
      */
     private void addAction(AbstractAction action) {
         actions.put(action.getUri(), action);
     }
 
     /**
-     * Returns the action for specified request
-     * @param request the http request
-     * @return the action for specified request
+     * Returns the {@code Action} object for specified client's request
+     * @param request the {@code HttpServletRequest} object contains the client's request
+     * @return the {@code Action} object for specified client's request or null
      */
     public Action getAction(HttpServletRequest request) {
         Action result = null;

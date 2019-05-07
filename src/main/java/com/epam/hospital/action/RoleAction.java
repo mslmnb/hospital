@@ -11,7 +11,6 @@ import java.util.Arrays;
 
 import static com.epam.hospital.util.ActionUtil.GET_ALL;
 import static com.epam.hospital.util.ActionUtil.getJsonString;
-import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 /**
@@ -32,14 +31,14 @@ public class RoleAction extends AbstractAction{
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
         switch (direction) {
             case GET_ALL:
                 result = JSON_VIEW_PREFIX.getPrefix() + getJsonString(Arrays.asList(Role.values()));
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

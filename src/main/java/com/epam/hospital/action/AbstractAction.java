@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class provides a skeletal implementation of the <tt>Action</tt> interface,
+ * This class provides a skeletal implementation of the {@code Action} interface,
  * to minimize the effort required to implement this interface.
  */
 
@@ -23,10 +23,6 @@ public abstract class AbstractAction implements Action{
         this.uri = uri;
     }
 
-    /**
-     * Returns the request string.
-     * @return the request string.
-     */
     @Override
     public String getUri() {
         return uri;
@@ -34,8 +30,8 @@ public abstract class AbstractAction implements Action{
 
     /**
      * Performs necessary operations and returns a view name
-     * @param request the http request
-     * @param response the http response
+     * @param request the {@code HttpServletRequest} object contains the client's request
+     * @param response the {@code HttpServletResponse} object contains the filter's response
      * @return the view name
      */
     @Override

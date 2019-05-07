@@ -12,8 +12,8 @@ public interface Action {
 
     /**
      * Performs necessary operations and returns a view name
-     * @param request the http request
-     * @param response the http response
+     * @param request the {@code HttpServletRequest} object contains the client's request
+     * @param response the {@code HttpServletResponse} object contains the filter's response
      * @return the view name
      */
     String execute(HttpServletRequest request, HttpServletResponse response);

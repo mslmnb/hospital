@@ -1,5 +1,9 @@
 package com.epam.hospital.model;
 
+/**
+ * The class of the entity adds a name property to {@code BaseEntity}. Used as a base class for entities
+ * needing these properties.
+ */
 public abstract class NamedEntity extends BaseEntity {
 
     private String name;

@@ -37,7 +37,7 @@ public class HandbkAction extends AbstractAction {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String result;
+        String result = null;
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
         String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE_NAME);
         String handbkTypeAsString = request.getParameter(TYPE_PARAMETER);
@@ -71,7 +71,7 @@ public class HandbkAction extends AbstractAction {
                         getJsonViewForDeleteDirection(request, response, service, ID_PARAMETER);
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

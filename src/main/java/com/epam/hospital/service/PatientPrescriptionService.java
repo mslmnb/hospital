@@ -19,7 +19,9 @@ public interface PatientPrescriptionService extends CommonServiceOperationForBas
      * @param description the description of prescription
      * @param executionDateAsString the execution date of prescription as string
      * @param resultNotes the notes about execution
-     * @throws AppException
+     * @throws UnvalidDataAppException if method's parameters contains unvalid data
+     * @throws NotFoundAppException if record which should be updated is not found
+     * @throws SqlAppException if a database access error occurs
      */
     void save(String idAsString, String patientIdAsString, String applicationDateAsString,
               String typeIdAsString, String description, String executionDateAsString,

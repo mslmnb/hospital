@@ -17,7 +17,7 @@ public class ConnectionPool {
     private static final Logger LOG = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private final String driverName;
-    private final List<Connection> freeConnections = new ArrayList();
+    private final List<Connection> freeConnections = new ArrayList<>();
     private final String url;
     private final String user;
     private final String password;

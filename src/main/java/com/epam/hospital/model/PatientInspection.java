@@ -7,6 +7,10 @@ import java.time.LocalDate;
 
 import static com.epam.hospital.service.PatientInspectionServiceImpl.*;
 
+/**
+ *  The class represents a patient's medical inspection.
+ */
+
 public class PatientInspection extends BaseEntity {
 
     private final Patient patient;

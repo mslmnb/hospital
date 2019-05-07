@@ -27,7 +27,7 @@ public interface PatientDiagnosisService extends CommonServiceOperationForBaseEn
               String diagnosisTypeIdAsString) throws UnvalidDataAppException, NotFoundAppException, SqlAppException;
 
     /**
-     * Gets all diagnosises for specified patient
+     * Gets all diagnoses for specified patient
      * @param patientIdAsString the patient's key as string
      * @param locale the language
      * @return the list of {@code PatientDiagnosis} entities
@@ -39,7 +39,7 @@ public interface PatientDiagnosisService extends CommonServiceOperationForBaseEn
                                   String locale) throws UnvalidDataAppException, SqlAppException;
 
     /**
-     * Gets all diagnosises for specified patient
+     * Gets all diagnoses for specified patient
      * @param patientId the patient's key
      * @param locale the language
      * @return the list of {@code PatientDiagnosis} entities

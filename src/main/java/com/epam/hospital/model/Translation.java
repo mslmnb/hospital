@@ -5,9 +5,25 @@ import org.json.JSONObject;
 
 import static com.epam.hospital.service.TranslationServiceImpl.*;
 
+/**
+ *  The class represents a translation for handbook's item.
+ */
+
 public class Translation extends BaseEntity {
+
+    /**
+     * the handbook's item
+     */
     private final HandbkItem handbkItem;
+
+    /**
+     * the language
+     */
     private final Lang lang;
+
+    /**
+     * the translation
+     */
     private final String itemTranslation;
 
     public Translation(Integer id, HandbkItem handbkItem, String locale, String itemTranslation) {

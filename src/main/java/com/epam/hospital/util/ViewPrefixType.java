@@ -2,6 +2,11 @@ package com.epam.hospital.util;
 
 import java.util.Arrays;
 
+/**
+ * Prefix type uses in {@code Action} classes.
+ * The {@code Action} class processes the client request and return the view with prefix.
+ * The prefix defines as view will be transferred to the client.
+ */
 public enum ViewPrefixType {
     JSON_VIEW_PREFIX("json:"),
     JSP_VIEW_PREFIX("jsp:"),

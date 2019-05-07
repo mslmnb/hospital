@@ -5,6 +5,10 @@ import org.json.JSONObject;
 
 import static com.epam.hospital.service.StaffServiceImpl.*;
 
+/**
+ *  The class represents a staff person.
+ */
+
 public class Staff extends NamedEntity {
     private String additionalName;
     private String surname;
@@ -62,14 +66,14 @@ public class Staff extends NamedEntity {
 
     @Override
     public String getJsonString() {
-        JSONObject userJsonObj = new JSONObject();
-        userJsonObj.put(ID_PARAMETER, getId());
-        userJsonObj.put(NAME_PARAMETER, getName());
-        userJsonObj.put(ADDITIONAL_NAME_PARAMETER, additionalName);
-        userJsonObj.put(SURNAME_PARAMETER, surname);
-        userJsonObj.put(POSITION_ID_PARAMETER, getPosition().getId());
-        userJsonObj.put(POSITION_PARAMETER, getPosition().getName());
-        return userJsonObj.toString();
+        JSONObject staffJsonObj = new JSONObject();
+        staffJsonObj.put(ID_PARAMETER, getId());
+        staffJsonObj.put(NAME_PARAMETER, getName());
+        staffJsonObj.put(ADDITIONAL_NAME_PARAMETER, additionalName);
+        staffJsonObj.put(SURNAME_PARAMETER, surname);
+        staffJsonObj.put(POSITION_ID_PARAMETER, getPosition().getId());
+        staffJsonObj.put(POSITION_PARAMETER, getPosition().getName());
+        return staffJsonObj.toString();
     }
 
     @Override

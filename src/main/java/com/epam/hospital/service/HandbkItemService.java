@@ -2,7 +2,6 @@ package com.epam.hospital.service;
 
 import com.epam.hospital.model.handbk.HandbkItem;
 import com.epam.hospital.model.handbk.HandbkType;
-import com.epam.hospital.util.exception.AppException;
 import com.epam.hospital.util.exception.NotFoundAppException;
 import com.epam.hospital.util.exception.SqlAppException;
 import com.epam.hospital.util.exception.UnvalidDataAppException;

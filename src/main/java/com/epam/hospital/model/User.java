@@ -5,14 +5,24 @@ import org.json.JSONObject;
 import static com.epam.hospital.model.Role.ROLE_ADMIN;
 import static com.epam.hospital.service.UserServiceImpl.*;
 
+/**
+ *  The class represents a system's user.
+ */
+
 public class User extends BaseEntity {
 
+    /**
+     * the staff person
+     */
     private Staff staff;
 
     private String login;
 
     private String password;
 
+    /**
+     * the role of system's user
+     */
     private Role role;
 
     public User() {

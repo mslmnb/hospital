@@ -8,6 +8,10 @@ import java.time.LocalDate;
 
 import static com.epam.hospital.service.PatientPrescriptionServiceImpl.*;
 
+/**
+ *  The class represents a patient's medical prescription.
+ */
+
 public class PatientPrescription extends BaseEntity {
     private final Patient patient;
     private final LocalDate applicationDate;

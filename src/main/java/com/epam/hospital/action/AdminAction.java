@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.epam.hospital.util.ActionUtil.FORWARD_TO_JSP;
-import static com.epam.hospital.util.ActionUtil.getJsonViewForDefaultDirection;
 import static com.epam.hospital.util.ViewPrefixType.FORWARD_VIEW_PREFIX;
-import static com.epam.hospital.util.ViewPrefixType.JSON_VIEW_PREFIX;
 
 /**
  * The class of actions when the user with the rights of the administrator logs in
@@ -31,14 +29,14 @@ public class AdminAction extends AbstractAction {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String direction = ActionUtil.getDirection(request.getPathInfo(), URI);
-        String result;
+        String result = null;
 
         switch (direction) {
             case FORWARD_TO_JSP:
                 result = FORWARD_VIEW_PREFIX.getPrefix() + JSP_FILE_NAME;
                 break;
             default:
-                result = JSON_VIEW_PREFIX.getPrefix() + getJsonViewForDefaultDirection(response, LOG, direction);
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
                 break;
         }
         return result;

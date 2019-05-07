@@ -35,10 +35,10 @@ public class JdbcPatientJdbcImpl implements PatientDAO, CommonJdbcOperationsForB
     private static final String PRIMARY_COMPLAINTS_FIELDNAME = "primary_complaints";
     private static final String PRIMARY_DIAGNOSIS_ID_FIELDNAME = "primary_diagnosis_item_id";
 
-    private static final String FOREIGN_KEY_IN_DIAGNOSISES = "diagnosis_register_patient_id_fkey";
+    private static final String FOREIGN_KEY_IN_DIAGNOSES = "diagnosis_register_patient_id_fkey";
     private static final String FOREIGN_KEY_IN_INSPECTIONS = "inspection_register_patient_id_fkey";
     private static final String FOREIGN_KEY_IN_PRESCRIPTIONS = "prescription_register_patient_id_fkey";
-    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSISES = "impossibleRemovingForDiagnosises";
+    private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSES = "impossibleRemovingForDiagnoses";
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTIONS = "impossibleRemovingForInspections";
     private static final String IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS = "impossibleRemovingForPrescriptions";
 
@@ -64,7 +64,7 @@ public class JdbcPatientJdbcImpl implements PatientDAO, CommonJdbcOperationsForB
 
     static {
         errorResolver = new HashMap<>();
-        errorResolver.put(FOREIGN_KEY_IN_DIAGNOSISES, IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSISES);
+        errorResolver.put(FOREIGN_KEY_IN_DIAGNOSES, IMPOSSIBLE_REMOVING_ERROR_FOR_DIAGNOSES);
         errorResolver.put(FOREIGN_KEY_IN_INSPECTIONS, IMPOSSIBLE_REMOVING_ERROR_FOR_INSPECTIONS);
         errorResolver.put(FOREIGN_KEY_IN_PRESCRIPTIONS, IMPOSSIBLE_REMOVING_ERROR_FOR_PRESCRIPTIONS);
     }

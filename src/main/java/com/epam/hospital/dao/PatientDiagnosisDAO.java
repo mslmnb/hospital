@@ -11,10 +11,10 @@ import java.util.List;
 public interface PatientDiagnosisDAO extends CommonCrudOperationsForBaseEntity<PatientDiagnosis> {
 
     /**
-     * Gets all patient's diagnosises for specified language and specified patient's key
+     * Gets all patient's diagnoses for specified language and specified patient's key
      * @param locale the language
      * @param patientId the patient's key
-     * @return the list of patient's diagnosises for specified language and specified patient's key
+     * @return the list of patient's diagnoses for specified language and specified patient's key
      *   if records are not found that returns empty list
      */
     List<PatientDiagnosis> getAll(String locale, int patientId);

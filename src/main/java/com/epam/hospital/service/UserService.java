@@ -1,12 +1,9 @@
 package com.epam.hospital.service;
 
 import com.epam.hospital.model.User;
-import com.epam.hospital.util.exception.AppException;
 import com.epam.hospital.util.exception.NotFoundAppException;
 import com.epam.hospital.util.exception.SqlAppException;
 import com.epam.hospital.util.exception.UnvalidDataAppException;
-
-import java.util.List;
 
 public interface UserService extends CommonServiceOperation<User>, CommonServiceOperationForBaseEntity<User>{
 

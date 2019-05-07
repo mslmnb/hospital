@@ -1,12 +1,18 @@
 package com.epam.hospital.model.handbk;
 
-import com.epam.hospital.model.HavingJsonView;
 import com.epam.hospital.model.NamedEntity;
 import org.json.JSONObject;
 
 import static com.epam.hospital.service.HandbkItemServiceImpl.*;
 
+/**
+ * The class represents an item of a handbook.
+ */
 public class HandbkItem extends NamedEntity {
+
+    /**
+     * the type of handbook
+     */
     private HandbkType type;
 
     public HandbkItem(Integer id, String name, HandbkType type) {

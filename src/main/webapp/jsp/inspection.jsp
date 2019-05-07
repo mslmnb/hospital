@@ -22,7 +22,7 @@
         <div class="shadow">
             <div class="row">
                 <div class="col-sm-11">
-                    <h3><fmt:message key="prescrptn.title"/>: ${param.name}</h3>
+                    <h3><fmt:message key="inspection.title"/>: ${param.name}</h3>
                 </div>
                 <br>
                 <div class="col-sm-1">

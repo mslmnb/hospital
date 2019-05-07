@@ -16,5 +16,4 @@
     i18n["common.saved"] = "<fmt:message key="common.saved"/>";
     i18n["error.common.noDbConnection"] = "<fmt:message key="error.common.noDbConnection"/>";
     i18n["error.common.unknownError"] = "<fmt:message key="error.common.unknownError"/>";
-
 </script>

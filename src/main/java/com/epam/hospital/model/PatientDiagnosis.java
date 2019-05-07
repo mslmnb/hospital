@@ -9,6 +9,10 @@ import java.time.LocalDate;
 
 import static com.epam.hospital.service.PatientDiagnosisServiceImpl.*;
 
+/**
+ *  The class represents a patient's medical diagnosis.
+ */
+
 public class PatientDiagnosis extends BaseEntity {
     private final Patient patient;
     private final LocalDate date;

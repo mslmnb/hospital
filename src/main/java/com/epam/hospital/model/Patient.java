@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import static com.epam.hospital.service.PatientServiceImpl.*;
 import static com.epam.hospital.util.ValidationUtil.FORMATTER;
 
+/**
+ *  The class represents a patient.
+ */
+
 public class Patient extends NamedEntity {
     private String additionalName;
     private String surname;

@@ -1,7 +1,6 @@
 package com.epam.hospital.dao;
 
 import com.epam.hospital.model.User;
-import java.util.List;
 
 /**
  * The interface of crud operation for {@code User} entity

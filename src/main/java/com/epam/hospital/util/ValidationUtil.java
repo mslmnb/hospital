@@ -9,6 +9,10 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The class of utilities for the validation of input data
+ */
+
 public class ValidationUtil {
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -20,6 +24,14 @@ public class ValidationUtil {
     private static final String I18N_KEY_FOR_INVALID = "invalid";
     private static final String I18N_KEY_FOR_NOT_FOUND = "notFound";
 
+    /**
+     * Throws {@code NotFoundAppException} if the result of request to database is empty
+     * @param object the result of request to database
+     * @param <T> the runtime type of class
+     * @return the same object if object is found (not null) else
+     *     throws {@code NotFoundAppException}
+     * @throws NotFoundAppException if the result of request to database is empty
+     */
     public static <T> T checkNotFound(T object) throws NotFoundAppException {
         if (object == null) {
             throw new NotFoundAppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
@@ -27,12 +39,29 @@ public class ValidationUtil {
         return object;
     }
 
+    /**
+     * Throws {@code NotFoundAppException} if record in database is not found
+     * @param found the indication that record in database is found or not
+     * @throws NotFoundAppException if record in database is not found
+     */
     public static void checkNotFound(boolean found) throws NotFoundAppException {
         if (!found) {
             throw new NotFoundAppException(new CheckResult(I18N_KEY_FOR_NOT_FOUND));
         }
     }
 
+    /**
+     * Checks that specified field's value is not null.
+     * Adds error message to {@code checkResult} if specified field's value is null.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * and {@code throwException} is true.
+     * @param fieldValue the field's value
+     * @param fieldName the field's name
+     * @param checkResult the object for keeping error messages
+     * @param throwException the indicator specifies it is possible or it is impossible to throw an exception
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages and
+     *     {@code throwException} is true
+     */
     public static void checkNotEmpty(String fieldValue, String fieldName,
                                      CheckResult checkResult, boolean throwException) throws UnvalidDataAppException {
         if (fieldValue == null || fieldValue.isEmpty()) {
@@ -43,23 +72,37 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * Checks that specified field's value is not null.
+     * Adds error message to {@code checkResult} if specified field's value is null.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * @param fieldValue the input field's value
+     * @param fieldName the input field's name
+     * @param checkResult the object for keeping error messages
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages
+     */
     public static void checkNotEmpty(String fieldValue, String fieldName,
                                      CheckResult checkResult) throws UnvalidDataAppException {
         checkNotEmpty(fieldValue, fieldName, checkResult, true);
-    }
-
-    private static void checkNotEmpty(String fieldValue, String fieldName) throws UnvalidDataAppException {
-        if (fieldValue == null || fieldValue.isEmpty()) {
-            throw new UnvalidDataAppException(new CheckResult(I18N_KEY_FOR_EMPTY +
-                                                              getWithCapitalFirstLetter(fieldName)));
-        }
     }
 
     private static String getWithCapitalFirstLetter(String fieldName) {
         return fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
     }
 
-    public static void checkEmail(String email, CheckResult checkResult, boolean throwException) {
+    /**
+     * Checks that specified email is valid.
+     * Adds error message to {@code checkResult} if specified email is not valid.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * and {@code throwException} is true.
+     * @param email the email
+     * @param checkResult the object for keeping error messages
+     * @param throwException the indicator specifies it is possible or it is impossible to throw an exception
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages and
+     *     {@code throwException} is true
+     */
+    public static void checkEmail(String email, CheckResult checkResult,
+                                  boolean throwException) throws UnvalidDataAppException {
         try {
             checkEmail(email);
         } catch (UnvalidDataAppException e) {
@@ -70,11 +113,23 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkEmail(String email) {
+    private static void checkEmail(String email) {
         checkByRegex(REGEX_FOR_EMAIL, email, I18N_KEY_FOR_INVALID_EMAIL);
     }
 
-    public static void checkPhone(String phone, CheckResult checkResult, boolean throwException) {
+    /**
+     * Checks that specified phone number is valid.
+     * Adds error message to {@code checkResult} if specified phone number is not valid.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * and {@code throwException} is true.
+     * @param phone the phone number
+     * @param checkResult the object for keeping error messages
+     * @param throwException the indicator specifies it is possible or it is impossible to throw an exception
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages and
+     *     {@code throwException} is true
+     */
+    public static void checkPhone(String phone, CheckResult checkResult,
+                                  boolean throwException) throws UnvalidDataAppException {
         try {
             checkPhone(phone);
         } catch (UnvalidDataAppException e) {
@@ -85,7 +140,7 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkPhone(String phone) {
+    private static void checkPhone(String phone) {
         checkByRegex(REGEX_FOR_PHONE, phone, I18N_KEY_FOR_INVALID_PHONE);
     }
 
@@ -99,6 +154,19 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * Checks that specified date is valid.
+     * Adds error message to {@code checkResult} if specified date is not valid.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * and {@code throwException} is true.
+     * @param dateAsString the date as string
+     * @param fieldName the name of input field for date
+     * @param checkResult the object for keeping error messages
+     * @param throwException the indicator specifies it is possible or it is impossible to throw an exception
+     * @return the date as {@code LocalDate}
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages and
+     *     {@code throwException} is true
+     */
     public static LocalDate checkAndReturnDate(String dateAsString, String fieldName, CheckResult checkResult,
                                                boolean throwException) throws UnvalidDataAppException {
         LocalDate result = null;
@@ -113,7 +181,14 @@ public class ValidationUtil {
         return result;
     }
 
-    public static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws UnvalidDataAppException {
+    private static void checkNotEmpty(String fieldValue, String fieldName) throws UnvalidDataAppException {
+        if (fieldValue == null || fieldValue.isEmpty()) {
+            throw new UnvalidDataAppException(new CheckResult(I18N_KEY_FOR_EMPTY +
+                    getWithCapitalFirstLetter(fieldName)));
+        }
+    }
+
+    private static LocalDate checkAndReturnDate(String dateAsString, String fieldName) throws UnvalidDataAppException {
         LocalDate result;
         checkNotEmpty(dateAsString, fieldName);
         try {
@@ -125,6 +200,19 @@ public class ValidationUtil {
         return result;
     }
 
+    /**
+     * Checks that specified integer value is valid.
+     * Adds error message to {@code checkResult} if specified integer value is not valid.
+     * Throws {@code UnvalidDataAppException} if {@code checkResult} contains error messages
+     * and {@code throwException} is true.
+     * @param intAsString the integer value as string
+     * @param fieldName the name of input field for integer value
+     * @param checkResult the object for keeping error messages
+     * @param throwException the indicator specifies it is possible or it is impossible to throw an exception
+     * @return the integer value as {@code Integer}
+     * @throws UnvalidDataAppException if {@code checkResult} contains error messages and
+     *     {@code throwException} is true
+     */
     public static Integer checkAndReturnInt(String intAsString, String fieldName, CheckResult checkResult,
                                             boolean throwException) throws UnvalidDataAppException {
         Integer result = null;
@@ -139,6 +227,13 @@ public class ValidationUtil {
         return result;
     }
 
+    /**
+     * Checks that specified integer value is valid.
+     * @param intAsString the integer value as string
+     * @param fieldName the name of input field for integer value
+     * @return the integer value as {@code Integer}
+     * @throws UnvalidDataAppException if specified integer value is not valid
+     */
     public static Integer checkAndReturnInt(String intAsString, String fieldName) throws UnvalidDataAppException {
         Integer result;
         checkNotEmpty(intAsString, fieldName);

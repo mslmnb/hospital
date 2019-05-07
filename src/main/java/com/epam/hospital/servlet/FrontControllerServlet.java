@@ -1,6 +1,7 @@
 package com.epam.hospital.servlet;
 
 import com.epam.hospital.dao.ConnectionPool;
+import com.epam.hospital.util.ActionUtil;
 import com.epam.hospital.util.ViewPrefixType;
 import com.epam.hospital.action.Action;
 import com.epam.hospital.action.ActionFactory;
@@ -18,14 +19,28 @@ import java.util.Properties;
 import static com.epam.hospital.util.PropertiesUtil.*;
 import static com.epam.hospital.util.ViewPrefixType.getValueByPrefix;
 
+/**
+ * The front controller servlet processes all requests from client to server.
+ */
 public class FrontControllerServlet extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(FrontControllerServlet.class);
     private static final String CONTEXT_PARAMETER_FOR_DB_PROPERTIES = "dbPropertiesFile";
     private static final String JSON_MIMETYPE = "application/json;charset=UTF-8";
 
+    /**
+     * the factory of {@code Action} classes
+     */
     private ActionFactory actionFactory;
+
+    /**
+     * the connection pool to database
+     */
     private ConnectionPool connectionPool;
 
+    /**
+     * initializes the factory of {@code Action} classes and the connection pool
+     * @throws ServletException
+     */
     @Override
     public void init() throws ServletException {
         super.init();
@@ -46,9 +61,21 @@ public class FrontControllerServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Processes all requests. The request is analyzed and transferred in the {@code Action} processor.
+     * The {@code Action} processor  return the view with prefix.
+     * The prefix defines as view will be transferred to the client.
+     * @param request the http request
+     * @param response the http response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Action action = this.actionFactory.getAction(request);
+        if (action==null) {
+            ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
+        }
         String viewWithPrefix = action.execute(request, response);
         String view = getViewWithoutPrefix(viewWithPrefix);
 
@@ -68,8 +95,7 @@ public class FrontControllerServlet extends HttpServlet {
                 response.sendRedirect(view);
                 break;
             default:
-                LOG.error("Action is not defined for URI:" + request.getRequestURI());
-                throw new IllegalStateException("Action is not defined for URI:" + request.getRequestURI());
+                ActionUtil.logAndThrowForIndefiniteActionException(request, LOG);
         }
     }
 

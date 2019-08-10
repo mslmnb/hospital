@@ -2,6 +2,7 @@ package com.epam.hospital.filter;
 
 import com.epam.hospital.model.Role;
 import com.epam.hospital.model.User;
+import com.epam.hospital.util.exception.IllegalAccessException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 
 import static com.epam.hospital.action.LoginAction.SESSION_ATTRIBUTE_FOR_AUTHORIZED_USER;
 
@@ -78,7 +80,7 @@ public class SecurityFilter implements Filter {
                     if (hasAccess) {
                         chain.doFilter(request, response);
                     } else {
-                        throw new IllegalAccessError("Illegal access to the resource.");
+                        throw new IllegalAccessException("Illegal access to the resource.");
                     }
                 }
             } else {
